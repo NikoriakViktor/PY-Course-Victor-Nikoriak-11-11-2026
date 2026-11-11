@@ -1,0 +1,51 @@
+# GitHub Actions — перевірка метаданих ноутбуків
+# Colab-кнопка і metadata.lms кожного ноутбука мають відповідати його розташуванню.
+# Студентські версії (*_student.ipynb) мають відповідати майстер-ноутбукам: без рішень, клітинки компілюються.
+# Якщо перевірка впала: python tools/sync_notebook_metadata.py і python tools/generate_student.py → commit → push.
+
+name: Notebooks — Colab links & metadata
+
+on:
+  push:
+    paths:
+      - 'module_*/**'
+      - 'docs/**'
+      - 'course.json'
+      - 'mkdocs.yml'
+      - 'tools/**'
+      - '.github/workflows/notebooks.yml'
+  pull_request:
+    paths:
+      - 'module_*/**'
+      - 'docs/**'
+      - 'course.json'
+      - 'mkdocs.yml'
+      - 'tools/**'
+      - '.github/workflows/notebooks.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    name: sync_notebook_metadata --check
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-python@v6
+        with:
+          python-version: 3.x
+
+      - name: Check notebook metadata and Colab links
+        run: python tools/sync_notebook_metadata.py --check
+
+      - name: Student notebooks are up to date (no solutions, every cell compiles)
+        run: python tools/generate_student.py --check
+
+      - name: Tests of the notebook tools
+        run: |
+          pip install -q pytest
+          cd tools && python -m pytest -q -p no:cacheprovider

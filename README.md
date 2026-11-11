@@ -149,7 +149,7 @@ git config --global user.email "ваш_email_на_GitHub"
 python --version
 ```
 
-Якщо `python` не знайдено — спробуйте `py --version` і розділ [«Python не знайдено»](https://nikoriakviktor.github.io/PY-Course-Victor-Nikoriak-11-11-2026/00_getting_started/troubleshooting/#python-not-found).
+Якщо `python` не знайдено — спробуйте `py --version` і розділ [«Python не знайдено»](https://nikoriakviktor.github.io/PY-Course-Victor-Nikoriak-11-11-2026/00_getting_started/troubleshooting/#python-not-found). Забули галочку **Add python.exe to PATH** — як прописати шлях вручну: [Windows: додати Python у PATH](https://nikoriakviktor.github.io/PY-Course-Victor-Nikoriak-11-11-2026/00_getting_started/troubleshooting/#windows-path).
 
 </details>
 

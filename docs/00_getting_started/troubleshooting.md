@@ -47,7 +47,82 @@ zsh: command not found: python
 | macOS / Linux | команда називається `python3`: `python3 --version`. Після активації `.venv` запрацює і `python` |
 | Windows | спробуй `py --version`. Якщо працює — Python встановлено, але його немає в `PATH`: створюй середовище командою `py -m venv .venv` |
 | Windows, відкривається Microsoft Store | **Параметри → Програми → Додаткові параметри програм → Псевдоніми виконання програм** (App execution aliases) → вимкни `python.exe` і `python3.exe`, потім відкрий новий термінал |
+| Windows, Python встановлено без галочки **Add python.exe to PATH** | пропиши шлях вручну — див. [«Windows: додати Python у PATH»](#windows-path) нижче |
 | Windows, нічого не допомогло | перевстанови Python з [python.org/downloads](https://www.python.org/downloads/) і постав галочку **Add python.exe to PATH** на першому екрані інсталятора |
+
+### Windows: додати Python у PATH { #windows-path }
+
+**PATH** — це список папок, у яких Windows шукає програму, коли ти вводиш її назву в терміналі. Якщо під час встановлення Python не стояла галочка **Add python.exe to PATH**, Python на диску є, але Windows не знає, де його шукати. Тоді `python` не знаходиться, а `py` часто працює: Python Launcher (`py`) встановлюється окремо й шукає Python сам.
+
+Нижче три способи — від найпростішого. Достатньо одного.
+
+#### Спосіб 1. Через інсталятор Python
+
+1. **Параметри → Програми → Встановлені програми** → знайди **Python 3.x** → **⋯ → Змінити** (Modify). Або запусти той самий інсталятор із [python.org](https://www.python.org/downloads/) ще раз.
+2. **Modify** → **Next** → у вікні **Advanced Options** постав галочку **Add Python to environment variables** → **Install**.
+3. Закрий **усі** термінали й відкрий новий. PyCharm і VS Code теж перезапусти.
+
+#### Спосіб 2. Вручну через «Змінні середовища»
+
+1. Дізнайся, де лежить Python. У PowerShell:
+
+    ```powershell
+    py -c "import sys; print(sys.executable)"
+    ```
+
+    ```text
+    C:\Users\Olena\AppData\Local\Programs\Python\Python313\python.exe
+    ```
+
+    Якщо і `py` не працює — пошукай файл:
+
+    ```powershell
+    Get-ChildItem "$env:LOCALAPPDATA\Programs\Python" -Recurse -Filter python.exe
+    ```
+
+    Потрібна **папка**, у якій лежить `python.exe` (без самого `python.exe` в кінці), і її підпапка `Scripts` — там живуть `pip`, `jupyter` та інші команди.
+
+2. Відкрий **Пуск** → введи `змінні середовища` (англійською — `environment variables`) → **Змінити змінні середовища для свого облікового запису**.
+3. У верхньому списку **Змінні користувача** вибери **Path** → **Змінити…**
+4. **Створити** → встав шлях до папки Python, наприклад `C:\Users\Olena\AppData\Local\Programs\Python\Python313\`.
+5. **Створити** ще раз → той самий шлях із `Scripts\` в кінці: `C:\Users\Olena\AppData\Local\Programs\Python\Python313\Scripts\`.
+6. Виділи обидва нові рядки й кнопкою **Вгору** (Move Up) підніми їх **вище** рядка `%USERPROFILE%\AppData\Local\Microsoft\WindowsApps`, якщо він є. Інакше Windows першою знайде заглушку, яка відкриває Microsoft Store.
+7. **OK** у всіх вікнах. Закрий усі термінали, відкрий новий, перезапусти PyCharm і VS Code.
+
+#### Спосіб 3. Однією командою в PowerShell
+
+Працює, якщо `py` вже відповідає. Команда додає папку Python і `Scripts` на початок PATH твого користувача (права адміністратора не потрібні):
+
+```powershell
+$py = py -c "import sys, os; print(os.path.dirname(sys.executable))"
+$old = [Environment]::GetEnvironmentVariable("Path", "User")
+[Environment]::SetEnvironmentVariable("Path", "$py;$py\Scripts;$old", "User")
+```
+
+Після цього закрий усі термінали й відкрий новий.
+
+#### Перевір
+
+У **новому** вікні PowerShell:
+
+```powershell
+python --version
+where.exe python
+```
+
+```text
+Python 3.13.1
+C:\Users\Olena\AppData\Local\Programs\Python\Python313\python.exe
+C:\Users\Olena\AppData\Local\Microsoft\WindowsApps\python.exe
+```
+
+Першим рядком у `where.exe` має стояти справжній Python, а не `WindowsApps`. Якщо першим іде `WindowsApps` — повтори крок 6 способу 2 або вимкни псевдоніми виконання (рядок про Microsoft Store у таблиці вище).
+
+!!! note "Чому досі не працює в PyCharm чи VS Code"
+    Редактор читає PATH один раз — під час запуску. Після зміни PATH його треба **повністю закрити** (не лише вікно проєкту) і відкрити знову. Якщо термінал у редакторі досі не бачить `python`, перезавантаж комп'ютер.
+
+!!! tip "Для роботи в курсі PATH не завжди потрібен"
+    Віртуальне середовище можна створити й через `py -m venv .venv`. Після активації `.venv` команда `python` працює й без PATH, бо активація сама додає папку середовища на початок PATH. Але для PyCharm, VS Code та інших інструментів, які шукають Python самі, краще мати його в PATH.
 
 ### Встановлено кілька версій Python
 

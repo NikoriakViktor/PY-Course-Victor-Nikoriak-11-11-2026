@@ -206,7 +206,7 @@ git config --global user.email
     python --version
     ```
 
-    Якщо `python` не знайдено або відкрився Microsoft Store — спробуй `py --version` і подивись розділ [«Python не знайдено»](troubleshooting.md#python-not-found).
+    Якщо `python` не знайдено або відкрився Microsoft Store — спробуй `py --version` і подивись розділ [«Python не знайдено»](troubleshooting.md#python-not-found). Забув поставити галочку **Add python.exe to PATH** — перевстановлювати не обов'язково: [Windows: додати Python у PATH](troubleshooting.md#windows-path).
 
 === "macOS"
 

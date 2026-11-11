@@ -4031,7 +4031,7 @@
 <a id="__codelineno-12-10" name="__codelineno-12-10" href="#__codelineno-12-10"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">id</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">meta</span>
 <a id="__codelineno-12-11" name="__codelineno-12-11" href="#__codelineno-12-11"></a><span class="w">        </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">docker/metadata-action@v5</span><span class="w">            </span><span class="c1"># імена образів — у нижньому регістрі (вимога реєстру)</span>
 <a id="__codelineno-12-12" name="__codelineno-12-12" href="#__codelineno-12-12"></a><span class="w">        </span><span class="nt">with</span><span class="p">:</span>
-<a id="__codelineno-12-13" name="__codelineno-12-13" href="#__codelineno-12-13"></a><span class="w">          </span><span class="nt">images</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ghcr.io/${{ github.repository_owner }}/news_hub</span>
+<a id="__codelineno-12-13" name="__codelineno-12-13" href="#__codelineno-12-13"></a><span class="w">          </span><span class="nt">images</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ghcr.io/${{ github.repository }}/news_hub</span><span class="w">   </span><span class="c1"># &lt;власник&gt;/&lt;репозиторій&gt;/news_hub</span>
 <a id="__codelineno-12-14" name="__codelineno-12-14" href="#__codelineno-12-14"></a><span class="w">          </span><span class="nt">tags</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span>
 <a id="__codelineno-12-15" name="__codelineno-12-15" href="#__codelineno-12-15"></a><span class="w">            </span><span class="no">type=sha</span>
 <a id="__codelineno-12-16" name="__codelineno-12-16" href="#__codelineno-12-16"></a><span class="w">            </span><span class="no">type=raw,value=latest</span>
@@ -4041,7 +4041,14 @@
 <a id="__codelineno-12-20" name="__codelineno-12-20" href="#__codelineno-12-20"></a><span class="w">          </span><span class="nt">push</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
 <a id="__codelineno-12-21" name="__codelineno-12-21" href="#__codelineno-12-21"></a><span class="w">          </span><span class="nt">tags</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">${{ steps.meta.outputs.tags }}</span>
 </code></pre></div>
-<p>На PR цей job — <code>skipped</code> (видно на графі вище). Тег <code>sha-5c6f1b3</code> відповідає на питання «яка версія зараз на сервері?»: кожен образ прив'язаний до коміту. <code>metadata-action</code> сам переводить <code>NikoriakViktor</code> у нижній регістр — <code>docker push ghcr.io/NikoriakViktor/…</code> реєстр відхилив би.</p>
+<p>На PR цей job — <code>skipped</code> (видно на графі вище). Тег <code>sha-5c6f1b3</code> відповідає на питання «яка версія зараз на сервері?»: кожен образ прив'язаний до коміту. <code>metadata-action</code> сам переводить <code>NikoriakViktor/PY-Course-…</code> у нижній регістр — <code>docker push ghcr.io/NikoriakViktor/…</code> реєстр відхилив би.</p>
+<div class="admonition warning">
+<p class="admonition-title">Чому в імені образу є назва репозиторію</p>
+<p>Пакет у ghcr.io <strong>належить репозиторію, який опублікував його першим</strong>, і <code>GITHUB_TOKEN</code> іншого репозиторію не має права в нього писати. Якби образ звався просто <code>ghcr.io/&lt;власник&gt;/news_hub</code>, то в другому репозиторії того самого власника (копія курсу для нової групи, твій експериментальний репозиторій) <code>publish</code> падав би з помилкою:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>denied: permission_denied: write_package
+</code></pre></div>
+<p>Саме так і сталося з копією цього курсу для нової групи. <code>${{ github.repository }}</code> в імені дає кожному репозиторію власний образ: <code>ghcr.io/&lt;власник&gt;/&lt;репозиторій&gt;/news_hub</code>. Альтернатива — дати іншому репозиторію доступ у налаштуваннях пакета (<strong>Package settings → Manage Actions access → Add Repository → Write</strong>), але тоді два репозиторії перезаписують один і той самий тег <code>latest</code>.</p>
+</div>
 <div class="admonition note">
 <p class="admonition-title">Що з цього перевірено</p>
 <p>Усі jobs, крім <code>publish</code>, пройшли на справжньому PR цього уроку (див. <a href="#tests">Тести</a>). <code>publish</code> запускається лише на push у <code>main</code>, тому на PR він <code>skipped</code>; його кроки — стандартні дії Docker, синтаксис перевірено <code>actionlint</code>. Автоматичний деплой на сервер у workflow не входить — див. <a href="#how-to-choose">Як обрати</a>.</p>
@@ -4205,7 +4212,7 @@
 <h2 id="practice">Практика<a class="headerlink" href="#practice" title="Permanent link">&para;</a></h2>
 <h3 id="readme">Розібраний приклад: бейдж статусу в README<a class="headerlink" href="#readme" title="Permanent link">&para;</a></h3>
 <p>Статус CI видно не лише в PR. GitHub віддає SVG-бейдж для кожного workflow:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>[<span class="nt">![news_hub — CI/CD</span>](<span class="na">https://github.com/NikoriakViktor/PY-Course-Victor-Nikoriak-11-11-2026/actions/workflows/news_hub.yml/badge.svg</span>)](https://github.com/NikoriakViktor/PY-Course-Victor-Nikoriak-11-11-2026/actions/workflows/news_hub.yml)
+<div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>[<span class="nt">![news_hub — CI/CD</span>](<span class="na">https://github.com/NikoriakViktor/PY-Course-Victor-Nikoriak-11-11-2026/actions/workflows/news_hub.yml/badge.svg</span>)](https://github.com/NikoriakViktor/PY-Course-Victor-Nikoriak-11-11-2026/actions/workflows/news_hub.yml)
 </code></pre></div>
 <p>Адреса складається з імені файлу workflow; за замовчуванням бейдж показує статус останнього прогону на гілці за замовчуванням (<code>main</code>), <code>?branch=…</code> — іншої гілки. Він зелений лише після першого прогону в <code>main</code>: доки урок не злитий, прогонів там немає.</p>
 <h3 id="_5">Зміни приклад<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h3>
@@ -4231,22 +4238,22 @@
 </ul>
 <h3 id="find-bug">Знайди помилку<a class="headerlink" href="#find-bug" title="Permanent link">&para;</a></h3>
 <p>Workflow для <code>news_hub</code>. На PR він зелений.</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a><span class="nt">on</span><span class="p">:</span>
-<a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a><span class="w">  </span><span class="nt">push</span><span class="p">:</span>
-<a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a><span class="w">  </span><span class="nt">pull_request</span><span class="p">:</span>
-<a id="__codelineno-14-4" name="__codelineno-14-4" href="#__codelineno-14-4"></a><span class="w">    </span><span class="nt">branches</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">main</span><span class="p p-Indicator">]</span>
-<a id="__codelineno-14-5" name="__codelineno-14-5" href="#__codelineno-14-5"></a>
-<a id="__codelineno-14-6" name="__codelineno-14-6" href="#__codelineno-14-6"></a><span class="nt">jobs</span><span class="p">:</span>
-<a id="__codelineno-14-7" name="__codelineno-14-7" href="#__codelineno-14-7"></a><span class="w">  </span><span class="nt">test</span><span class="p">:</span>
-<a id="__codelineno-14-8" name="__codelineno-14-8" href="#__codelineno-14-8"></a><span class="w">    </span><span class="nt">runs-on</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ubuntu-latest</span>
-<a id="__codelineno-14-9" name="__codelineno-14-9" href="#__codelineno-14-9"></a><span class="w">    </span><span class="nt">env</span><span class="p">:</span>
-<a id="__codelineno-14-10" name="__codelineno-14-10" href="#__codelineno-14-10"></a><span class="w">      </span><span class="nt">GEMINI_API_KEY</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">AIzaSyD-course-demo-key-not-real-0000000</span>
-<a id="__codelineno-14-11" name="__codelineno-14-11" href="#__codelineno-14-11"></a><span class="w">    </span><span class="nt">steps</span><span class="p">:</span>
-<a id="__codelineno-14-12" name="__codelineno-14-12" href="#__codelineno-14-12"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">actions/checkout@v5</span>
-<a id="__codelineno-14-13" name="__codelineno-14-13" href="#__codelineno-14-13"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">actions/setup-python@v6</span>
-<a id="__codelineno-14-14" name="__codelineno-14-14" href="#__codelineno-14-14"></a><span class="w">        </span><span class="nt">with</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{</span><span class="nt">python-version</span><span class="p">:</span><span class="w"> </span><span class="s">"3.13"</span><span class="p p-Indicator">}</span>
-<a id="__codelineno-14-15" name="__codelineno-14-15" href="#__codelineno-14-15"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">pip install -r module_5/lessons/lesson_51_ci_cd/news_hub/requirements.txt</span>
-<a id="__codelineno-14-16" name="__codelineno-14-16" href="#__codelineno-14-16"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">cd module_5/lessons/lesson_51_ci_cd/news_hub &amp;&amp; pytest || true</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="nt">on</span><span class="p">:</span>
+<a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a><span class="w">  </span><span class="nt">push</span><span class="p">:</span>
+<a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a><span class="w">  </span><span class="nt">pull_request</span><span class="p">:</span>
+<a id="__codelineno-15-4" name="__codelineno-15-4" href="#__codelineno-15-4"></a><span class="w">    </span><span class="nt">branches</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">main</span><span class="p p-Indicator">]</span>
+<a id="__codelineno-15-5" name="__codelineno-15-5" href="#__codelineno-15-5"></a>
+<a id="__codelineno-15-6" name="__codelineno-15-6" href="#__codelineno-15-6"></a><span class="nt">jobs</span><span class="p">:</span>
+<a id="__codelineno-15-7" name="__codelineno-15-7" href="#__codelineno-15-7"></a><span class="w">  </span><span class="nt">test</span><span class="p">:</span>
+<a id="__codelineno-15-8" name="__codelineno-15-8" href="#__codelineno-15-8"></a><span class="w">    </span><span class="nt">runs-on</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ubuntu-latest</span>
+<a id="__codelineno-15-9" name="__codelineno-15-9" href="#__codelineno-15-9"></a><span class="w">    </span><span class="nt">env</span><span class="p">:</span>
+<a id="__codelineno-15-10" name="__codelineno-15-10" href="#__codelineno-15-10"></a><span class="w">      </span><span class="nt">GEMINI_API_KEY</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">AIzaSyD-course-demo-key-not-real-0000000</span>
+<a id="__codelineno-15-11" name="__codelineno-15-11" href="#__codelineno-15-11"></a><span class="w">    </span><span class="nt">steps</span><span class="p">:</span>
+<a id="__codelineno-15-12" name="__codelineno-15-12" href="#__codelineno-15-12"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">actions/checkout@v5</span>
+<a id="__codelineno-15-13" name="__codelineno-15-13" href="#__codelineno-15-13"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">actions/setup-python@v6</span>
+<a id="__codelineno-15-14" name="__codelineno-15-14" href="#__codelineno-15-14"></a><span class="w">        </span><span class="nt">with</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{</span><span class="nt">python-version</span><span class="p">:</span><span class="w"> </span><span class="s">"3.13"</span><span class="p p-Indicator">}</span>
+<a id="__codelineno-15-15" name="__codelineno-15-15" href="#__codelineno-15-15"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">pip install -r module_5/lessons/lesson_51_ci_cd/news_hub/requirements.txt</span>
+<a id="__codelineno-15-16" name="__codelineno-15-16" href="#__codelineno-15-16"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">cd module_5/lessons/lesson_51_ci_cd/news_hub &amp;&amp; pytest || true</span>
 </code></pre></div>
 <p>Знайди чотири проблеми.</p>
 <details class="success">
@@ -4315,7 +4322,7 @@
 <li>Червоний видно — його виправлять. Відсутній виглядає як «усе гаразд»: PR зливають без жодної перевірки.</li>
 <li>Що нижні межі в <code>requirements.txt</code> правдиві. Звичайний job ставить найновіші версії; у проєкті нотаток межа <code>&gt;=5.3</code> виявилась неправдивою (5.3.0 не стартує без setuptools).</li>
 <li>Щоб не витрачати дві хвилини на образ і smoke, якщо код уже не пройшов тести, — і щоб червоний статус показував першу причину, а не лавину наслідків.</li>
-<li>З <code>GITHUB_TOKEN</code> цього прогону з <code>permissions: packages: write</code> лише в job <code>publish</code>. Решта jobs запускають код з PR — їм достатньо читати.</li>
+<li>З <code>GITHUB_TOKEN</code> цього прогону з <code>permissions: packages: write</code> лише в job <code>publish</code>. Решта jobs запускають код з PR — їм достатньо читати. Писати токен може лише в пакети свого репозиторію — тому в імені образу є <code>${{ github.repository }}</code>.</li>
 <li>Далі в журналі прогону це значення буде замінене на <code>***</code> — навіть якщо якась команда його надрукує.</li>
 </ol>
 </details>

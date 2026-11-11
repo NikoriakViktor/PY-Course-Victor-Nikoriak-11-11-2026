@@ -1,0 +1,2789 @@
+
+<!doctype html>
+<html lang="uk" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Курс Python українською — від основ до просунутих тем, у форматі книги">
+      
+      
+      
+        <link rel="canonical" href="https://nikoriakviktor.github.io/PY-Course-Victor-Nikoriak-11-11-2026/00_getting_started/quick_start/">
+      
+      
+        <link rel="prev" href="../">
+      
+      
+        <link rel="next" href="../git_setup/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.8.1">
+    
+    
+      
+        <title>Швидкий старт - PY Course — Viktor Nikoriak</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.57a0d79d.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.fb2fffe2.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#_1" class="md-skip">
+          Перейти до змісту
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Хедер">
+    <a href="../.." title="PY Course — Viktor Nikoriak" class="md-header__button md-logo" aria-label="PY Course — Viktor Nikoriak" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            PY Course — Viktor Nikoriak
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Швидкий старт
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-hidden="true"  type="radio" name="__palette" id="__palette_0">
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Пошук" placeholder="Пошук" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Шукати">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Очистити" aria-label="Очистити" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Пошук розпочато
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/NikoriakViktor/PY-Course-Victor-Nikoriak-11-11-2026" title="Перейти до вихідного коду" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    NikoriakViktor/PY-Course-Victor-Nikoriak-11-11-2026
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Вкладки" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Головна
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Як користуватися
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../modules/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Модулі курсу (в розробці)
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../00_python_mental_model/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Довідник
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Навігація" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="PY Course — Viktor Nikoriak" class="md-nav__button md-logo" aria-label="PY Course — Viktor Nikoriak" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    PY Course — Viktor Nikoriak
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/NikoriakViktor/PY-Course-Victor-Nikoriak-11-11-2026" title="Перейти до вихідного коду" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    NikoriakViktor/PY-Course-Victor-Nikoriak-11-11-2026
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Головна
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Як користуватися
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_2" id="__nav_2_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Як користуватися
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Швидкий старт
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Швидкий старт
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Зміст">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Зміст
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Два шляхи
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#colab-now" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Шлях А. Перший ноутбук у Colab за 2 хвилини
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Шлях Б. Повне налаштування
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Шлях Б. Повне налаштування">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#0" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Крок 0. Що знадобиться
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Крок 0. Що знадобиться">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#github-signup" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Реєстрація на GitHub
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1-git" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Крок 1. Встанови Git
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-python" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Крок 2. Встанови Python
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-ssh-github" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Крок 3. Підключи SSH-ключ до GitHub
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fork" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Крок 4. Зроби Fork
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Крок 4. Зроби Fork">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#fork_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Що таке fork і навіщо він
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fork_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Як створити fork
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#clone" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Крок 5. Клонуй свій fork і додай upstream
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#venv" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Крок 6. Створи віртуальне середовище
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Крок 7. Відкрий проєкт у редакторі
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#first-notebook" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Крок 8. Перший ноутбук: Colab і JupyterLab
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Крок 8. Перший ноутбук: Colab і JupyterLab">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Що таке ноутбук
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#-" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ноутбук-пісочниця
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#google-colab" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Google Colab: короткий огляд
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#jupyterlab" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        JupyterLab на своєму комп'ютері
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pycharm-vs-code" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        У PyCharm або VS Code
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ноутбуки уроків
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#9" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Крок 9. Пробна здача домашки
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Щодня: три ритуали
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Щодня: три ритуали">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#before-class" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Перед заняттям — забери нові уроки
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Домашка — тільки в окремій гілці
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Після зауважень викладача
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Контрольний список
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_10" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Що далі
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_11" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Усі посилання в одному місці
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../git_setup/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Встановлення Git
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../environment_setup/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Налаштування середовища
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../colab/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Ноутбуки в Google Colab
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../jupyter/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Jupyter локально
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../pycharm/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    PyCharm
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../vscode/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    VS Code
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../homework_workflow/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Здача домашніх робіт
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../troubleshooting/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Часті проблеми і нюанси
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_11" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../github/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    GitHub
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_2_11" id="__nav_2_11_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_11_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_11">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    GitHub
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../github/ssh_keys/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    SSH-ключі
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../github/fork_and_clone/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Fork і Clone
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../github/pull_request/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Pull Request
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../github/create_repository/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Як створити свій репозиторій
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../modules/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Модулі курсу (в розробці)
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../00_python_mental_model/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Довідник
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Зміст">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Зміст
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Два шляхи
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#colab-now" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Шлях А. Перший ноутбук у Colab за 2 хвилини
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Шлях Б. Повне налаштування
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Шлях Б. Повне налаштування">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#0" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Крок 0. Що знадобиться
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Крок 0. Що знадобиться">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#github-signup" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Реєстрація на GitHub
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1-git" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Крок 1. Встанови Git
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-python" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Крок 2. Встанови Python
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-ssh-github" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Крок 3. Підключи SSH-ключ до GitHub
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fork" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Крок 4. Зроби Fork
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Крок 4. Зроби Fork">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#fork_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Що таке fork і навіщо він
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fork_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Як створити fork
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#clone" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Крок 5. Клонуй свій fork і додай upstream
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#venv" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Крок 6. Створи віртуальне середовище
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Крок 7. Відкрий проєкт у редакторі
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#first-notebook" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Крок 8. Перший ноутбук: Colab і JupyterLab
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Крок 8. Перший ноутбук: Colab і JupyterLab">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Що таке ноутбук
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#-" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ноутбук-пісочниця
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#google-colab" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Google Colab: короткий огляд
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#jupyterlab" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        JupyterLab на своєму комп'ютері
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pycharm-vs-code" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        У PyCharm або VS Code
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ноутбуки уроків
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#9" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Крок 9. Пробна здача домашки
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Щодня: три ритуали
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Щодня: три ритуали">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#before-class" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Перед заняттям — забери нові уроки
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Домашка — тільки в окремій гілці
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Після зауважень викладача
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Контрольний список
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_10" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Що далі
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_11" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Усі посилання в одному місці
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+                
+
+
+
+  
+
+
+  <nav class="md-path" aria-label="Навігація" >
+    <ol class="md-path__list">
+      
+        
+  
+  
+    <li class="md-path__item">
+      <a href="../.." class="md-path__link">
+        
+  <span class="md-ellipsis">
+    Головна
+  </span>
+
+      </a>
+    </li>
+  
+
+      
+      
+        
+  
+  
+    
+    
+      <li class="md-path__item">
+        <a href="../" class="md-path__link">
+          
+  <span class="md-ellipsis">
+    Як користуватися
+  </span>
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ol>
+  </nav>
+
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="_1">Швидкий старт<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h1>
+<p>Ця сторінка веде від «нічого не встановлено» до «ноутбук уроку відкрито, домашку можна здати». Іди згори вниз і не пропускай кроки з позначкою <strong>Перевір</strong> — вони показують, що попередній крок справді вдався.</p>
+<p>Якщо на якомусь кроці з'явилась помилка — шукай її текст на сторінці <a href="../troubleshooting/">Часті проблеми і нюанси</a>.</p>
+<h2 id="_2">Два шляхи<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Шлях А — Google Colab</th>
+<th>Шлях Б — на своєму комп'ютері</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Що потрібно</td>
+<td>браузер і Google-акаунт</td>
+<td>Git, Python, PyCharm або VS Code</td>
+</tr>
+<tr>
+<td>Час на налаштування</td>
+<td>2 хвилини</td>
+<td>30–60 хвилин</td>
+</tr>
+<tr>
+<td>Для чого</td>
+<td>відкрити урок просто зараз</td>
+<td>повноцінна робота й здача домашніх робіт</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Шлях А</strong> — щоб не пропустити перше заняття, якщо щось не встановилось. <strong>Шлях Б</strong> потрібен усім: домашні роботи здаються через Git і GitHub.</p>
+<h2 id="colab-now">Шлях А. Перший ноутбук у Colab за 2 хвилини<a class="headerlink" href="#colab-now" title="Permanent link">&para;</a></h2>
+<p>Почни з <strong>ноутбука-пісочниці</strong> курсу: у ньому пояснено, що таке ноутбук і Colab, є перший код і перша задача.</p>
+<p><a class="md-button md-button--primary" href="https://colab.research.google.com/github/NikoriakViktor/PY-Course-Victor-Nikoriak-11-11-2026/blob/main/module_1/lessons/lesson_01_intro_and_course_format/hello_course.ipynb">Відкрити пісочницю в Colab</a> <a class="solutions-link" href="https://github.com/NikoriakViktor/PY-Course-Victor-Nikoriak-11-11-2026/blob/main/module_1/lessons/lesson_01_intro_and_course_format/hello_course.ipynb">Переглянути на GitHub</a></p>
+<ol>
+<li>Натисни кнопку вище й увійди в Google-акаунт.</li>
+<li><strong>File → Save a copy in Drive</strong> — без цього твої зміни не збережуться.</li>
+<li>Виконуй клітинки по черзі клавішами <strong>Shift+Enter</strong> і читай пояснення між ними.</li>
+</ol>
+<p>Що таке Colab і як ним користуватися — у <a href="#first-notebook">кроці 8</a>. Ноутбуки уроків відкриваються так само — кнопкою <strong>Відкрити вправи в Colab</strong> на сторінці уроку в <a href="../../modules/">книзі курсу</a>.</p>
+<h2 id="_3">Шлях Б. Повне налаштування<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>
+<p>Ось що ти побудуєш за наступні 9 кроків:</p>
+<pre class="mermaid"><code>flowchart LR
+    classDef step     fill:#eceff1,stroke:#546e7a,stroke-width:1px;
+    classDef success  fill:#e8f5e9,stroke:#2e7d32,stroke-width:2px;
+    classDef warning  fill:#fff8e1,stroke:#e65100,stroke-width:2px;
+
+    U["репозиторій викладача&lt;br&gt;upstream"]
+    F["твій fork на GitHub&lt;br&gt;origin"]
+    L["папка на комп'ютері&lt;br&gt;PyCharm / VS Code"]
+
+    U -- "Fork (один раз)" --&gt; F
+    F -- "git clone (один раз)" --&gt; L
+    U -- "git pull upstream main&lt;br&gt;нові уроки" --&gt; L
+    L -- "git push origin homework-NN&lt;br&gt;домашка" --&gt; F
+
+    class U warning
+    class F step
+    class L success</code></pre>
+<ul>
+<li><strong>upstream</strong> — репозиторій викладача. Звідти ти лише <strong>забираєш</strong> нові уроки.</li>
+<li><strong>origin</strong> — твій fork (особиста копія на GitHub). Туди ти <strong>надсилаєш</strong> домашні роботи.</li>
+<li><strong>локальна папка</strong> — клон твого fork на комп'ютері. У ній ти працюєш.</li>
+</ul>
+<h3 id="0">Крок 0. Що знадобиться<a class="headerlink" href="#0" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Акаунт на GitHub — якщо його ще немає, зареєструйся (інструкція нижче).</li>
+<li>
+<p>Термінал:</p>
+<table>
+<thead>
+<tr>
+<th>Система</th>
+<th>Який термінал відкрити</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Windows 10/11</td>
+<td><strong>PowerShell</strong> (меню Пуск → введи <code>powershell</code>)</td>
+</tr>
+<tr>
+<td>macOS</td>
+<td><strong>Terminal</strong> (Spotlight <strong>⌘ Space</strong> → <code>Terminal</code>)</td>
+</tr>
+<tr>
+<td>Linux</td>
+<td><strong>Terminal</strong> (зазвичай <strong>Ctrl+Alt+T</strong>)</td>
+</tr>
+</tbody>
+</table>
+</li>
+</ul>
+<h4 id="github-signup">Реєстрація на GitHub<a class="headerlink" href="#github-signup" title="Permanent link">&para;</a></h4>
+<p>Якщо акаунт уже є — пропусти цей блок.</p>
+<ol>
+<li>Відкрий <a href="https://github.com/">github.com</a> і натисни <strong>Sign up</strong> угорі праворуч — або одразу перейди на <a href="https://github.com/signup">github.com/signup</a>.</li>
+<li>Заповни форму:<ul>
+<li><strong>Email</strong> — пошта, до якої ти маєш доступ: на неї прийде код підтвердження;</li>
+<li><strong>Password</strong> — надійний пароль, якого ти не використовуєш на інших сайтах;</li>
+<li><strong>Username</strong> — твій логін. Лише латинські літери, цифри й дефіс.</li>
+</ul>
+</li>
+<li>Пройди перевірку «я не робот», якщо GitHub її покаже.</li>
+<li>Введи <strong>код підтвердження</strong> з листа, який прийшов на пошту.</li>
+<li>Якщо GitHub пропонує обрати тариф — вибери <strong>Free</strong>. Опитування про досвід можна пропустити (<strong>Skip</strong>).</li>
+</ol>
+<p><strong>Перевір:</strong> відкрий <code>https://github.com/&lt;твій-логін&gt;</code> — має відкритися твій профіль.</p>
+<div class="admonition warning">
+<p class="admonition-title">Обери нормальний логін одразу</p>
+<p>Логін — це твоє ім'я в професійному світі. Він стане частиною адреси профілю, кожного репозиторію й кожного сайту на GitHub Pages:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>https://github.com/&lt;твій-логін&gt;
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>https://github.com/&lt;твій-логін&gt;/PY-Course-Victor-Nikoriak-11-11-2026
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>https://&lt;твій-логін&gt;.github.io/…
+</code></pre></div>
+<p>Саме ці посилання ти даватимеш викладачу, одногрупникам, а згодом вставиш у резюме й LinkedIn.</p>
+<table>
+<thead>
+<tr>
+<th>Добре</th>
+<th>Погано</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>olena-kovalenko</code></td>
+<td><code>zaya12</code></td>
+</tr>
+<tr>
+<td><code>okovalenko</code></td>
+<td><code>xX_kotik2009_Xx</code></td>
+</tr>
+<tr>
+<td><code>kovalenko-dev</code></td>
+<td><code>qwerty123456</code></td>
+</tr>
+</tbody>
+</table>
+<p>Найпростіше — ім'я та прізвище латиницею. Якщо такий логін зайнятий, додай ініціал або <code>-dev</code>.</p>
+<p><strong>Змінити логін пізніше можна</strong> (<strong>Settings → Account → Change username</strong>), але всі посилання зі старим логіном, які ти вже десь залишив — у резюме, на LinkedIn, у чатах, на інших сайтах, — можуть перестати працювати й показувати помилку 404. Сайти на GitHub Pages і адреса профілю перестають відкриватися одразу.</p>
+<p>Реальний приклад — викладач змінив логін <code>NikoriakViktot</code> на <code>NikoriakViktor</code>, тобто лише одну літеру:</p>
+<table>
+<thead>
+<tr>
+<th>Адреса</th>
+<th>Що відкривається</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>nikoriakviktot.github.io/notes_chat_app/</code> — старий логін</td>
+<td><strong>404</strong> — <code>There isn't a GitHub Pages site here.</code></td>
+</tr>
+<tr>
+<td><code>nikoriakviktor.github.io/notes_chat_app/</code> — новий логін</td>
+<td>сайт курсу</td>
+</tr>
+</tbody>
+</table>
+<p>Сайт той самий і нікуди не зник, але кожне старе посилання на нього — у чатах, презентаціях, на інших сайтах — тепер показує помилку, і виправляти їх доводиться вручну.</p>
+<p>Тому краще один раз обрати добре. Довідка GitHub: <a href="https://docs.github.com/en/account-and-profile/concepts/username-changes">Username changes</a>.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Той самий email — у Git</p>
+<p>Запам'ятай, з якою поштою ти зареєструвався: її ж треба буде вказати в <code>git config</code> на кроці 1. Тоді GitHub прив'яже твої commit-и до твого профілю.</p>
+</div>
+<p>Щоб захистити акаунт, увімкни двофакторну автентифікацію: аватар → <strong>Settings → Password and authentication → Two-factor authentication</strong> (<a href="https://github.com/settings/security">github.com/settings/security</a>). GitHub з часом сам попросить це зробити.</p>
+<p>Довідка GitHub: <a href="https://docs.github.com/en/get-started/start-your-journey/creating-an-account-on-github">Creating an account on GitHub</a>.</p>
+<div class="admonition warning">
+<p class="admonition-title">Windows: де тримати проєкт</p>
+<p>Клонуй репозиторій у коротку папку без кирилиці та пробілів, наприклад <code>C:\Projects</code>. Не клади його в <strong>OneDrive</strong>, на Робочий стіл чи в «Документи», якщо вони синхронізуються з OneDrive: синхронізація блокує файли Git і віртуального середовища.</p>
+</div>
+<h3 id="1-git">Крок 1. Встанови Git<a class="headerlink" href="#1-git" title="Permanent link">&para;</a></h3>
+<div class="tabbed-set tabbed-alternate" data-tabs="1:3"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><input id="__tabbed_1_3" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">Windows</label><label for="__tabbed_1_2">macOS</label><label for="__tabbed_1_3">Linux</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<p>Завантаж інсталятор з <a href="https://git-scm.com/install/windows">git-scm.com/install/windows</a> і встанови, натискаючи <strong>Next</strong> (налаштування за замовчуванням підходять).</p>
+<p>Або однією командою в PowerShell:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="n">winget</span> <span class="n">install</span> <span class="p">-</span><span class="n">-id</span> <span class="n">Git</span><span class="p">.</span><span class="n">Git</span> <span class="n">-e</span>
+</code></pre></div>
+<p>Після встановлення <strong>закрий і знову відкрий PowerShell</strong> — інакше команда <code>git</code> не знайдеться.</p>
+</div>
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>xcode-select<span class="w"> </span>--install
+</code></pre></div>
+<p>З'явиться вікно — натисни <strong>Install</strong>. Це встановлює інструменти розробника Apple, серед яких є Git. Інші способи: <a href="https://git-scm.com/install/mac">git-scm.com/install/mac</a>.</p>
+</div>
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="c1"># Ubuntu / Debian</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>sudo<span class="w"> </span>apt<span class="w"> </span>update
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>git
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>
+<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="c1"># Fedora</span>
+<a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>sudo<span class="w"> </span>dnf<span class="w"> </span>install<span class="w"> </span>git
+<a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a>
+<a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a><span class="c1"># Arch</span>
+<a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a>sudo<span class="w"> </span>pacman<span class="w"> </span>-S<span class="w"> </span>git
+</code></pre></div>
+<p>Інші дистрибутиви: <a href="https://git-scm.com/install/linux">git-scm.com/install/linux</a>.</p>
+</div>
+</div>
+</div>
+<p><strong>Перевір:</strong></p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>git<span class="w"> </span>--version
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>git version 2.47.1
+</code></pre></div>
+<p>Номер версії в тебе може бути іншим — головне, що команда відповіла.</p>
+<p>Тепер представся Git (один раз на комп'ютер). Ці дані потраплять у кожен твій commit:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>git<span class="w"> </span>config<span class="w"> </span>--global<span class="w"> </span>user.name<span class="w"> </span><span class="s2">"Імʼя Прізвище"</span>
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>git<span class="w"> </span>config<span class="w"> </span>--global<span class="w"> </span>user.email<span class="w"> </span><span class="s2">"твій_email_на_GitHub"</span>
+</code></pre></div>
+<p><strong>Перевір:</strong></p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>git<span class="w"> </span>config<span class="w"> </span>--global<span class="w"> </span>user.name
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>git<span class="w"> </span>config<span class="w"> </span>--global<span class="w"> </span>user.email
+</code></pre></div>
+<p>Докладно: <a href="../git_setup/">Встановлення Git</a>.</p>
+<h3 id="2-python">Крок 2. Встанови Python<a class="headerlink" href="#2-python" title="Permanent link">&para;</a></h3>
+<p>Потрібен <strong>Python 3.10 або новіший</strong>.</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="2:3"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio" /><input id="__tabbed_2_2" name="__tabbed_2" type="radio" /><input id="__tabbed_2_3" name="__tabbed_2" type="radio" /><div class="tabbed-labels"><label for="__tabbed_2_1">Windows</label><label for="__tabbed_2_2">macOS</label><label for="__tabbed_2_3">Linux</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<ol>
+<li>Завантаж Python з <a href="https://www.python.org/downloads/">python.org/downloads</a>.</li>
+<li>Запусти інсталятор. Якщо на першому екрані є галочка <strong>Add python.exe to PATH</strong> — <strong>обов'язково постав її</strong>, потім <strong>Install Now</strong>.</li>
+<li>Закрий і знову відкрий PowerShell.</li>
+</ol>
+<p><strong>Перевір:</strong></p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="n">python</span> <span class="p">-</span><span class="n">-version</span>
+</code></pre></div>
+<p>Якщо <code>python</code> не знайдено або відкрився Microsoft Store — спробуй <code>py --version</code> і подивись розділ <a href="../troubleshooting/#python-not-found">«Python не знайдено»</a>.</p>
+</div>
+<div class="tabbed-block">
+<p>Завантаж інсталятор з <a href="https://www.python.org/downloads/">python.org/downloads</a> і встанови. Якщо користуєшся Homebrew:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>brew<span class="w"> </span>install<span class="w"> </span>python
+</code></pre></div>
+<p><strong>Перевір</strong> (на macOS команда називається <code>python3</code>):</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>python3<span class="w"> </span>--version
+</code></pre></div>
+</div>
+<div class="tabbed-block">
+<p>Python зазвичай уже встановлено, але модуль <code>venv</code> на Ubuntu/Debian ставиться окремо:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="c1"># Ubuntu / Debian</span>
+<a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>python3<span class="w"> </span>python3-venv<span class="w"> </span>python3-pip
+<a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a>
+<a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a><span class="c1"># Fedora</span>
+<a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a>sudo<span class="w"> </span>dnf<span class="w"> </span>install<span class="w"> </span>python3<span class="w"> </span>python3-pip
+</code></pre></div>
+<p><strong>Перевір:</strong></p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>python3<span class="w"> </span>--version
+</code></pre></div>
+</div>
+</div>
+</div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>Python 3.12.7
+</code></pre></div>
+<div class="admonition note">
+<p class="admonition-title"><code>python</code> чи <code>python3</code></p>
+<p>На Windows команда зазвичай <code>python</code>, на macOS і Linux — <code>python3</code>. Далі на цій сторінці команди для кожної системи записані окремо. Після активації віртуального середовища (крок 6) на всіх системах працює просто <code>python</code>.</p>
+</div>
+<h3 id="3-ssh-github">Крок 3. Підключи SSH-ключ до GitHub<a class="headerlink" href="#3-ssh-github" title="Permanent link">&para;</a></h3>
+<p>SSH-ключ дає змогу виконувати <code>git clone</code>, <code>git pull</code> і <code>git push</code> без введення пароля. Створюється один раз на комп'ютер.</p>
+<ol>
+<li>
+<p>Створи ключ (команда однакова на всіх системах). На всі запитання натискай <strong>Enter</strong>:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>ssh-keygen<span class="w"> </span>-t<span class="w"> </span>ed25519<span class="w"> </span>-C<span class="w"> </span><span class="s2">"твій_email_на_GitHub"</span>
+</code></pre></div>
+</li>
+<li>
+<p>Скопіюй <strong>публічний</strong> ключ:</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="3:3"><input checked="checked" id="__tabbed_3_1" name="__tabbed_3" type="radio" /><input id="__tabbed_3_2" name="__tabbed_3" type="radio" /><input id="__tabbed_3_3" name="__tabbed_3" type="radio" /><div class="tabbed-labels"><label for="__tabbed_3_1">Windows (PowerShell)</label><label for="__tabbed_3_2">macOS</label><label for="__tabbed_3_3">Linux</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="nb">Get-Content</span> <span class="s2">"$env:USERPROFILE\.ssh\id_ed25519.pub"</span> <span class="p">|</span> <span class="nb">Set-Clipboard</span>
+</code></pre></div>
+</div>
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>pbcopy<span class="w"> </span>&lt;<span class="w"> </span>~/.ssh/id_ed25519.pub
+</code></pre></div>
+</div>
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>cat<span class="w"> </span>~/.ssh/id_ed25519.pub
+</code></pre></div>
+<p>Виділи й скопіюй рядок, що починається з <code>ssh-ed25519</code>.</p>
+</div>
+</div>
+</div>
+</li>
+<li>
+<p>На GitHub: клік по аватару → <strong>Settings → SSH and GPG keys → New SSH key</strong> (<a href="https://github.com/settings/keys">github.com/settings/keys</a>) → встав ключ → <strong>Add SSH key</strong>.</p>
+</li>
+</ol>
+<p><strong>Перевір:</strong></p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a>ssh<span class="w"> </span>-T<span class="w"> </span>git@github.com
+</code></pre></div>
+<p>На запитання <code>Are you sure you want to continue connecting</code> введи <code>yes</code>. Правильна відповідь:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a>Hi USERNAME! You've successfully authenticated, but GitHub does not provide shell access.
+</code></pre></div>
+<p>Докладно, з розбором помилок: <a href="../github/ssh_keys/">SSH-ключі</a>.</p>
+<div class="admonition tip">
+<p class="admonition-title">Якщо SSH не вдається налаштувати просто зараз</p>
+<p>Клонуй через HTTPS — у кроці 5 заміни адресу на <code>https://github.com/&lt;твій-логін&gt;/PY-Course-Victor-Nikoriak-11-11-2026.git</code>. Під час першого <code>git push</code> Git попросить увійти в GitHub через браузер. До SSH повернешся пізніше.</p>
+</div>
+<h3 id="fork">Крок 4. Зроби Fork<a class="headerlink" href="#fork" title="Permanent link">&para;</a></h3>
+<h4 id="fork_1">Що таке fork і навіщо він<a class="headerlink" href="#fork_1" title="Permanent link">&para;</a></h4>
+<p>Репозиторій курсу належить викладачу. Читати його може кожен, а <strong>змінювати — лише викладач</strong>. Якби ти спробував надіслати туди домашку, GitHub відповів би <code>Permission denied</code>.</p>
+<p><strong>Fork</strong> (англ. «відгалуження») — це <strong>твоя особиста копія чужого репозиторію на GitHub</strong>, яка пам'ятає, звідки її скопійовано. У своїй копії ти власник: створюєш гілки, робиш commit-и, надсилаєш код.</p>
+<p>Аналогія: викладач роздав усім однаковий робочий зошит. Оригінал лишається в нього, а ти пишеш у <strong>своєму примірнику</strong>. Коли викладач додає нові сторінки в оригінал, ти дописуєш їх у свій примірник — і твої записи при цьому не зникають.</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Репозиторій викладача</th>
+<th>Твій fork</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Адреса</td>
+<td><code>github.com/NikoriakViktor/…</code></td>
+<td><code>github.com/&lt;твій-логін&gt;/…</code></td>
+</tr>
+<tr>
+<td>Хто може змінювати</td>
+<td>лише викладач</td>
+<td>ти</td>
+</tr>
+<tr>
+<td>Що в ньому</td>
+<td>уроки курсу</td>
+<td>уроки курсу <strong>плюс</strong> твої гілки з домашками</td>
+</tr>
+<tr>
+<td>Назва в Git на твоєму комп'ютері</td>
+<td><code>upstream</code></td>
+<td><code>origin</code></td>
+</tr>
+</tbody>
+</table>
+<p>Три слова, які легко сплутати:</p>
+<ul>
+<li><strong>Fork</strong> — копія <strong>на GitHub</strong> → з репозиторію викладача у твій акаунт. Робиться один раз кнопкою на сайті.</li>
+<li><strong>Clone</strong> — копія <strong>на комп'ютер</strong> → з твого fork у папку на диску. Робиться один раз командою <code>git clone</code> (крок 5).</li>
+<li><strong>Branch</strong> (гілка) — окрема лінія змін <strong>усередині</strong> одного репозиторію. Створюється для кожної домашки.</li>
+</ul>
+<p>Fork не оновлюється сам: коли викладач публікує новий урок, у твоїй копії він з'явиться лише після команд із розділу <a href="#before-class">«Перед заняттям»</a>.</p>
+<p>Довідка GitHub: <a href="https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/working-with-forks/fork-a-repo">Fork a repository</a>, <a href="https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/working-with-forks/about-forks">About forks</a>.</p>
+<h4 id="fork_2">Як створити fork<a class="headerlink" href="#fork_2" title="Permanent link">&para;</a></h4>
+<ol>
+<li>Увійди у свій акаунт GitHub і відкрий <a href="https://github.com/NikoriakViktor/PY-Course-Victor-Nikoriak-11-11-2026">репозиторій курсу</a>.</li>
+<li>Натисни кнопку <strong>Fork</strong> угорі праворуч (поруч із <strong>Watch</strong> і <strong>Star</strong>). Відкриється сторінка <strong>Create a new fork</strong> — або перейди на неї одразу: <a href="https://github.com/NikoriakViktor/PY-Course-Victor-Nikoriak-11-11-2026/fork">https://github.com/NikoriakViktor/PY-Course-Victor-Nikoriak-11-11-2026/fork</a>.</li>
+<li>
+<p>Заповни її так:</p>
+<table>
+<thead>
+<tr>
+<th>Поле</th>
+<th>Що вказати</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Owner</strong></td>
+<td>натисни <strong>Choose an owner</strong> і вибери <strong>свій акаунт</strong></td>
+</tr>
+<tr>
+<td><strong>Repository name</strong></td>
+<td>не змінюй: <code>PY-Course-Victor-Nikoriak-11-11-2026</code></td>
+</tr>
+<tr>
+<td><strong>Description</strong></td>
+<td>можна лишити порожнім</td>
+</tr>
+<tr>
+<td><strong>Copy the <code>main</code> branch only</strong></td>
+<td>галочка <strong>увімкнена</strong></td>
+</tr>
+</tbody>
+</table>
+</li>
+<li>
+<p>Натисни зелену кнопку <strong>Create fork</strong> і зачекай кілька секунд.</p>
+</li>
+</ol>
+<p><strong>Перевір:</strong> відкрилася сторінка твоєї копії. В адресному рядку — твій логін, а під назвою репозиторію є рядок <code>forked from NikoriakViktor/PY-Course-Victor-Nikoriak-11-11-2026</code>:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a>https://github.com/&lt;твій-логін&gt;/PY-Course-Victor-Nikoriak-11-11-2026
+</code></pre></div>
+<div class="admonition note">
+<p class="admonition-title">Fork робиться один раз</p>
+<p>Якщо натиснути <strong>Fork</strong> вдруге, GitHub покаже, що копія вже існує, і запропонує перейти до неї. Нові уроки потрапляють у твій fork не через повторний Fork, а командами з розділу <a href="#before-class">«Перед заняттям»</a>.</p>
+</div>
+<p>Докладно: <a href="../github/fork_and_clone/">Fork і Clone</a>.</p>
+<h3 id="clone">Крок 5. Клонуй свій fork і додай upstream<a class="headerlink" href="#clone" title="Permanent link">&para;</a></h3>
+<p>Перейди в папку, де лежатимуть проєкти, і клонуй <strong>свій fork</strong> (не репозиторій викладача):</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="4:2"><input checked="checked" id="__tabbed_4_1" name="__tabbed_4" type="radio" /><input id="__tabbed_4_2" name="__tabbed_4" type="radio" /><div class="tabbed-labels"><label for="__tabbed_4_1">Windows (PowerShell)</label><label for="__tabbed_4_2">macOS / Linux</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a><span class="n">mkdir</span> <span class="n">C</span><span class="p">:\</span><span class="n">Projects</span>
+<a id="__codelineno-21-2" name="__codelineno-21-2" href="#__codelineno-21-2"></a><span class="nb">cd </span><span class="n">C</span><span class="p">:\</span><span class="n">Projects</span>
+<a id="__codelineno-21-3" name="__codelineno-21-3" href="#__codelineno-21-3"></a><span class="n">git</span> <span class="n">clone</span> <span class="n">git</span><span class="nv">@github</span><span class="p">.</span><span class="n">com</span><span class="p">:&lt;</span><span class="n">твій</span><span class="p">-</span><span class="n">логін</span><span class="p">&gt;/</span><span class="n">PY-Course-Victor-Nikoriak</span><span class="p">-</span><span class="n">11</span><span class="p">-</span><span class="n">11</span><span class="p">-</span><span class="n">2026</span><span class="p">.</span><span class="n">git</span>
+<a id="__codelineno-21-4" name="__codelineno-21-4" href="#__codelineno-21-4"></a><span class="nb">cd </span><span class="n">PY-Course-Victor-Nikoriak</span><span class="p">-</span><span class="n">11</span><span class="p">-</span><span class="n">11</span><span class="p">-</span><span class="n">2026</span>
+</code></pre></div>
+</div>
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a>mkdir<span class="w"> </span>-p<span class="w"> </span>~/projects
+<a id="__codelineno-22-2" name="__codelineno-22-2" href="#__codelineno-22-2"></a><span class="nb">cd</span><span class="w"> </span>~/projects
+<a id="__codelineno-22-3" name="__codelineno-22-3" href="#__codelineno-22-3"></a>git<span class="w"> </span>clone<span class="w"> </span>git@github.com:&lt;твій-логін&gt;/PY-Course-Victor-Nikoriak-11-11-2026.git
+<a id="__codelineno-22-4" name="__codelineno-22-4" href="#__codelineno-22-4"></a><span class="nb">cd</span><span class="w"> </span>PY-Course-Victor-Nikoriak-11-11-2026
+</code></pre></div>
+</div>
+</div>
+</div>
+<p><code>&lt;твій-логін&gt;</code> заміни на свій логін GitHub — без кутових дужок.</p>
+<p>Додай репозиторій викладача як <code>upstream</code> (один раз):</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a>git<span class="w"> </span>remote<span class="w"> </span>add<span class="w"> </span>upstream<span class="w"> </span>https://github.com/NikoriakViktor/PY-Course-Victor-Nikoriak-11-11-2026.git
+</code></pre></div>
+<p><strong>Перевір:</strong></p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a>git<span class="w"> </span>remote<span class="w"> </span>-v
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a>origin    git@github.com:&lt;твій-логін&gt;/PY-Course-Victor-Nikoriak-11-11-2026.git (fetch)
+<a id="__codelineno-25-2" name="__codelineno-25-2" href="#__codelineno-25-2"></a>origin    git@github.com:&lt;твій-логін&gt;/PY-Course-Victor-Nikoriak-11-11-2026.git (push)
+<a id="__codelineno-25-3" name="__codelineno-25-3" href="#__codelineno-25-3"></a>upstream  https://github.com/NikoriakViktor/PY-Course-Victor-Nikoriak-11-11-2026.git (fetch)
+<a id="__codelineno-25-4" name="__codelineno-25-4" href="#__codelineno-25-4"></a>upstream  https://github.com/NikoriakViktor/PY-Course-Victor-Nikoriak-11-11-2026.git (push)
+</code></pre></div>
+<p>У рядках <code>origin</code> має бути <strong>твій</strong> логін, у рядках <code>upstream</code> — <code>NikoriakViktor</code>. Якщо навпаки — див. <a href="../troubleshooting/#cloned-upstream">«Клонував репозиторій викладача замість fork»</a>.</p>
+<p>Докладно: <a href="../github/fork_and_clone/">Fork і Clone</a>.</p>
+<h3 id="venv">Крок 6. Створи віртуальне середовище<a class="headerlink" href="#venv" title="Permanent link">&para;</a></h3>
+<p>Віртуальне середовище (<code>.venv</code>) — окремий Python для цього проєкту зі своїми бібліотеками. Команди виконуй <strong>у папці репозиторію</strong>.</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="5:2"><input checked="checked" id="__tabbed_5_1" name="__tabbed_5" type="radio" /><input id="__tabbed_5_2" name="__tabbed_5" type="radio" /><div class="tabbed-labels"><label for="__tabbed_5_1">Windows (PowerShell)</label><label for="__tabbed_5_2">macOS / Linux</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><a id="__codelineno-26-1" name="__codelineno-26-1" href="#__codelineno-26-1"></a><span class="n">python</span> <span class="n">-m</span> <span class="n">venv</span> <span class="p">.</span><span class="n">venv</span>
+<a id="__codelineno-26-2" name="__codelineno-26-2" href="#__codelineno-26-2"></a><span class="p">.</span><span class="n">venv</span><span class="p">\</span><span class="n">Scripts</span><span class="p">\</span><span class="n">activate</span>
+</code></pre></div>
+<p>Якщо PowerShell відповів «виконання сценаріїв вимкнено» — виконай один раз і повтори активацію:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-27-1" name="__codelineno-27-1" href="#__codelineno-27-1"></a><span class="nb">Set-ExecutionPolicy</span> <span class="n">RemoteSigned</span> <span class="n">-Scope</span> <span class="n">CurrentUser</span>
+</code></pre></div>
+</div>
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><a id="__codelineno-28-1" name="__codelineno-28-1" href="#__codelineno-28-1"></a>python3<span class="w"> </span>-m<span class="w"> </span>venv<span class="w"> </span>.venv
+<a id="__codelineno-28-2" name="__codelineno-28-2" href="#__codelineno-28-2"></a><span class="nb">source</span><span class="w"> </span>.venv/bin/activate
+</code></pre></div>
+</div>
+</div>
+</div>
+<p><strong>Перевір:</strong> на початку рядка термінала з'явилося <code>(.venv)</code>.</p>
+<p>Тепер встанови бібліотеки:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-29-1" name="__codelineno-29-1" href="#__codelineno-29-1"></a>python<span class="w"> </span>-m<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>--upgrade<span class="w"> </span>pip
+<a id="__codelineno-29-2" name="__codelineno-29-2" href="#__codelineno-29-2"></a>pip<span class="w"> </span>install<span class="w"> </span>jupyterlab<span class="w"> </span>notebook<span class="w"> </span>ipykernel
+<a id="__codelineno-29-3" name="__codelineno-29-3" href="#__codelineno-29-3"></a>pip<span class="w"> </span>install<span class="w"> </span>-r<span class="w"> </span>requirements.txt
+</code></pre></div>
+<ul>
+<li>Другий рядок — мінімум для ноутбуків модуля 1.</li>
+<li>Третій рядок ставить усі бібліотеки курсу й триває кілька хвилин. Якщо якийсь пакет не встановився — це не заважає почати модуль 1; рішення шукай у розділі <a href="../troubleshooting/#pip-install-fails">«Не встановлюються бібліотеки»</a>.</li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Активувати треба в кожному новому терміналі</p>
+<p>Закрив термінал — <code>(.venv)</code> зникло. Наступного разу знову зайди в папку проєкту й виконай команду активації. PyCharm і VS Code роблять це самі у своєму вбудованому терміналі.</p>
+</div>
+<p>Докладно: <a href="../environment_setup/">Налаштування середовища</a>.</p>
+<h3 id="7">Крок 7. Відкрий проєкт у редакторі<a class="headerlink" href="#7" title="Permanent link">&para;</a></h3>
+<p>Обери <strong>один</strong> редактор. Для курсу підходять обидва; якщо вагаєшся — бери PyCharm, у ньому менше налаштувань.</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="6:2"><input checked="checked" id="__tabbed_6_1" name="__tabbed_6" type="radio" /><input id="__tabbed_6_2" name="__tabbed_6" type="radio" /><div class="tabbed-labels"><label for="__tabbed_6_1">PyCharm</label><label for="__tabbed_6_2">VS Code</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<ol>
+<li>Встанови PyCharm зі <a href="https://www.jetbrains.com/pycharm/download/">сторінки завантаження</a>. Основні можливості безкоштовні, і для курсу їх досить.</li>
+<li><strong>Open</strong> → вибери папку <code>PY-Course-Victor-Nikoriak-11-11-2026</code>.</li>
+<li>Підключи створене середовище: клік по назві інтерпретатора в <strong>правому нижньому куті</strong> → <strong>Add New Interpreter → Add Local Interpreter</strong> → наявне середовище → вкажи шлях:<ul>
+<li>Windows: <code>.venv\Scripts\python.exe</code></li>
+<li>macOS / Linux: <code>.venv/bin/python</code></li>
+</ul>
+</li>
+<li>Відкрий вбудований термінал — <strong>Alt+F12</strong>.</li>
+</ol>
+<p><strong>Перевір:</strong> у правому нижньому куті видно <code>Python 3.x (.venv)</code> або назву проєкту, а рядок у терміналі починається з <code>(.venv)</code>.</p>
+<p>Докладно: <a href="../pycharm/">PyCharm</a>.</p>
+</div>
+<div class="tabbed-block">
+<ol>
+<li>Встанови VS Code з <a href="https://code.visualstudio.com/">code.visualstudio.com</a>.</li>
+<li><strong>File → Open Folder…</strong> → вибери папку <code>PY-Course-Victor-Nikoriak-11-11-2026</code>. На запитання про довіру авторам натисни <strong>Yes, I trust the authors</strong>.</li>
+<li>Встанови розширення (<strong>Ctrl+Shift+X</strong>, на macOS <strong>⇧⌘X</strong>): <strong>Python</strong> і <strong>Jupyter</strong> від Microsoft.</li>
+<li>Вибери інтерпретатор: <strong>Ctrl+Shift+P</strong> (macOS <strong>⇧⌘P</strong>) → <strong>Python: Select Interpreter</strong> → рядок зі шляхом <code>.venv</code>.</li>
+<li>Відкрий термінал: <strong>View → Terminal</strong>.</li>
+</ol>
+<p><strong>Перевір:</strong> унизу праворуч видно версію Python з позначкою <code>.venv</code>, а новий термінал починається з <code>(.venv)</code>.</p>
+<p>Докладно: <a href="../vscode/">VS Code</a>.</p>
+</div>
+</div>
+</div>
+<h3 id="first-notebook">Крок 8. Перший ноутбук: Colab і JupyterLab<a class="headerlink" href="#first-notebook" title="Permanent link">&para;</a></h3>
+<h4 id="_4">Що таке ноутбук<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h4>
+<p><strong>Ноутбук</strong> (Jupyter Notebook, файл <code>.ipynb</code>) — документ із <strong>клітинок</strong>. У клітинках <strong>Code</strong> — код Python: запускаєш клітинку, і результат з'являється одразу під нею. У клітинках <strong>Markdown</strong> — текст із поясненнями, заголовками й таблицями. Тому ноутбук зручний для навчання: теорія, код і результат лежать поруч.</p>
+<p>Усі уроки курсу — ноутбуки. Один і той самий файл <code>.ipynb</code> можна відкрити чотирма способами:</p>
+<table>
+<thead>
+<tr>
+<th>Де</th>
+<th>Де виконується Python</th>
+<th>Що потрібно встановити</th>
+<th>Коли зручно</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Google Colab</strong></td>
+<td>на тимчасовій машині Google у хмарі</td>
+<td>нічого, лише Google-акаунт</td>
+<td>перші заняття, чужий комп'ютер, слабкий ноутбук</td>
+</tr>
+<tr>
+<td><strong>JupyterLab</strong></td>
+<td>на твоєму комп'ютері, інтерфейс — у браузері</td>
+<td>Python, <code>.venv</code>, <code>jupyterlab</code> (кроки 2 і 6)</td>
+<td>основна робота з уроками</td>
+</tr>
+<tr>
+<td><strong>PyCharm</strong></td>
+<td>на твоєму комп'ютері</td>
+<td>PyCharm (крок 7)</td>
+<td>ноутбуки разом із <code>.py</code>-файлами й Git</td>
+</tr>
+<tr>
+<td><strong>VS Code</strong></td>
+<td>на твоєму комп'ютері</td>
+<td>VS Code і розширення Jupyter (крок 7)</td>
+<td>те саме, якщо ти обрав VS Code</td>
+</tr>
+</tbody>
+</table>
+<h4 id="-">Ноутбук-пісочниця<a class="headerlink" href="#-" title="Permanent link">&para;</a></h4>
+<p>Для першого знайомства в курсі є простий ноутбук: <code>print("Hello, курс Python у Beetroot Academy!")</code>, пояснення про клітинки й Colab, експерименти зі змінними та перша задача — програма-візитівка. Він лежить у папці першого уроку:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-30-1" name="__codelineno-30-1" href="#__codelineno-30-1"></a>module_1/lessons/lesson_01_intro_and_course_format/hello_course.ipynb
+</code></pre></div>
+<p><a class="md-button md-button--primary" href="https://colab.research.google.com/github/NikoriakViktor/PY-Course-Victor-Nikoriak-11-11-2026/blob/main/module_1/lessons/lesson_01_intro_and_course_format/hello_course.ipynb">Відкрити пісочницю в Colab</a> <a class="solutions-link" href="https://github.com/NikoriakViktor/PY-Course-Victor-Nikoriak-11-11-2026/blob/main/module_1/lessons/lesson_01_intro_and_course_format/hello_course.ipynb">Переглянути на GitHub</a></p>
+<p>Відкрий його спершу в Colab, а потім — локально в JupyterLab або в редакторі. Так ти побачиш, що це той самий файл.</p>
+<h4 id="google-colab">Google Colab: короткий огляд<a class="headerlink" href="#google-colab" title="Permanent link">&para;</a></h4>
+<p><strong>Google Colab</strong> (Colaboratory) — безкоштовний сервіс Google, який запускає ноутбуки просто в браузері. Python і популярні бібліотеки там уже встановлено.</p>
+<table>
+<thead>
+<tr>
+<th>Що зробити</th>
+<th>Як</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>відкрити ноутбук уроку</td>
+<td>кнопка <strong>Open in Colab</strong> у першій клітинці або <strong>Відкрити вправи в Colab</strong> у книзі</td>
+</tr>
+<tr>
+<td><strong>зберегти свою копію</strong> — першим ділом</td>
+<td><strong>File → Save a copy in Drive</strong> (копія ляже в папку «Colab Notebooks» на Google Drive)</td>
+</tr>
+<tr>
+<td>виконати клітинку</td>
+<td><strong>Shift+Enter</strong> або ▶ ліворуч від клітинки</td>
+</tr>
+<tr>
+<td>додати клітинку</td>
+<td><strong>+ Code</strong> або <strong>+ Text</strong> угорі</td>
+</tr>
+<tr>
+<td>виконати все згори донизу</td>
+<td><strong>Runtime → Run all</strong></td>
+</tr>
+<tr>
+<td>почати з чистої пам'яті</td>
+<td><strong>Runtime → Restart session</strong></td>
+</tr>
+<tr>
+<td>зупинити код, що «завис»</td>
+<td><strong>Runtime → Interrupt execution</strong></td>
+</tr>
+<tr>
+<td>встановити бібліотеку</td>
+<td>клітинка <code>%pip install назва</code></td>
+</tr>
+</tbody>
+</table>
+<p>Що варто знати:</p>
+<ul>
+<li><strong>Без копії зміни зникають.</strong> Ноутбук, відкритий з GitHub, — лише перегляд оригіналу.</li>
+<li><strong>Машина тимчасова.</strong> Після простою Colab її відключає: код у ноутбуці лишається, а змінні, встановлені бібліотеки й завантажені файли зникають. Після повернення — <strong>Runtime → Run all</strong>.</li>
+<li><strong>Твоя копія не оновлюється.</strong> Якщо викладач змінив урок, відкрий його знову кнопкою Colab.</li>
+</ul>
+<p>Докладно — файли, Google Drive, секрети, здача домашки з Colab: <a href="../colab/">Ноутбуки в Google Colab</a>.</p>
+<h4 id="jupyterlab">JupyterLab на своєму комп'ютері<a class="headerlink" href="#jupyterlab" title="Permanent link">&para;</a></h4>
+<p><strong>JupyterLab</strong> — той самий інтерфейс ноутбуків, але Python працює на твоєму комп'ютері, у <code>.venv</code> проєкту. Бібліотеки встановлюються один раз і не зникають, файли лежать у твоїй папці, інтернет для виконання коду не потрібен.</p>
+<ol>
+<li>
+<p>Відкрий термінал і перейди в папку репозиторію:</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="7:2"><input checked="checked" id="__tabbed_7_1" name="__tabbed_7" type="radio" /><input id="__tabbed_7_2" name="__tabbed_7" type="radio" /><div class="tabbed-labels"><label for="__tabbed_7_1">Windows (PowerShell)</label><label for="__tabbed_7_2">macOS / Linux</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><a id="__codelineno-31-1" name="__codelineno-31-1" href="#__codelineno-31-1"></a><span class="nb">cd </span><span class="n">C</span><span class="p">:\</span><span class="n">Projects</span><span class="p">\</span><span class="n">PY-Course-Victor-Nikoriak</span><span class="p">-</span><span class="n">11</span><span class="p">-</span><span class="n">11</span><span class="p">-</span><span class="n">2026</span>
+<a id="__codelineno-31-2" name="__codelineno-31-2" href="#__codelineno-31-2"></a><span class="p">.</span><span class="n">venv</span><span class="p">\</span><span class="n">Scripts</span><span class="p">\</span><span class="n">activate</span>
+</code></pre></div>
+</div>
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><a id="__codelineno-32-1" name="__codelineno-32-1" href="#__codelineno-32-1"></a><span class="nb">cd</span><span class="w"> </span>~/projects/PY-Course-Victor-Nikoriak-11-11-2026
+<a id="__codelineno-32-2" name="__codelineno-32-2" href="#__codelineno-32-2"></a><span class="nb">source</span><span class="w"> </span>.venv/bin/activate
+</code></pre></div>
+</div>
+</div>
+</div>
+</li>
+<li>
+<p>Переконайся, що на початку рядка є <code>(.venv)</code>, і запусти:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-33-1" name="__codelineno-33-1" href="#__codelineno-33-1"></a>jupyter<span class="w"> </span>lab
+</code></pre></div>
+<p>Браузер відкриється сам за адресою на кшталт <code>http://localhost:8888/lab</code>. Якщо не відкрився — скопіюй з термінала адресу з <code>token=…</code> і встав у браузер.</p>
+</li>
+<li>
+<p>У панелі файлів ліворуч відкрий <code>module_1</code> → <code>lessons</code> → <code>lesson_01_intro_and_course_format</code> → <code>hello_course.ipynb</code> (подвійний клік).</p>
+</li>
+<li>Угорі праворуч має бути кернел <strong>Python 3 (ipykernel)</strong> або <strong>Python Course (.venv)</strong>. Виконуй клітинки <strong>Shift+Enter</strong>.</li>
+<li>Збереження — <strong>Ctrl+S</strong> (macOS <strong>⌘S</strong>): файл зберігається прямо в папку проєкту.</li>
+<li>Закінчив — збережи ноутбуки, повернись у термінал і натисни <strong>Ctrl+C</strong>, потім <code>y</code>.</li>
+</ol>
+<div class="admonition warning">
+<p class="admonition-title">Не закривай термінал, поки працюєш</p>
+<p>У ньому працює сервер Jupyter. Закрив термінал — ноутбуки перестали виконуватися.</p>
+</div>
+<p>Якщо команда <code>jupyter</code> не знайдена — <code>.venv</code> не активовано або JupyterLab у нього не встановлено: <code>pip install jupyterlab notebook ipykernel</code>. Докладно — кернели, <code>%pip</code>, гарячі клавіші: <a href="../jupyter/">Jupyter локально</a>.</p>
+<h4 id="pycharm-vs-code">У PyCharm або VS Code<a class="headerlink" href="#pycharm-vs-code" title="Permanent link">&para;</a></h4>
+<div class="tabbed-set tabbed-alternate" data-tabs="8:2"><input checked="checked" id="__tabbed_8_1" name="__tabbed_8" type="radio" /><input id="__tabbed_8_2" name="__tabbed_8" type="radio" /><div class="tabbed-labels"><label for="__tabbed_8_1">PyCharm</label><label for="__tabbed_8_2">VS Code</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<p>Двічі клацни <code>hello_course.ipynb</code> у дереві проєкту. Клітинка виконується кнопкою ▶ ліворуч від неї або <strong>Shift+Enter</strong>. Ноутбук працює на інтерпретаторі проєкту (<code>.venv</code> з кроку 7). Докладно: <a href="../pycharm/">PyCharm → Ноутбуки</a>.</p>
+</div>
+<div class="tabbed-block">
+<p>Клацни <code>hello_course.ipynb</code>. Угорі праворуч натисни <strong>Select Kernel → Python Environments</strong> → вибери <code>.venv</code>. Клітинка виконується <strong>Shift+Enter</strong>. Докладно: <a href="../vscode/">VS Code → Ноутбуки</a>.</p>
+</div>
+</div>
+</div>
+<h4 id="_5">Ноутбуки уроків<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h4>
+<p>Уроки лежать у папках <code>module_N/lessons/lesson_NN_&lt;тема&gt;/</code>, де <code>NN</code> — номер уроку. Для занять відкривай файл із закінченням <strong><code>_student.ipynb</code></strong> — у ньому вправи без розв'язків. Наприклад, урок 2:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-34-1" name="__codelineno-34-1" href="#__codelineno-34-1"></a>module_1/lessons/lesson_02_first_steps_environment_setup/note_lesson_02_first_steps_student.ipynb
+</code></pre></div>
+<div class="admonition tip">
+<p class="admonition-title">Експериментуй у копії</p>
+<p>Не змінюй файли уроків у гілці <code>main</code>: інакше наступне оновлення (<code>git pull upstream main</code>) зупиниться з помилкою. Для експериментів зроби копію ноутбука з власною назвою, наприклад <code>my_hello.ipynb</code>. Чому так — <a href="../troubleshooting/#local-changes">«Your local changes … would be overwritten»</a>.</p>
+</div>
+<p><strong>Перевір:</strong> у локальному ноутбуці створи нову клітинку й виконай:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-35-1" name="__codelineno-35-1" href="#__codelineno-35-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
+<a id="__codelineno-35-2" name="__codelineno-35-2" href="#__codelineno-35-2"></a><span class="nb">print</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">executable</span><span class="p">)</span>
+</code></pre></div>
+<p>У шляху має бути <code>.venv</code>. Якщо там інша папка — ноутбук працює не на тому Python: див. <a href="../troubleshooting/#wrong-kernel">«Ноутбук не бачить бібліотек»</a>.</p>
+<h3 id="9">Крок 9. Пробна здача домашки<a class="headerlink" href="#9" title="Permanent link">&para;</a></h3>
+<p>Пройди цей цикл один раз до першої справжньої домашки — тоді в день здачі не буде сюрпризів.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-36-1" name="__codelineno-36-1" href="#__codelineno-36-1"></a>git<span class="w"> </span>checkout<span class="w"> </span>-b<span class="w"> </span>homework-00
+</code></pre></div>
+<p>Створи файл <code>assignments/hello.txt</code> з будь-яким текстом, потім:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-37-1" name="__codelineno-37-1" href="#__codelineno-37-1"></a>git<span class="w"> </span>add<span class="w"> </span>assignments/hello.txt
+<a id="__codelineno-37-2" name="__codelineno-37-2" href="#__codelineno-37-2"></a>git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </span><span class="s2">"Homework 00: test submission"</span>
+<a id="__codelineno-37-3" name="__codelineno-37-3" href="#__codelineno-37-3"></a>git<span class="w"> </span>push<span class="w"> </span>-u<span class="w"> </span>origin<span class="w"> </span>homework-00
+</code></pre></div>
+<p>На GitHub відкрий <strong>свій fork</strong> (<code>https://github.com/&lt;твій-логін&gt;/PY-Course-Victor-Nikoriak-11-11-2026</code>) → з'явиться кнопка <strong>Compare &amp; pull request</strong> → переконайся, що вгорі вказано <code>base: main</code> ← <code>compare: homework-00</code> → <strong>Create pull request</strong>.</p>
+<p><strong>Перевір:</strong> у вкладці <strong>Pull requests</strong> з'явився твій PR.</p>
+<p>Повернися в <code>main</code>:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-38-1" name="__codelineno-38-1" href="#__codelineno-38-1"></a>git<span class="w"> </span>checkout<span class="w"> </span>main
+</code></pre></div>
+<p>Докладно, зі скриншотами: <a href="../github/pull_request/">Pull Request</a> і <a href="../homework_workflow/">Здача домашніх робіт</a>.</p>
+<h2 id="_6">Щодня: три ритуали<a class="headerlink" href="#_6" title="Permanent link">&para;</a></h2>
+<h3 id="before-class">Перед заняттям — забери нові уроки<a class="headerlink" href="#before-class" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-39-1" name="__codelineno-39-1" href="#__codelineno-39-1"></a>git<span class="w"> </span>checkout<span class="w"> </span>main
+<a id="__codelineno-39-2" name="__codelineno-39-2" href="#__codelineno-39-2"></a>git<span class="w"> </span>pull<span class="w"> </span>upstream<span class="w"> </span>main
+<a id="__codelineno-39-3" name="__codelineno-39-3" href="#__codelineno-39-3"></a>git<span class="w"> </span>push<span class="w"> </span>origin<span class="w"> </span>main
+</code></pre></div>
+<h3 id="_7">Домашка — тільки в окремій гілці<a class="headerlink" href="#_7" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-40-1" name="__codelineno-40-1" href="#__codelineno-40-1"></a>git<span class="w"> </span>checkout<span class="w"> </span>main
+<a id="__codelineno-40-2" name="__codelineno-40-2" href="#__codelineno-40-2"></a>git<span class="w"> </span>checkout<span class="w"> </span>-b<span class="w"> </span>homework-01
+<a id="__codelineno-40-3" name="__codelineno-40-3" href="#__codelineno-40-3"></a><span class="c1"># ... виконуєш завдання ...</span>
+<a id="__codelineno-40-4" name="__codelineno-40-4" href="#__codelineno-40-4"></a>git<span class="w"> </span>add<span class="w"> </span>.
+<a id="__codelineno-40-5" name="__codelineno-40-5" href="#__codelineno-40-5"></a>git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </span><span class="s2">"Homework 01"</span>
+<a id="__codelineno-40-6" name="__codelineno-40-6" href="#__codelineno-40-6"></a>git<span class="w"> </span>push<span class="w"> </span>-u<span class="w"> </span>origin<span class="w"> </span>homework-01
+</code></pre></div>
+<p>Потім на GitHub — Pull Request <code>homework-01 → main</code>.</p>
+<h3 id="_8">Після зауважень викладача<a class="headerlink" href="#_8" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-41-1" name="__codelineno-41-1" href="#__codelineno-41-1"></a>git<span class="w"> </span>checkout<span class="w"> </span>homework-01
+<a id="__codelineno-41-2" name="__codelineno-41-2" href="#__codelineno-41-2"></a><span class="c1"># ... виправляєш ...</span>
+<a id="__codelineno-41-3" name="__codelineno-41-3" href="#__codelineno-41-3"></a>git<span class="w"> </span>add<span class="w"> </span>.
+<a id="__codelineno-41-4" name="__codelineno-41-4" href="#__codelineno-41-4"></a>git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </span><span class="s2">"Fix review comments"</span>
+<a id="__codelineno-41-5" name="__codelineno-41-5" href="#__codelineno-41-5"></a>git<span class="w"> </span>push
+</code></pre></div>
+<p>Pull Request оновиться сам — новий створювати не треба.</p>
+<div class="admonition warning">
+<p class="admonition-title">Три правила, які рятують від більшості проблем</p>
+<ol>
+<li><strong>Не працюй у <code>main</code>.</strong> Гілка <code>main</code> — лише для матеріалів викладача. Якщо ти зміниш у ній файл уроку, наступний <code>git pull upstream main</code> зупиниться з помилкою.</li>
+<li><strong>Одна домашка — одна гілка</strong>, і кожну нову гілку створюй від свіжого <code>main</code>.</li>
+<li><strong>Перед будь-якою командою глянь <code>git status</code></strong> — він показує, у якій ти гілці та що змінено.</li>
+</ol>
+</div>
+<h2 id="_9">Контрольний список<a class="headerlink" href="#_9" title="Permanent link">&para;</a></h2>
+<p>Усе готово, якщо кожна команда відповідає без помилки:</p>
+<table>
+<thead>
+<tr>
+<th>Команда</th>
+<th>Що має бути</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>git --version</code></td>
+<td>номер версії Git</td>
+</tr>
+<tr>
+<td><code>python --version</code> (у терміналі з <code>(.venv)</code>)</td>
+<td>Python 3.10 або новіший</td>
+</tr>
+<tr>
+<td><code>ssh -T git@github.com</code></td>
+<td><code>Hi &lt;твій-логін&gt;! You've successfully authenticated…</code></td>
+</tr>
+<tr>
+<td><code>git remote -v</code></td>
+<td><code>origin</code> — твій fork, <code>upstream</code> — <code>NikoriakViktor</code></td>
+</tr>
+<tr>
+<td><code>git status</code></td>
+<td><code>On branch main</code>, <code>nothing to commit</code></td>
+</tr>
+<tr>
+<td><code>pip list</code></td>
+<td>у списку є <code>jupyterlab</code> і <code>ipykernel</code></td>
+</tr>
+</tbody>
+</table>
+<h2 id="_10">Що далі<a class="headerlink" href="#_10" title="Permanent link">&para;</a></h2>
+<ul>
+<li><a href="../troubleshooting/">Часті проблеми і нюанси</a> — якщо щось пішло не так.</li>
+<li><a href="../../git-cheatsheet/">Git шпаргалка</a> — команди Git з поясненнями.</li>
+<li><a href="../../modules/">Модулі курсу</a> — уроки по порядку.</li>
+</ul>
+<h2 id="_11">Усі посилання в одному місці<a class="headerlink" href="#_11" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Що</th>
+<th>Де</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Репозиторій курсу</td>
+<td><a href="https://github.com/NikoriakViktor/PY-Course-Victor-Nikoriak-11-11-2026">https://github.com/NikoriakViktor/PY-Course-Victor-Nikoriak-11-11-2026</a></td>
+</tr>
+<tr>
+<td>Книга курсу</td>
+<td><a href="https://nikoriakviktor.github.io/PY-Course-Victor-Nikoriak-11-11-2026/">nikoriakviktor.github.io/PY-Course-Victor-Nikoriak-11-11-2026</a></td>
+</tr>
+<tr>
+<td>Створити fork</td>
+<td><a href="https://github.com/NikoriakViktor/PY-Course-Victor-Nikoriak-11-11-2026/fork">https://github.com/NikoriakViktor/PY-Course-Victor-Nikoriak-11-11-2026/fork</a></td>
+</tr>
+<tr>
+<td>Реєстрація на GitHub</td>
+<td><a href="https://github.com/signup">github.com/signup</a></td>
+</tr>
+<tr>
+<td>SSH-ключі в акаунті GitHub</td>
+<td><a href="https://github.com/settings/keys">github.com/settings/keys</a></td>
+</tr>
+<tr>
+<td>Git</td>
+<td><a href="https://git-scm.com/">git-scm.com</a></td>
+</tr>
+<tr>
+<td>Python</td>
+<td><a href="https://www.python.org/downloads/">python.org/downloads</a></td>
+</tr>
+<tr>
+<td>PyCharm</td>
+<td><a href="https://www.jetbrains.com/pycharm/download/">jetbrains.com/pycharm/download</a></td>
+</tr>
+<tr>
+<td>VS Code</td>
+<td><a href="https://code.visualstudio.com/">code.visualstudio.com</a></td>
+</tr>
+<tr>
+<td>Google Colab</td>
+<td><a href="https://colab.research.google.com/">colab.research.google.com</a></td>
+</tr>
+<tr>
+<td>Ноутбук-пісочниця в Colab</td>
+<td><a href="https://colab.research.google.com/github/NikoriakViktor/PY-Course-Victor-Nikoriak-11-11-2026/blob/main/module_1/lessons/lesson_01_intro_and_course_format/hello_course.ipynb">hello_course.ipynb</a></td>
+</tr>
+</tbody>
+</table>
+<p>Сторінки цього розділу: <a href="../git_setup/">Встановлення Git</a> · <a href="../github/ssh_keys/">SSH-ключі</a> · <a href="../github/fork_and_clone/">Fork і Clone</a> · <a href="../environment_setup/">Налаштування середовища</a> · <a href="../pycharm/">PyCharm</a> · <a href="../vscode/">VS Code</a> · <a href="../jupyter/">Jupyter локально</a> · <a href="../colab/">Google Colab</a> · <a href="../homework_workflow/">Здача домашніх робіт</a> · <a href="../github/pull_request/">Pull Request</a> · <a href="../troubleshooting/">Часті проблеми</a></p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Футер" >
+        
+          
+          <a href="../" class="md-footer__link md-footer__link--prev" aria-label="Назад: Вступ">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Назад
+              </span>
+              <div class="md-ellipsis">
+                Вступ
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../git_setup/" class="md-footer__link md-footer__link--next" aria-label="Вперед: Встановлення Git">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Вперед
+              </span>
+              <div class="md-ellipsis">
+                Встановлення Git
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tabs", "navigation.sections", "navigation.indexes", "navigation.path", "navigation.prune", "navigation.footer", "toc.follow", "search.highlight", "search.suggest", "content.code.copy"], "search": "../../assets/javascripts/workers/search.a7633da7.min.js", "tags": null, "translations": {"clipboard.copied": "\u0421\u043a\u043e\u043f\u0456\u0439\u043e\u0432\u0430\u043d\u043e \u0432 \u0431\u0443\u0444\u0435\u0440", "clipboard.copy": "\u0421\u043a\u043e\u043f\u0456\u044e\u0432\u0430\u0442\u0438 \u0432 \u0431\u0443\u0444\u0435\u0440", "search.result.more.one": "\u0429\u0435 1 \u0437\u0431\u0456\u0433 \u043d\u0430 \u0446\u0456\u0439 \u0441\u0442\u043e\u0440\u0456\u043d\u0446\u0456", "search.result.more.other": "\u0429\u0435 # \u0437\u0431\u0456\u0433\u0456\u0432 \u043d\u0430 \u0446\u0456\u0439 \u0441\u0442\u043e\u0440\u0456\u043d\u0446\u0456", "search.result.none": "\u0417\u0431\u0456\u0433\u0456\u0432 \u043d\u0435 \u0437\u043d\u0430\u0439\u0434\u0435\u043d\u043e", "search.result.one": "\u0417\u043d\u0430\u0439\u0434\u0435\u043d\u043e 1 \u0437\u0431\u0456\u0433", "search.result.other": "\u0417\u043d\u0430\u0439\u0434\u0435\u043d\u043e # \u0437\u0431\u0456\u0433\u0456\u0432", "search.result.placeholder": "\u0420\u043e\u0437\u043f\u043e\u0447\u043d\u0456\u0442\u044c \u043f\u0438\u0441\u0430\u0442\u0438 \u0434\u043b\u044f \u043f\u043e\u0448\u0443\u043a\u0443", "search.result.term.missing": "\u041d\u0435 \u0437\u043d\u0430\u0439\u0434\u0435\u043d\u043e \u0437\u0430\u043f\u0438\u0442\u0443", "select.version": "\u041e\u0431\u0440\u0430\u0442\u0438 \u0432\u0435\u0440\u0441\u0456\u044e"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.a5f9d56c.min.js"></script>
+      
+        <script src="../../javascripts/sidebars.js"></script>
+      
+    
+  </body>
+</html>

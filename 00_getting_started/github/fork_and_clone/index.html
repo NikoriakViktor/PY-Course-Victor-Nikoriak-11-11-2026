@@ -399,6 +399,8 @@
       
         
       
+        
+      
     
     
     
@@ -456,6 +458,34 @@
           </label>
           <ul class="md-nav__list" data-md-scrollfix>
             
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../quick_start/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Швидкий старт
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
               
             
               
@@ -668,7 +698,7 @@
   <span class="md-ellipsis">
     
   
-    Часті проблеми
+    Часті проблеми і нюанси
   
 
     
@@ -723,7 +753,7 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_10" checked>
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_11" checked>
         
           
           <div class="md-nav__link md-nav__container">
@@ -745,14 +775,14 @@
             </a>
             
               
-              <label class="md-nav__link " for="__nav_2_10" id="__nav_2_10_label" tabindex="">
+              <label class="md-nav__link " for="__nav_2_11" id="__nav_2_11_label" tabindex="">
                 <span class="md-nav__icon md-icon"></span>
               </label>
             
           </div>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_10_label" aria-expanded="true">
-          <label class="md-nav__title" for="__nav_2_10">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_11_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2_11">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -859,6 +889,17 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#fork" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Що таке fork
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#1-fork" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -942,7 +983,7 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#_4" class="md-nav__link">
+  <a href="#before-class" class="md-nav__link">
     <span class="md-ellipsis">
       
         🔄 Перед кожним заняттям
@@ -1195,6 +1236,17 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#fork" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Що таке fork
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#1-fork" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1278,7 +1330,7 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#_4" class="md-nav__link">
+  <a href="#before-class" class="md-nav__link">
     <span class="md-ellipsis">
       
         🔄 Перед кожним заняттям
@@ -1375,13 +1427,24 @@
 
 
 <h1 id="fork-clone">Fork і Clone<a class="headerlink" href="#fork-clone" title="Permanent link">&para;</a></h1>
+<p>Коротка версія всього налаштування — <a href="../../quick_start/">Швидкий старт</a>.</p>
+<h2 id="fork">Що таке fork<a class="headerlink" href="#fork" title="Permanent link">&para;</a></h2>
+<p>Репозиторій курсу належить викладачу: читати його може кожен, а змінювати — лише він. <strong>Fork</strong> — це твоя особиста копія цього репозиторію <strong>на GitHub</strong>, яка пам'ятає, звідки її скопійовано. У своїй копії ти власник: створюєш гілки, робиш commit-и, надсилаєш домашні роботи.</p>
+<ul>
+<li><strong>Fork</strong> — копія на GitHub: репозиторій викладача → твій акаунт. Один раз, кнопкою на сайті.</li>
+<li><strong>Clone</strong> — копія на комп'ютер: твій fork → папка на диску. Один раз, командою або через PyCharm.</li>
+<li><strong>upstream</strong> і <strong>origin</strong> — назви, під якими Git на твоєму комп'ютері знає репозиторій викладача і твій fork.</li>
+</ul>
+<p>Fork не оновлюється сам — нові уроки ти забираєш командами з розділу <a href="#before-class">«Перед кожним заняттям»</a> унизу сторінки.</p>
+<p>Довідка GitHub: <a href="https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/working-with-forks/fork-a-repo">Fork a repository</a>.</p>
 <h2 id="1-fork">1️⃣ Створи Fork репозиторію<a class="headerlink" href="#1-fork" title="Permanent link">&para;</a></h2>
+<p>Потрібен акаунт GitHub — якщо його ще немає: <a href="../../quick_start/#github-signup">Реєстрація на GitHub</a>.</p>
 <p>Перейди у репозиторій курсу:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>https://github.com/NikoriakViktor/PY-Course-Victor-Nikoriak-11-11-2026
 </code></pre></div>
-<p>Натисни кнопку <strong>Fork</strong>.</p>
+<p>Натисни кнопку <strong>Fork</strong> угорі праворуч — або відкрий сторінку створення одразу: <a href="https://github.com/NikoriakViktor/PY-Course-Victor-Nikoriak-11-11-2026/fork">https://github.com/NikoriakViktor/PY-Course-Victor-Nikoriak-11-11-2026/fork</a>.</p>
 <h3 id="create-a-new-fork">У вікні «Create a new fork»<a class="headerlink" href="#create-a-new-fork" title="Permanent link">&para;</a></h3>
-<p><strong>Owner</strong> — твій GitHub акаунт</p>
+<p><strong>Owner</strong> — натисни <strong>Choose an owner</strong> і вибери свій GitHub акаунт</p>
 <p><strong>Repository name</strong></p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>PY-Course-Victor-Nikoriak-11-11-2026
 </code></pre></div>
@@ -1416,12 +1479,13 @@
 <div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>origin   → твій repo
 <a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>upstream → repo викладача
 </code></pre></div>
-<h2 id="_4">🔄 Перед кожним заняттям<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h2>
+<h2 id="before-class">🔄 Перед кожним заняттям<a class="headerlink" href="#before-class" title="Permanent link">&para;</a></h2>
 <p>Оновлення матеріалів:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>git<span class="w"> </span>checkout<span class="w"> </span>main
 <a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>git<span class="w"> </span>pull<span class="w"> </span>upstream<span class="w"> </span>main
 <a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>git<span class="w"> </span>push<span class="w"> </span>origin<span class="w"> </span>main
 </code></pre></div>
+<p>Якщо <code>git pull</code> зупинився з помилкою — <a href="../../troubleshooting/#local-changes">Часті проблеми і нюанси</a>.</p>
 
 
 

@@ -3,7 +3,7 @@
 Лише стандартна бібліотека (ast): проєкт не треба встановлювати й запускати.
 
     python architecture_audit.py шлях/до/пакета [шлях/до/іншого/пакета ...]
-    python architecture_audit.py ../../../module_5/lessons/lesson_50_ci_cd/news_hub/news_hub --mermaid
+    python architecture_audit.py ../../../module_5/lessons/lesson_51_ci_cd/news_hub/news_hub --mermaid
 
 Що друкує:
 - модулі з кількістю рядків, вхідними (fan-in) і вихідними (fan-out) залежностями;

@@ -1,6 +1,6 @@
-# CI/CD для проєкту нотаток — урок 50 курсу (module_5/lessons/lesson_50_ci_cd/crispy_notes_project).
+# CI/CD для проєкту нотаток — урок 51 курсу (module_5/lessons/lesson_51_ci_cd/crispy_notes_project).
 # Основа — .github/workflows/django-tests.yml Django-книги notes_chat_app (крок 8 книги: тести й CI).
-# Що змінено і чому — docs/modules/m5/lesson_50.md.
+# Що змінено і чому — docs/modules/m5/lesson_51.md.
 
 name: crispy_notes — CI/CD
 
@@ -8,11 +8,11 @@ on:
   push:
     branches: [main]
     paths:
-      - 'module_5/lessons/lesson_50_ci_cd/crispy_notes_project/**'
+      - 'module_5/lessons/lesson_51_ci_cd/crispy_notes_project/**'
       - '.github/workflows/crispy_notes.yml'
   pull_request:
     paths:
-      - 'module_5/lessons/lesson_50_ci_cd/crispy_notes_project/**'
+      - 'module_5/lessons/lesson_51_ci_cd/crispy_notes_project/**'
       - '.github/workflows/crispy_notes.yml'
   workflow_dispatch:
 
@@ -24,11 +24,11 @@ concurrency:
   cancel-in-progress: true
 
 env:
-  PROJECT: module_5/lessons/lesson_50_ci_cd/crispy_notes_project
+  PROJECT: module_5/lessons/lesson_51_ci_cd/crispy_notes_project
 
 defaults:
   run:
-    working-directory: module_5/lessons/lesson_50_ci_cd/crispy_notes_project
+    working-directory: module_5/lessons/lesson_51_ci_cd/crispy_notes_project
 
 jobs:
   tests:

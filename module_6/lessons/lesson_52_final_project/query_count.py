@@ -3,7 +3,7 @@
 N+1 видно одразу: якщо запитів стає більше разом із записами — десь у циклі є запит до бази.
 Запуск з папки crispy_notes_project (тестова база створюється й видаляється сама):
 
-    cd module_5/lessons/lesson_50_ci_cd/crispy_notes_project
+    cd module_5/lessons/lesson_51_ci_cd/crispy_notes_project
     python manage.py shell < ../../../../module_6/lessons/lesson_51_final_project/query_count.py
 """
 from django.contrib.auth.models import Group, User

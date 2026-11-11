@@ -1,6 +1,6 @@
-# CI/CD для news_hub — урок 50 курсу (module_5/lessons/lesson_50_ci_cd/news_hub).
+# CI/CD для news_hub — урок 51 курсу (module_5/lessons/lesson_51_ci_cd/news_hub).
 # Основа — .github/workflows/django-tests.yml Django-книги notes_chat_app: services PostgreSQL, кеш pip, paths.
-# Що змінено і чому — docs/modules/m5/lesson_50.md.
+# Що змінено і чому — docs/modules/m5/lesson_51.md.
 #
 #   PR (у будь-яку гілку) → тести ×2 версії Python, мінімальні версії, PostgreSQL + Redis, mypy, образ + smoke
 #   push у main          → те саме + публікація образу в GitHub Container Registry (ghcr.io)
@@ -11,11 +11,11 @@ on:
   push:
     branches: [main]
     paths:
-      - 'module_5/lessons/lesson_50_ci_cd/news_hub/**'
+      - 'module_5/lessons/lesson_51_ci_cd/news_hub/**'
       - '.github/workflows/news_hub.yml'
   pull_request:                      # без branches: PR у будь-яку гілку (зокрема PR поверх іншого PR)
     paths:
-      - 'module_5/lessons/lesson_50_ci_cd/news_hub/**'
+      - 'module_5/lessons/lesson_51_ci_cd/news_hub/**'
       - '.github/workflows/news_hub.yml'
   workflow_dispatch:
 
@@ -27,11 +27,11 @@ concurrency:                         # новий push у той самий PR �
   cancel-in-progress: true
 
 env:
-  PROJECT: module_5/lessons/lesson_50_ci_cd/news_hub
+  PROJECT: module_5/lessons/lesson_51_ci_cd/news_hub
 
 defaults:
   run:
-    working-directory: module_5/lessons/lesson_50_ci_cd/news_hub
+    working-directory: module_5/lessons/lesson_51_ci_cd/news_hub
 
 jobs:
   tests:

@@ -115,6 +115,8 @@ flowchart LR
 !!! note "Той самий email — у Git"
     Запам'ятай, з якою поштою ти зареєструвався: її ж треба буде вказати в `git config` на кроці 1. Тоді GitHub прив'яже твої commit-и до твого профілю.
 
+Коли акаунт готовий, оформи сторінку профілю: фото, ім'я, коротке bio і README-візитівку — [Профіль: README-візитівка](github/profile_readme.md). Це можна зробити й пізніше, але не відкладай надовго: саме цю сторінку відкриватимуть за твоїм посиланням.
+
 Щоб захистити акаунт, увімкни двофакторну автентифікацію: аватар → **Settings → Password and authentication → Two-factor authentication** ([github.com/settings/security](https://github.com/settings/security)). GitHub з часом сам попросить це зробити.
 
 Довідка GitHub: [Creating an account on GitHub](https://docs.github.com/en/get-started/start-your-journey/creating-an-account-on-github).
@@ -671,6 +673,7 @@ Pull Request оновиться сам — новий створювати не 
 - [Часті проблеми і нюанси](troubleshooting.md) — якщо щось пішло не так.
 - [Git шпаргалка](../git-cheatsheet.md) — команди Git з поясненнями.
 - [Модулі курсу](../modules/README.md) — уроки по порядку.
+- [Профіль: README-візитівка](github/profile_readme.md) — зроби зі сторінки `github.com/<твій-логін>` своє обличчя розробника.
 
 ## Усі посилання в одному місці
 

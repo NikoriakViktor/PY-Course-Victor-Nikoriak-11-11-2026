@@ -20,6 +20,7 @@
 - [Як користуватися курсом](docs/00_getting_started/README.md)
 - [Ноутбуки в Google Colab](docs/00_getting_started/colab.md)
 - [SSH-ключі для GitHub](docs/00_getting_started/github/ssh_keys.md)
+- [Профіль GitHub: README-візитівка](docs/00_getting_started/github/profile_readme.md) ([у книзі](https://nikoriakviktor.github.io/PY-Course-Victor-Nikoriak-11-11-2026/00_getting_started/github/profile_readme/))
 - [Здача домашніх робіт](docs/00_getting_started/homework_workflow.md)
 - [Часті проблеми і нюанси](docs/00_getting_started/troubleshooting.md) ([у книзі](https://nikoriakviktor.github.io/PY-Course-Victor-Nikoriak-11-11-2026/00_getting_started/troubleshooting/))
 
@@ -69,6 +70,8 @@ flowchart LR
 > Змінити логін пізніше можна, але посилання зі старим логіном, які ви вже залишили на сторонніх ресурсах, можуть перестати працювати й показувати помилку.
 >
 > Реальний приклад: після зміни логіна `NikoriakViktot` → `NikoriakViktor` (одна літера!) адреса `nikoriakviktot.github.io/notes_chat_app/` показує **404 — There isn't a GitHub Pages site here**, хоча сам сайт працює за новою адресою `nikoriakviktor.github.io/notes_chat_app/`.
+
+Оформіть сторінку профілю — фото, ім'я, README-візитівку: [Профіль GitHub: README-візитівка](docs/00_getting_started/github/profile_readme.md).
 
 Докладно: [Швидкий старт → Реєстрація на GitHub](https://nikoriakviktor.github.io/PY-Course-Victor-Nikoriak-11-11-2026/00_getting_started/quick_start/#github-signup)
 

@@ -2,6 +2,11 @@
 
 Цей розділ — усе, що потрібно налаштувати перед першим заняттям і під час курсу.
 
+!!! tip "Починаєш з нуля?"
+    Іди за сторінкою **[Швидкий старт](quick_start.md)**: реєстрація на GitHub, Git, Python, fork, clone, PyCharm або VS Code, перший ноутбук і пробна здача домашки — по кроках для Windows, macOS і Linux. Якщо щось не працює — [Часті проблеми і нюанси](troubleshooting.md).
+
+Окремі теми докладно:
+
 1. [Встановлення Git](git_setup.md) — один раз, перед стартом.
 2. [GitHub](github/README.md) — SSH-ключ, fork, clone (докладніше, ніж тут).
 3. [Налаштування середовища](environment_setup.md) — venv, залежності, Jupyter.
@@ -10,7 +15,7 @@
 6. [PyCharm](pycharm.md) — повний гайд: проєкт із venv, запуск, дебагер, пакети, Git, ноутбуки.
 7. [VS Code](vscode.md) — розширення для Python, venv, запуск, дебаг, ноутбуки.
 8. [Здача домашніх робіт](homework_workflow.md) — гілки, коміти, Pull Request.
-9. [Часті проблеми](troubleshooting.md) — якщо щось пішло не так.
+9. [Часті проблеми і нюанси](troubleshooting.md) — помилки Git, Python, venv, GitHub, PyCharm, VS Code та їх рішення.
 
 ## Як працює курс
 

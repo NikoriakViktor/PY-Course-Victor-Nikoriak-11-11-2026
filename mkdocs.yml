@@ -74,6 +74,7 @@ nav:
 
   - Як користуватися:
     - Вступ: 00_getting_started/README.md
+    - Швидкий старт: 00_getting_started/quick_start.md
     - Встановлення Git: 00_getting_started/git_setup.md
     - Налаштування середовища: 00_getting_started/environment_setup.md
     - Ноутбуки в Google Colab: 00_getting_started/colab.md
@@ -81,7 +82,7 @@ nav:
     - PyCharm: 00_getting_started/pycharm.md
     - VS Code: 00_getting_started/vscode.md
     - Здача домашніх робіт: 00_getting_started/homework_workflow.md
-    - Часті проблеми: 00_getting_started/troubleshooting.md
+    - Часті проблеми і нюанси: 00_getting_started/troubleshooting.md
     - GitHub:
       - Огляд: 00_getting_started/github/README.md
       - SSH-ключі: 00_getting_started/github/ssh_keys.md

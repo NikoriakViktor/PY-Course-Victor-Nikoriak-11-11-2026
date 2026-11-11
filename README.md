@@ -16,17 +16,101 @@
 
 Швидкі посилання:
 
+- [**Швидкий старт** — усе налаштування по кроках](docs/00_getting_started/quick_start.md) ([у книзі](https://nikoriakviktor.github.io/PY-Course-Victor-Nikoriak-11-11-2026/00_getting_started/quick_start/))
 - [Як користуватися курсом](docs/00_getting_started/README.md)
 - [Ноутбуки в Google Colab](docs/00_getting_started/colab.md)
 - [SSH-ключі для GitHub](docs/00_getting_started/github/ssh_keys.md)
 - [Здача домашніх робіт](docs/00_getting_started/homework_workflow.md)
-- [Часті проблеми](docs/00_getting_started/troubleshooting.md)
+- [Часті проблеми і нюанси](docs/00_getting_started/troubleshooting.md) ([у книзі](https://nikoriakviktor.github.io/PY-Course-Victor-Nikoriak-11-11-2026/00_getting_started/troubleshooting/))
 
 ## 🚀 Швидкий старт
 
+Нижче — повний шлях від «нічого не встановлено» до «урок відкрито, домашку можна здати». Та сама інструкція з вкладками для кожної системи — у книзі: **[Швидкий старт](https://nikoriakviktor.github.io/PY-Course-Victor-Nikoriak-11-11-2026/00_getting_started/quick_start/)**. Якщо на якомусь кроці з'явилась помилка — **[Часті проблеми і нюанси](docs/00_getting_started/troubleshooting.md)**.
+
+> 💡 **Потрібно відкрити урок просто зараз, а нічого не встановлено?** Кожен ноутбук відкривається в браузері кнопкою **Open in Colab** у його першій клітинці — потрібен лише Google-акаунт. Одразу зробіть **File → Save a copy in Drive**. Докладно: [Ноутбуки в Google Colab](docs/00_getting_started/colab.md).
+
+### Як усе влаштовано
+
+```mermaid
+flowchart LR
+    U["репозиторій викладача<br>upstream"]
+    F["ваш fork на GitHub<br>origin"]
+    L["папка на комп'ютері<br>PyCharm / VS Code"]
+
+    U -- "Fork (один раз)" --> F
+    F -- "git clone (один раз)" --> L
+    U -- "git pull upstream main<br>нові уроки" --> L
+    L -- "git push origin homework-NN<br>домашка" --> F
+```
+
+- **upstream** — репозиторій викладача. Звідти ви лише **забираєте** нові уроки.
+- **origin** — ваш fork. Туди ви **надсилаєте** домашні роботи.
+- **папка на комп'ютері** — клон вашого fork. У ній ви працюєте.
+
+---
+
+### 0. Зареєструйтесь на GitHub
+
+Якщо акаунт уже є — переходьте до кроку 1.
+
+1. Відкрийте [github.com/signup](https://github.com/signup).
+2. Вкажіть **email**, **пароль** і **username** (логін — лише латинські літери, цифри й дефіс).
+3. Введіть код підтвердження з листа.
+4. Якщо GitHub пропонує тариф — оберіть **Free**.
+
+> ⚠️ **Оберіть нормальний логін одразу.** Логін стане частиною адреси профілю й кожного вашого репозиторію: `github.com/<ваш-логін>/…`. Ці посилання ви даватимете викладачу, а згодом вставите в резюме.
+>
+> ✅ `olena-kovalenko`, `okovalenko` — ❌ `zaya12`, `xX_kotik2009_Xx`
+>
+> Змінити логін пізніше можна, але посилання зі старим логіном, які ви вже залишили на сторонніх ресурсах, можуть перестати працювати й показувати помилку.
+>
+> Реальний приклад: після зміни логіна `NikoriakViktot` → `NikoriakViktor` (одна літера!) адреса `nikoriakviktot.github.io/notes_chat_app/` показує **404 — There isn't a GitHub Pages site here**, хоча сам сайт працює за новою адресою `nikoriakviktor.github.io/notes_chat_app/`.
+
+Докладно: [Швидкий старт → Реєстрація на GitHub](https://nikoriakviktor.github.io/PY-Course-Victor-Nikoriak-11-11-2026/00_getting_started/quick_start/#github-signup)
+
+---
+
 ### 1. Встановіть Git
 
-[Інструкція з встановлення Git](docs/00_getting_started/git_setup.md)
+<details>
+<summary><b>🪟 Windows</b></summary>
+
+Завантажте інсталятор з [git-scm.com/install/windows](https://git-scm.com/install/windows) і встановіть, натискаючи **Next**. Або в PowerShell:
+
+```powershell
+winget install --id Git.Git -e
+```
+
+Після встановлення **закрийте й знову відкрийте PowerShell**.
+
+</details>
+
+<details>
+<summary><b>🍎 macOS</b></summary>
+
+```bash
+xcode-select --install
+```
+
+У вікні, що з'явиться, натисніть **Install**. Інші способи: [git-scm.com/install/mac](https://git-scm.com/install/mac).
+
+</details>
+
+<details>
+<summary><b>🐧 Linux</b></summary>
+
+```bash
+# Ubuntu / Debian
+sudo apt update
+sudo apt install git
+
+# Fedora
+sudo dnf install git
+```
+
+Інші дистрибутиви: [git-scm.com/install/linux](https://git-scm.com/install/linux).
+
+</details>
 
 Перевірте:
 
@@ -34,24 +118,126 @@
 git --version
 ```
 
+Представтесь Git (один раз на комп'ютер; email — той самий, що на GitHub):
+
+```bash
+git config --global user.name "Імʼя Прізвище"
+git config --global user.email "ваш_email_на_GitHub"
+```
+
+Докладно: [Встановлення Git](docs/00_getting_started/git_setup.md)
+
 ---
 
-### 2. Зробіть Fork репозиторію
+### 2. Встановіть Python 3.10+
 
-Натисніть **Fork** у верхній частині цього репозиторію.
+<details>
+<summary><b>🪟 Windows</b></summary>
 
-Працюйте у **власному Fork**, а не безпосередньо в репозиторії викладача.
+1. Завантажте Python з [python.org/downloads](https://www.python.org/downloads/).
+2. Якщо на першому екрані інсталятора є галочка **Add python.exe to PATH** — **обов'язково поставте її**.
+3. Закрийте й знову відкрийте PowerShell.
 
-Детально: [Fork, SSH і Clone](docs/00_getting_started/github/fork_and_clone.md)
+```powershell
+python --version
+```
+
+Якщо `python` не знайдено — спробуйте `py --version` і розділ [«Python не знайдено»](https://nikoriakviktor.github.io/PY-Course-Victor-Nikoriak-11-11-2026/00_getting_started/troubleshooting/#python-not-found).
+
+</details>
+
+<details>
+<summary><b>🍎 macOS</b></summary>
+
+Інсталятор з [python.org/downloads](https://www.python.org/downloads/) або `brew install python`. Команда на macOS називається `python3`:
+
+```bash
+python3 --version
+```
+
+</details>
+
+<details>
+<summary><b>🐧 Linux</b></summary>
+
+```bash
+# Ubuntu / Debian
+sudo apt install python3 python3-venv python3-pip
+```
+
+```bash
+python3 --version
+```
+
+</details>
 
 ---
 
-### 3. Клонуйте свій Fork
+### 3. Підключіть SSH-ключ до GitHub
+
+SSH-ключ дає змогу виконувати `git clone`, `git pull` і `git push` без пароля. Створюється один раз на комп'ютер.
+
+```bash
+ssh-keygen -t ed25519 -C "ваш_email_на_GitHub"
+```
+
+На всі запитання натискайте **Enter**. Потім скопіюйте **публічний** ключ:
+
+| Система | Команда |
+|---|---|
+| Windows (PowerShell) | `Get-Content "$env:USERPROFILE\.ssh\id_ed25519.pub" \| Set-Clipboard` |
+| macOS | `pbcopy < ~/.ssh/id_ed25519.pub` |
+| Linux | `cat ~/.ssh/id_ed25519.pub` — і скопіюйте рядок вручну |
+
+Додайте його на сторінці [github.com/settings/keys](https://github.com/settings/keys) → **New SSH key**.
+
+Перевірте:
+
+```bash
+ssh -T git@github.com
+```
+
+Правильна відповідь: `Hi <ваш-логін>! You've successfully authenticated…`
+
+Докладно, з розбором помилок: [SSH-ключі для GitHub](docs/00_getting_started/github/ssh_keys.md)
+
+---
+
+### 4. Зробіть Fork репозиторію
+
+**Що таке fork.** Репозиторій курсу належить викладачу: читати його може кожен, а змінювати — лише він. **Fork** — це ваша особиста копія цього репозиторію на GitHub. У ній ви власник: створюєте гілки, робите commit-и, надсилаєте домашні роботи. Аналогія: викладач роздав усім однаковий робочий зошит — оригінал лишається в нього, а ви пишете у своєму примірнику.
+
+| | Fork | Clone | Branch |
+|---|---|---|---|
+| Що це | копія **на GitHub** у вашому акаунті | копія **на комп'ютері** | окрема лінія змін усередині репозиторію |
+| Коли | один раз | один раз | для кожної домашки |
+
+**Як створити:**
+
+1. Увійдіть у GitHub і відкрийте сторінку створення fork: [https://github.com/NikoriakViktor/PY-Course-Victor-Nikoriak-11-11-2026/fork](https://github.com/NikoriakViktor/PY-Course-Victor-Nikoriak-11-11-2026/fork) (або кнопка **Fork** угорі праворуч на сторінці цього репозиторію).
+2. **Owner** → **Choose an owner** → оберіть **свій акаунт**.
+3. **Repository name** не змінюйте.
+4. Галочка **Copy the `main` branch only** — увімкнена.
+5. Натисніть **Create fork**.
+
+Перевірте: відкрилася сторінка `https://github.com/<ваш-логін>/PY-Course-Victor-Nikoriak-11-11-2026`, під назвою є рядок `forked from NikoriakViktor/…`.
+
+Працюйте у **власному fork**, а не безпосередньо в репозиторії викладача.
+
+Детально: [Fork, SSH і Clone](docs/00_getting_started/github/fork_and_clone.md) · [Що таке fork і навіщо він](https://nikoriakviktor.github.io/PY-Course-Victor-Nikoriak-11-11-2026/00_getting_started/quick_start/#fork)
+
+---
+
+### 5. Клонуйте свій Fork
+
+> 🪟 **Windows:** клонуйте в коротку папку без кирилиці та пробілів, наприклад `C:\Projects`. Не в OneDrive.
 
 ```bash
 git clone git@github.com:<your-username>/PY-Course-Victor-Nikoriak-11-11-2026.git
 cd PY-Course-Victor-Nikoriak-11-11-2026
 ```
+
+`<your-username>` замініть на свій логін — без кутових дужок.
 
 Додайте репозиторій викладача як `upstream`:
 
@@ -74,11 +260,74 @@ upstream  → репозиторій курсу
 
 ---
 
-### 4. Налаштуйте Python
+### 6. Створіть віртуальне середовище
 
-Створіть віртуальне середовище та підключіть його в PyCharm/Jupyter:
+У папці репозиторію:
+
+<details>
+<summary><b>🪟 Windows (PowerShell)</b></summary>
+
+```powershell
+python -m venv .venv
+.venv\Scripts\activate
+```
+
+Якщо PowerShell відповів «виконання сценаріїв вимкнено» — виконайте один раз `Set-ExecutionPolicy RemoteSigned -Scope CurrentUser` і повторіть активацію.
+
+</details>
+
+<details>
+<summary><b>🍎 macOS / 🐧 Linux</b></summary>
+
+```bash
+python3 -m venv .venv
+source .venv/bin/activate
+```
+
+</details>
+
+На початку рядка термінала має з'явитися `(.venv)`. Тепер встановіть бібліотеки:
+
+```bash
+python -m pip install --upgrade pip
+pip install jupyterlab notebook ipykernel
+pip install -r requirements.txt
+```
+
+Другий рядок — мінімум для модуля 1; третій ставить усі бібліотеки курсу й триває кілька хвилин. Якщо якийсь пакет не встановився — [«Не встановлюються бібліотеки»](https://nikoriakviktor.github.io/PY-Course-Victor-Nikoriak-11-11-2026/00_getting_started/troubleshooting/#pip-install-fails).
 
 👉 [Налаштування Python-середовища](docs/00_getting_started/environment_setup.md)
+
+---
+
+### 7. Відкрийте проєкт у PyCharm або VS Code
+
+Оберіть **один** редактор — для курсу підходять обидва.
+
+<details>
+<summary><b>PyCharm</b></summary>
+
+1. Встановіть PyCharm: [jetbrains.com/pycharm/download](https://www.jetbrains.com/pycharm/download/).
+2. **Open** → папка `PY-Course-Victor-Nikoriak-11-11-2026`.
+3. Клік по назві інтерпретатора в правому нижньому куті → **Add New Interpreter → Add Local Interpreter** → наявне середовище → `.venv\Scripts\python.exe` (Windows) або `.venv/bin/python` (macOS/Linux).
+4. Термінал: **Alt+F12** — рядок має починатися з `(.venv)`.
+
+Повний гайд: [PyCharm](docs/00_getting_started/pycharm.md)
+
+</details>
+
+<details>
+<summary><b>VS Code</b></summary>
+
+1. Встановіть VS Code: [code.visualstudio.com](https://code.visualstudio.com/).
+2. **File → Open Folder…** → папка `PY-Course-Victor-Nikoriak-11-11-2026`.
+3. Розширення (**Ctrl+Shift+X**): **Python** і **Jupyter** від Microsoft.
+4. **Ctrl+Shift+P → Python: Select Interpreter** → рядок зі шляхом `.venv`.
+5. У ноутбуці: **Select Kernel** угорі праворуч → `.venv`.
+
+Повний гайд: [VS Code](docs/00_getting_started/vscode.md)
+
+</details>
 
 Після цього відкрийте потрібний урок у:
 
@@ -86,11 +335,11 @@ upstream  → репозиторій курсу
 module_1/lessons/lesson_NN_<тема>/    ← NN = номер уроку за програмою курсу
 ```
 
-Без встановлення Python кожен ноутбук можна відкрити в Google Colab кнопкою **Open in Colab** у його першій клітинці: [Ноутбуки в Google Colab](docs/00_getting_started/colab.md).
+Для занять відкривайте файл із закінченням `_student.ipynb` — у ньому вправи без розв'язків. Запуск Jupyter у браузері: [Jupyter локально](docs/00_getting_started/jupyter.md).
 
 ---
 
-### 5. Перед кожним заняттям оновлюйте `main`
+### 8. Перед кожним заняттям оновлюйте `main`
 
 ```bash
 git checkout main
@@ -114,7 +363,7 @@ git push origin main
 
 ---
 
-### 6. Домашні роботи виконуйте в окремій гілці
+### 9. Домашні роботи виконуйте в окремій гілці
 
 ```bash
 git checkout -b homework-01
@@ -154,7 +403,7 @@ homework-01 → main
 > ⚠️ **Не виконуйте домашні роботи у `main`.**
 > Одна домашня робота = одна окрема гілка.
 
-Якщо щось не працює: [Часті проблеми](docs/00_getting_started/troubleshooting.md)
+Якщо щось не працює: [Часті проблеми і нюанси](docs/00_getting_started/troubleshooting.md) — помилки Git, Python, venv, GitHub, PyCharm і VS Code з рішеннями.
 
 
 ## Про курс і викладача

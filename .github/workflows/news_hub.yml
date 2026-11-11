@@ -166,7 +166,9 @@ jobs:
       - id: meta
         uses: docker/metadata-action@v5            # імена образів — у нижньому регістрі (вимога реєстру)
         with:
-          images: ghcr.io/${{ github.repository_owner }}/news_hub
+          # <власник>/<репозиторій>/news_hub: пакет ghcr.io належить репозиторію, який створив його першим,
+          # тож у fork-ах і копіях курсу для інших груп кожен репозиторій публікує свій образ
+          images: ghcr.io/${{ github.repository }}/news_hub
           tags: |
             type=sha
             type=raw,value=latest

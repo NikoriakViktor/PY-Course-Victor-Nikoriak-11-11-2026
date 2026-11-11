@@ -37,7 +37,7 @@
 
 Щоб працювати з **клонованим репозиторієм курсу**: **Open** → вибери папку `PY-Course-Victor-Nikoriak-11-11-2026` → далі налаштуй інтерпретатор (наступний розділ).
 
-## Інтерпретатор: який Python виконує код
+## Інтерпретатор: який Python виконує код { #interpreter }
 
 Інтерпретатор проєкту — це Python, яким PyCharm запускає код, перевіряє імпорти й у який ставить пакети. Для роботи потрібен хоча б один інтерпретатор: системний Python або **віртуальне середовище** (venv) — базовий інтерпретатор плюс свої встановлені пакети. PyCharm уміє створювати середовища Virtualenv, pipenv, Poetry, uv, Hatch і conda; для курсу беремо звичайний **Virtualenv (venv)**.
 
@@ -152,9 +152,62 @@
 
 Порада: крок за кроком (F8) пройди цикл з уроку 6 і стеж у **Variables**, як змінюються лічильник і список — це дає інтуїцію, якої не дасть жоден `print`.
 
-## Вбудований термінал
+## Вбудований термінал { #terminal }
 
-**Alt+F12** (або кнопка **Terminal** внизу) відкриває термінал у папці проєкту. Якщо інтерпретатор проєкту — venv і в **Settings → Tools → Terminal** увімкнено **Activate virtualenv**, venv у терміналі активується автоматично: на початку рядка буде `(.venv)`. Тут зручно запускати `git`, `pip`, `pytest`, `jupyter lab`.
+Термінал PyCharm — той самий PowerShell, zsh чи bash, що й у системі, але відкритий одразу в папці проєкту й з активованим `.venv`. Тут запускають `git`, `pip`, `pytest`, `jupyter lab`.
+
+### Як відкрити
+
+| Спосіб | Windows / Linux | macOS |
+|---|---|---|
+| гаряча клавіша | **Alt+F12** | **⌥F12** |
+| кнопка | значок **Terminal** на лівій або нижній панелі вікна | те саме |
+| меню | **View → Tool Windows → Terminal** | те саме |
+
+Не бачиш кнопки **Terminal** на панелях — **View → Appearance → Tool Window Bars** або просто **Shift** двічі → введи `Terminal`.
+
+**Перевір:** у терміналі виконай
+
+```bash
+python --version
+```
+
+і переконайся, що на початку рядка є `(.venv)`.
+
+### Кілька вкладок і вибір shell
+
+- **+** у заголовку термінала — нова вкладка (наприклад, в одній працює `jupyter lab`, в іншій — `git`).
+- Стрілка **˅** поруч із **+** — відкрити вкладку з іншим shell: PowerShell, Command Prompt, Git Bash, WSL — з тих, що є на комп'ютері.
+- Подвійний клік по назві вкладки — перейменувати її (`jupyter`, `git`).
+- Правий клік по вкладці → **Split Right** / **Split Down** — два термінали поруч.
+
+### Налаштування термінала
+
+**Settings → Tools → Terminal** (Windows/Linux **Ctrl+Alt+S**, macOS **⌘,**):
+
+| Параметр | Що поставити |
+|---|---|
+| **Shell path** | Windows: `powershell.exe` (або `pwsh.exe`, якщо встановлено PowerShell 7). Git Bash: `"C:\Program Files\Git\bin\bash.exe" --login -i`. macOS: `/bin/zsh`. Linux: `/bin/bash` |
+| **Start directory** | порожньо або корінь проєкту — термінал відкриватиметься в папці проєкту |
+| **Activate virtualenv** | **увімкнено** — `.venv` активується в кожній новій вкладці |
+
+Після зміни налаштувань **закрий вкладку термінала й відкрий нову** — стара вкладка працює зі старими налаштуваннями.
+
+!!! warning "Команди залежать від shell, а не від PyCharm"
+    У PowerShell працюють `Get-Content`, `.venv\Scripts\activate`; у Git Bash, zsh і bash — `cat`, `source .venv/bin/activate` (у Git Bash — `source .venv/Scripts/activate`). Якщо команда з інструкції «не знайдена», перевір, який shell відкрито: це видно в назві вкладки. Докладно: [SSH-ключі → розділ 8](github/ssh_keys.md).
+
+Шрифт термінала змінюється окремо від редактора: **Settings → Editor → Color Scheme → Console Font**.
+
+### Якщо щось не так
+
+| Симптом | Що робити |
+|---|---|
+| немає `(.venv)` на початку рядка | інтерпретатор проєкту — не `.venv` (див. [Інтерпретатор](#interpreter)), або вимкнено **Activate virtualenv**; після виправлення відкрий **нову** вкладку |
+| PowerShell: «виконання сценаріїв вимкнено» | один раз: `Set-ExecutionPolicy RemoteSigned -Scope CurrentUser`, потім нова вкладка |
+| `git` або `python` не знайдено, хоча в системному терміналі працює | PyCharm запущено до встановлення програми — **повністю закрий PyCharm** і відкрий знову |
+| термінал відкривається не в папці проєкту | очисти **Start directory** у налаштуваннях термінала |
+
+Інші помилки — [Часті проблеми і нюанси](troubleshooting.md).
 
 ## Встановлення пакетів
 
@@ -189,7 +242,7 @@ Pull Request на GitHub створюй як завжди — на сайті Gi
 - **Шрифт і розмір**: Settings → Editor → Font.
 - **PEP 8**: PyCharm перевіряє стиль «з коробки» — жовте підкреслення й підказки справа. Наведи курсор на підкреслене, щоб прочитати пояснення, і натисни **Alt+Enter** (macOS **⌥↩**) — PyCharm запропонує виправлення.
 - **Автоформатування**: **Ctrl+Alt+L** (macOS **⌘⌥L**) — **Reformat Code**, розставляє відступи й пробіли за PEP 8.
-- **Мова інтерфейсу, тема** — Settings → Appearance & Behavior.
+- **Мова інтерфейсу, тема** — див. [Тема й мова інтерфейсу](#theme-language).
 
 ## Гарячі клавіші, які варто вивчити першими
 
@@ -208,9 +261,86 @@ Pull Request на GitHub створюй як завжди — на сайті Gi
 
 Якщо сумніваєшся — **Find Action** (Ctrl+Shift+A) і введи назву дії англійською: PyCharm покаже і команду, і її гарячу клавішу. Повна шпаргалка для твоєї ОС — **Help → Keyboard Shortcuts PDF**.
 
-## Плагіни
+## Плагіни { #plugins }
 
-**Settings → Plugins → Marketplace** — пошук і встановлення, вкладка **Installed** — керування встановленими. Основне для курсу (Python, Git, Markdown, Jupyter) уже вбудоване. Став плагіни свідомо: кожен плагін уповільнює запуск IDE, а плагіни від невідомих авторів отримують доступ до твого коду.
+Плагін — додаток, що навчає PyCharm нового: показувати діаграми, підсвічувати CSV, підказувати гарячі клавіші. Основне для курсу — Python, Git, Jupyter, Markdown, термінал — уже **вбудоване**, тож без плагінів можна пройти весь курс.
+
+### Як встановити плагін
+
+1. **Settings → Plugins** (Windows/Linux **Ctrl+Alt+S**, macOS **⌘,**).
+2. Вкладка **Marketplace** → введи назву в пошук.
+3. Перевір **автора** під назвою (у таблицях нижче вказано, чий плагін правильний) → **Install**.
+4. Якщо PyCharm просить — **Restart IDE**.
+
+Вкладка **Installed** — встановлені плагіни: там їх вимикають (галочка) і видаляють (**⋯ → Uninstall**). Оновлення PyCharm пропонує сам, а встановити всі доступні можна кнопкою **Update** на тій самій вкладці.
+
+!!! warning "Став плагіни свідомо"
+    Кожен плагін уповільнює запуск PyCharm, а плагін від невідомого автора отримує доступ до твого коду. Став лише те, чим справді користуєшся, і перевіряй автора й кількість завантажень. Якщо PyCharm після встановлення почав гальмувати чи падати — вимкни останній встановлений плагін на вкладці **Installed**.
+
+### Markdown — вбудований
+
+Markdown — мова розмітки, якою написано `README.md`, книгу курсу й текстові клітинки ноутбуків. Плагін **Markdown** (JetBrains) у PyCharm уже є.
+
+1. Відкрий будь-який `.md`-файл, наприклад `README.md` курсу.
+2. У правому верхньому куті редактора є три кнопки: **Editor** (лише текст), **Editor and Preview** (текст і результат поруч), **Preview** (лише результат). Обери **Editor and Preview** — зміни видно одразу.
+3. Налаштування — **Settings → Languages & Frameworks → Markdown**.
+
+Якщо кнопок попереднього перегляду немає — **Settings → Plugins → Installed** → знайди **Markdown** і перевір, що він увімкнений.
+
+### Mermaid — діаграми в Markdown
+
+**Mermaid** малює діаграми з тексту: блок-схеми, діаграми класів, послідовностей. Ними ілюстровано уроки в книзі курсу. Без плагіна PyCharm показує блок ` ```mermaid ` як звичайний код; з плагіном — як діаграму.
+
+1. **Settings → Plugins → Marketplace** → пошук `Mermaid`.
+2. Встанови плагін **Mermaid** від **JetBrains** (не плутай зі схожими сторонніми плагінами) → **Restart IDE**.
+3. Перевір: створи файл `test_mermaid.md`, встав текст нижче й увімкни **Editor and Preview**.
+
+````markdown
+```mermaid
+flowchart LR
+    A["Fork"] --> B["Clone"] --> C["Homework branch"] --> D["Pull Request"]
+```
+````
+
+У попередньому перегляді має з'явитися така схема:
+
+```mermaid
+flowchart LR
+    classDef step     fill:#eceff1,stroke:#546e7a,stroke-width:1px;
+    classDef success  fill:#e8f5e9,stroke:#2e7d32,stroke-width:2px;
+
+    A["Fork"] --> B["Clone"] --> C["Homework branch"] --> D["Pull Request"]
+
+    class A,B,C step
+    class D success
+```
+
+Якщо замість схеми видно текст коду — плагін не встановлено або PyCharm не перезапущено. Плагін також відкриває окремі файли діаграм `.mmd` і підсвічує синтаксис Mermaid.
+
+Синтаксис і приклади діаграм — [mermaid.js.org](https://mermaid.js.org/intro/); перевірити діаграму без PyCharm — [mermaid.live](https://mermaid.live/).
+
+### Рекомендовані плагіни
+
+Не обов'язкові — став, коли відчуєш потребу.
+
+| Плагін | Автор | Навіщо | Коли знадобиться |
+|---|---|---|---|
+| [Mermaid](https://plugins.jetbrains.com/plugin/20146-mermaid) | JetBrains | діаграми в Markdown і файли `.mmd` | з перших уроків — щоб бачити схеми з книги |
+| [Rainbow CSV](https://plugins.jetbrains.com/plugin/12896-rainbow-csv) | Andrey Kolchanov | кожна колонка CSV — своїм кольором, файл легко читати | урок 15 (файли, CSV) і модуль 3 (pandas) |
+| [CSV Editor](https://plugins.jetbrains.com/plugin/10037-csv-editor) | Martin Sommer | відкриває CSV як таблицю, яку можна редагувати | те саме — обери **один** із двох CSV-плагінів |
+| [Key Promoter X](https://plugins.jetbrains.com/plugin/9792-key-promoter-x) | Hal's Corner | після кліку мишкою підказує гарячу клавішу для цієї дії | перші тижні — швидко вивчиш клавіші |
+| [Rainbow Brackets Lite](https://plugins.jetbrains.com/plugin/20710-rainbow-brackets-lite--free-and-opensource) | Zhihao Zhang | парні дужки однакового кольору — легше знайти, де закривається вкладена дужка | вкладені списки, словники, виклики функцій |
+| [.ignore](https://plugins.jetbrains.com/plugin/7495--ignore) | JetBrains | підсвічування й підказки в `.gitignore`, файли, що ігноруються, видно сірим | коли створюєш власний репозиторій |
+| [Ruff](https://plugins.jetbrains.com/plugin/20574-ruff) | Kodai Aono | швидкий лінтер і форматер Python, ті самі правила, що в VS Code | коли код стає більшим, приблизно з модуля 2 |
+| [String Manipulation](https://plugins.jetbrains.com/plugin/2162-stringmanipulation) | Vojtěch Krása | змінює регістр і стиль назв: `snake_case` ↔ `camelCase`, сортує рядки | за бажанням |
+
+!!! note "AI-плагіни — лише за правилами курсу"
+    [GitHub Copilot](https://plugins.jetbrains.com/plugin/17718-github-copilot--your-ai-pair-programmer) і вбудований JetBrains AI Assistant дописують код за тебе. На завданнях без AI їх треба вимикати: **Settings → Plugins → Installed** → зніми галочку, або вимкни підказки в самому плагіні. Як і коли AI можна використовувати — у правилах курсу ([Урок 1](../modules/m1/lesson_01.md)).
+
+### Тема й мова інтерфейсу { #theme-language }
+
+- **Тема** (світла, темна, висококонтрастна) — **Settings → Appearance & Behavior → Appearance → Theme**. Нових тем шукай у **Marketplace** за словом `theme`.
+- **Мова інтерфейсу** — **Settings → Appearance & Behavior → System Settings → Language and Region**. Порада: залиш англійську — назви меню в інструкціях курсу, документації JetBrains і на Stack Overflow англійські.
 
 ## Джерела
 
@@ -222,4 +352,6 @@ Pull Request на GitHub створюй як завжди — на сайті Gi
 - [Install, uninstall, and upgrade packages](https://www.jetbrains.com/help/pycharm/installing-uninstalling-and-upgrading-packages.html), [Terminal settings](https://www.jetbrains.com/help/pycharm/settings-tools-terminal.html)
 - [Commit and push changes to Git repository](https://www.jetbrains.com/help/pycharm/commit-and-push-changes.html), [Main version control shortcuts](https://www.jetbrains.com/help/pycharm/main-version-control-shortcuts.html)
 - [PyCharm keyboard shortcuts](https://www.jetbrains.com/help/pycharm/mastering-keyboard-shortcuts.html)
+- [Terminal tool window](https://www.jetbrains.com/help/pycharm/terminal-emulator.html), [Install plugins](https://www.jetbrains.com/help/pycharm/managing-plugins.html), [Markdown](https://www.jetbrains.com/help/pycharm/markdown.html)
+- JetBrains Marketplace: [Mermaid](https://plugins.jetbrains.com/plugin/20146-mermaid), [Markdown](https://plugins.jetbrains.com/plugin/7793-markdown)
 - [Free educational licenses](https://sales.jetbrains.com/hc/en-gb/articles/207241195-Do-you-offer-free-educational-licenses-for-students-and-teachers)

@@ -455,6 +455,8 @@ pip install -r requirements.txt
 
     **Перевір:** у правому нижньому куті видно `Python 3.x (.venv)` або назву проєкту, а рядок у терміналі починається з `(.venv)`.
 
+    Термінал (вкладки, вибір PowerShell / Git Bash, автоактивація `.venv`) — [PyCharm → Вбудований термінал](pycharm.md#terminal). Markdown, діаграми Mermaid і корисні плагіни — [PyCharm → Плагіни](pycharm.md#plugins).
+
     Докладно: [PyCharm](pycharm.md).
 
 === "VS Code"

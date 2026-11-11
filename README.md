@@ -27,7 +27,11 @@
 
 Нижче — повний шлях від «нічого не встановлено» до «урок відкрито, домашку можна здати». Та сама інструкція з вкладками для кожної системи — у книзі: **[Швидкий старт](https://nikoriakviktor.github.io/PY-Course-Victor-Nikoriak-11-11-2026/00_getting_started/quick_start/)**. Якщо на якомусь кроці з'явилась помилка — **[Часті проблеми і нюанси](docs/00_getting_started/troubleshooting.md)**.
 
-> 💡 **Потрібно відкрити урок просто зараз, а нічого не встановлено?** Кожен ноутбук відкривається в браузері кнопкою **Open in Colab** у його першій клітинці — потрібен лише Google-акаунт. Одразу зробіть **File → Save a copy in Drive**. Докладно: [Ноутбуки в Google Colab](docs/00_getting_started/colab.md).
+> 💡 **Хочете спробувати Python просто зараз, нічого не встановлюючи?** Відкрийте ноутбук-пісочницю в браузері:
+>
+> [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/NikoriakViktor/PY-Course-Victor-Nikoriak-11-11-2026/blob/main/module_1/lessons/lesson_01_intro_and_course_format/hello_course.ipynb) — [`hello_course.ipynb`](module_1/lessons/lesson_01_intro_and_course_format/hello_course.ipynb)
+>
+> У ньому — що таке ноутбук і Google Colab, перший `print("Hello, курс Python у Beetroot Academy!")` і перша задача. Потрібен лише Google-акаунт. Одразу зробіть **File → Save a copy in Drive**. Докладно: [Ноутбуки в Google Colab](docs/00_getting_started/colab.md).
 
 ### Як усе влаштовано
 
@@ -335,7 +339,19 @@ pip install -r requirements.txt
 module_1/lessons/lesson_NN_<тема>/    ← NN = номер уроку за програмою курсу
 ```
 
-Для занять відкривайте файл із закінченням `_student.ipynb` — у ньому вправи без розв'язків. Запуск Jupyter у браузері: [Jupyter локально](docs/00_getting_started/jupyter.md).
+Для занять відкривайте файл із закінченням `_student.ipynb` — у ньому вправи без розв'язків.
+
+#### Перший ноутбук у JupyterLab
+
+У терміналі в папці репозиторію, з активованим `(.venv)`:
+
+```bash
+jupyter lab
+```
+
+Браузер відкриється сам. У панелі ліворуч відкрийте `module_1/lessons/lesson_01_intro_and_course_format/hello_course.ipynb` — ту саму пісочницю, що й у Colab, — і виконуйте клітинки **Shift+Enter**. Термінал не закривайте, поки працюєте; зупинити сервер — **Ctrl+C**.
+
+Що таке Colab і JupyterLab, чим вони відрізняються і як працювати в кожному: [Швидкий старт → Перший ноутбук](https://nikoriakviktor.github.io/PY-Course-Victor-Nikoriak-11-11-2026/00_getting_started/quick_start/#first-notebook) · [Jupyter локально](docs/00_getting_started/jupyter.md) · [Google Colab](docs/00_getting_started/colab.md)
 
 ---
 

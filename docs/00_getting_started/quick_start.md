@@ -14,14 +14,17 @@
 
 **Шлях А** — щоб не пропустити перше заняття, якщо щось не встановилось. **Шлях Б** потрібен усім: домашні роботи здаються через Git і GitHub.
 
-## Шлях А. Урок у Colab за 2 хвилини
+## Шлях А. Перший ноутбук у Colab за 2 хвилини { #colab-now }
 
-1. Відкрий потрібний урок у [книзі курсу](../modules/README.md).
-2. Натисни кнопку **Відкрити вправи в Colab** (або значок **Open in Colab** у першій клітинці ноутбука).
-3. У Colab: **File → Save a copy in Drive** — без цього твої зміни не збережуться.
-4. Виконуй клітинки клавішами **Shift+Enter**.
+Почни з **ноутбука-пісочниці** курсу: у ньому пояснено, що таке ноутбук і Colab, є перший код і перша задача.
 
-Докладно: [Ноутбуки в Google Colab](colab.md).
+[Відкрити пісочницю в Colab](https://colab.research.google.com/github/NikoriakViktor/PY-Course-Victor-Nikoriak-11-11-2026/blob/main/module_1/lessons/lesson_01_intro_and_course_format/hello_course.ipynb){ .md-button .md-button--primary } [Переглянути на GitHub](https://github.com/NikoriakViktor/PY-Course-Victor-Nikoriak-11-11-2026/blob/main/module_1/lessons/lesson_01_intro_and_course_format/hello_course.ipynb){ .solutions-link }
+
+1. Натисни кнопку вище й увійди в Google-акаунт.
+2. **File → Save a copy in Drive** — без цього твої зміни не збережуться.
+3. Виконуй клітинки по черзі клавішами **Shift+Enter** і читай пояснення між ними.
+
+Що таке Colab і як ним користуватися — у [кроці 8](#first-notebook). Ноутбуки уроків відкриваються так само — кнопкою **Відкрити вправи в Colab** на сторінці уроку в [книзі курсу](../modules/README.md).
 
 ## Шлях Б. Повне налаштування
 
@@ -464,35 +467,116 @@ pip install -r requirements.txt
 
     Докладно: [VS Code](vscode.md).
 
-### Крок 8. Запусти перший ноутбук
+### Крок 8. Перший ноутбук: Colab і JupyterLab { #first-notebook }
 
-Уроки лежать у папках `module_N/lessons/lesson_NN_<тема>/`, де `NN` — номер уроку. Для занять відкривай файл із закінченням **`_student.ipynb`** — у ньому вправи без розв'язків.
+#### Що таке ноутбук
 
-Відкрий, наприклад:
+**Ноутбук** (Jupyter Notebook, файл `.ipynb`) — документ із **клітинок**. У клітинках **Code** — код Python: запускаєш клітинку, і результат з'являється одразу під нею. У клітинках **Markdown** — текст із поясненнями, заголовками й таблицями. Тому ноутбук зручний для навчання: теорія, код і результат лежать поруч.
+
+Усі уроки курсу — ноутбуки. Один і той самий файл `.ipynb` можна відкрити чотирма способами:
+
+| Де | Де виконується Python | Що потрібно встановити | Коли зручно |
+|---|---|---|---|
+| **Google Colab** | на тимчасовій машині Google у хмарі | нічого, лише Google-акаунт | перші заняття, чужий комп'ютер, слабкий ноутбук |
+| **JupyterLab** | на твоєму комп'ютері, інтерфейс — у браузері | Python, `.venv`, `jupyterlab` (кроки 2 і 6) | основна робота з уроками |
+| **PyCharm** | на твоєму комп'ютері | PyCharm (крок 7) | ноутбуки разом із `.py`-файлами й Git |
+| **VS Code** | на твоєму комп'ютері | VS Code і розширення Jupyter (крок 7) | те саме, якщо ти обрав VS Code |
+
+#### Ноутбук-пісочниця
+
+Для першого знайомства в курсі є простий ноутбук: `print("Hello, курс Python у Beetroot Academy!")`, пояснення про клітинки й Colab, експерименти зі змінними та перша задача — програма-візитівка. Він лежить у папці першого уроку:
 
 ```text
-module_1/lessons/lesson_02_first_steps_environment_setup/note_lesson_02_first_steps_student.ipynb
+module_1/lessons/lesson_01_intro_and_course_format/hello_course.ipynb
 ```
 
-=== "PyCharm"
+[Відкрити пісочницю в Colab](https://colab.research.google.com/github/NikoriakViktor/PY-Course-Victor-Nikoriak-11-11-2026/blob/main/module_1/lessons/lesson_01_intro_and_course_format/hello_course.ipynb){ .md-button .md-button--primary } [Переглянути на GitHub](https://github.com/NikoriakViktor/PY-Course-Victor-Nikoriak-11-11-2026/blob/main/module_1/lessons/lesson_01_intro_and_course_format/hello_course.ipynb){ .solutions-link }
 
-    Двічі клацни файл у дереві проєкту. Клітинка виконується кнопкою ▶ ліворуч від неї або **Shift+Enter**. Ноутбук працює на інтерпретаторі проєкту.
+Відкрий його спершу в Colab, а потім — локально в JupyterLab або в редакторі. Так ти побачиш, що це той самий файл.
 
-=== "VS Code"
+#### Google Colab: короткий огляд
 
-    Клацни файл. Угорі праворуч натисни **Select Kernel → Python Environments** → вибери `.venv`. Клітинка виконується **Shift+Enter**.
+**Google Colab** (Colaboratory) — безкоштовний сервіс Google, який запускає ноутбуки просто в браузері. Python і популярні бібліотеки там уже встановлено.
 
-=== "Jupyter у браузері"
+| Що зробити | Як |
+|---|---|
+| відкрити ноутбук уроку | кнопка **Open in Colab** у першій клітинці або **Відкрити вправи в Colab** у книзі |
+| **зберегти свою копію** — першим ділом | **File → Save a copy in Drive** (копія ляже в папку «Colab Notebooks» на Google Drive) |
+| виконати клітинку | **Shift+Enter** або ▶ ліворуч від клітинки |
+| додати клітинку | **+ Code** або **+ Text** угорі |
+| виконати все згори донизу | **Runtime → Run all** |
+| почати з чистої пам'яті | **Runtime → Restart session** |
+| зупинити код, що «завис» | **Runtime → Interrupt execution** |
+| встановити бібліотеку | клітинка `%pip install назва` |
 
-    У терміналі з активованим `(.venv)`:
+Що варто знати:
+
+- **Без копії зміни зникають.** Ноутбук, відкритий з GitHub, — лише перегляд оригіналу.
+- **Машина тимчасова.** Після простою Colab її відключає: код у ноутбуці лишається, а змінні, встановлені бібліотеки й завантажені файли зникають. Після повернення — **Runtime → Run all**.
+- **Твоя копія не оновлюється.** Якщо викладач змінив урок, відкрий його знову кнопкою Colab.
+
+Докладно — файли, Google Drive, секрети, здача домашки з Colab: [Ноутбуки в Google Colab](colab.md).
+
+#### JupyterLab на своєму комп'ютері
+
+**JupyterLab** — той самий інтерфейс ноутбуків, але Python працює на твоєму комп'ютері, у `.venv` проєкту. Бібліотеки встановлюються один раз і не зникають, файли лежать у твоїй папці, інтернет для виконання коду не потрібен.
+
+1. Відкрий термінал і перейди в папку репозиторію:
+
+    === "Windows (PowerShell)"
+
+        ```powershell
+        cd C:\Projects\PY-Course-Victor-Nikoriak-11-11-2026
+        .venv\Scripts\activate
+        ```
+
+    === "macOS / Linux"
+
+        ```bash
+        cd ~/projects/PY-Course-Victor-Nikoriak-11-11-2026
+        source .venv/bin/activate
+        ```
+
+2. Переконайся, що на початку рядка є `(.venv)`, і запусти:
 
     ```bash
     jupyter lab
     ```
 
-    Браузер відкриється сам. Знайди файл у панелі ліворуч. Не закривай термінал, поки працюєш. Докладно: [Jupyter локально](jupyter.md).
+    Браузер відкриється сам за адресою на кшталт `http://localhost:8888/lab`. Якщо не відкрився — скопіюй з термінала адресу з `token=…` і встав у браузер.
 
-**Перевір:** створи нову клітинку, введи код і виконай:
+3. У панелі файлів ліворуч відкрий `module_1` → `lessons` → `lesson_01_intro_and_course_format` → `hello_course.ipynb` (подвійний клік).
+4. Угорі праворуч має бути кернел **Python 3 (ipykernel)** або **Python Course (.venv)**. Виконуй клітинки **Shift+Enter**.
+5. Збереження — **Ctrl+S** (macOS **⌘S**): файл зберігається прямо в папку проєкту.
+6. Закінчив — збережи ноутбуки, повернись у термінал і натисни **Ctrl+C**, потім `y`.
+
+!!! warning "Не закривай термінал, поки працюєш"
+    У ньому працює сервер Jupyter. Закрив термінал — ноутбуки перестали виконуватися.
+
+Якщо команда `jupyter` не знайдена — `.venv` не активовано або JupyterLab у нього не встановлено: `pip install jupyterlab notebook ipykernel`. Докладно — кернели, `%pip`, гарячі клавіші: [Jupyter локально](jupyter.md).
+
+#### У PyCharm або VS Code
+
+=== "PyCharm"
+
+    Двічі клацни `hello_course.ipynb` у дереві проєкту. Клітинка виконується кнопкою ▶ ліворуч від неї або **Shift+Enter**. Ноутбук працює на інтерпретаторі проєкту (`.venv` з кроку 7). Докладно: [PyCharm → Ноутбуки](pycharm.md).
+
+=== "VS Code"
+
+    Клацни `hello_course.ipynb`. Угорі праворуч натисни **Select Kernel → Python Environments** → вибери `.venv`. Клітинка виконується **Shift+Enter**. Докладно: [VS Code → Ноутбуки](vscode.md).
+
+#### Ноутбуки уроків
+
+Уроки лежать у папках `module_N/lessons/lesson_NN_<тема>/`, де `NN` — номер уроку. Для занять відкривай файл із закінченням **`_student.ipynb`** — у ньому вправи без розв'язків. Наприклад, урок 2:
+
+```text
+module_1/lessons/lesson_02_first_steps_environment_setup/note_lesson_02_first_steps_student.ipynb
+```
+
+!!! tip "Експериментуй у копії"
+    Не змінюй файли уроків у гілці `main`: інакше наступне оновлення (`git pull upstream main`) зупиниться з помилкою. Для експериментів зроби копію ноутбука з власною назвою, наприклад `my_hello.ipynb`. Чому так — [«Your local changes … would be overwritten»](troubleshooting.md#local-changes).
+
+**Перевір:** у локальному ноутбуці створи нову клітинку й виконай:
 
 ```python
 import sys
@@ -602,5 +686,6 @@ Pull Request оновиться сам — новий створювати не 
 | PyCharm | [jetbrains.com/pycharm/download](https://www.jetbrains.com/pycharm/download/) |
 | VS Code | [code.visualstudio.com](https://code.visualstudio.com/) |
 | Google Colab | [colab.research.google.com](https://colab.research.google.com/) |
+| Ноутбук-пісочниця в Colab | [hello_course.ipynb](https://colab.research.google.com/github/NikoriakViktor/PY-Course-Victor-Nikoriak-11-11-2026/blob/main/module_1/lessons/lesson_01_intro_and_course_format/hello_course.ipynb) |
 
 Сторінки цього розділу: [Встановлення Git](git_setup.md) · [SSH-ключі](github/ssh_keys.md) · [Fork і Clone](github/fork_and_clone.md) · [Налаштування середовища](environment_setup.md) · [PyCharm](pycharm.md) · [VS Code](vscode.md) · [Jupyter локально](jupyter.md) · [Google Colab](colab.md) · [Здача домашніх робіт](homework_workflow.md) · [Pull Request](github/pull_request.md) · [Часті проблеми](troubleshooting.md)

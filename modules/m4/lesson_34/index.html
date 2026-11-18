@@ -4284,7 +4284,7 @@
 <a id="__codelineno-32-4" name="__codelineno-32-4" href="#__codelineno-32-4"></a>302 -&gt; http://127.0.0.1:8000/admin/login/?next=/admin/
 </code></pre></div>
 <p>Без входу адмінка перенаправляє (<code>302</code>) на сторінку логіну. Після входу <code>admin</code> бачить нотатки — ті самі, що створили через ORM:</p>
-<p><img alt="Список нотаток в адмін-панелі Django: колонки «Заголовок» і «Створено», рядок пошуку" src="img/lesson_34_admin.png" /></p>
+<p><img alt="Список нотаток в адмін-панелі Django: колонки «Заголовок» і «Створено», рядок пошуку" src="../img/lesson_34_admin.png" /></p>
 <p>Пароль у базі не зберігається — лише його хеш (урок 17):</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-33-1" name="__codelineno-33-1" href="#__codelineno-33-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">django.contrib.auth.models</span><span class="w"> </span><span class="kn">import</span> <span class="n">User</span>
 <a id="__codelineno-33-2" name="__codelineno-33-2" href="#__codelineno-33-2"></a>
@@ -4420,7 +4420,7 @@
 <a id="__codelineno-39-11" name="__codelineno-39-11" href="#__codelineno-39-11"></a>    <span class="n">search_fields</span> <span class="o">=</span> <span class="p">(</span><span class="s2">"title"</span><span class="p">,</span> <span class="s2">"content"</span><span class="p">)</span>
 </code></pre></div>
 <p><code>list_filter</code> додає праворуч фільтр «Закріплена: так / ні», <code>list_editable</code> — прапорець прямо в списку, без відкриття нотатки.</p>
-<p><img alt="Адмін-панель: колонка «Закріплена», фільтр праворуч" src="img/lesson_34_admin_pinned.png" /></p>
+<p><img alt="Адмін-панель: колонка «Закріплена», фільтр праворуч" src="../img/lesson_34_admin_pinned.png" /></p>
 <h3 id="_7">Зміни приклад: пріоритет<a class="headerlink" href="#_7" title="Permanent link">&para;</a></h3>
 <p>У Notes Chat App у нотатки є <strong>пріоритет</strong> від 1 до 4. Додай поле <code>priority</code> з варіантами вибору:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-40-1" name="__codelineno-40-1" href="#__codelineno-40-1"></a><span class="n">PRIORITY_CHOICES</span> <span class="o">=</span> <span class="p">[(</span><span class="mi">1</span><span class="p">,</span> <span class="s2">"Низький"</span><span class="p">),</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="s2">"Звичайний"</span><span class="p">),</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="s2">"Високий"</span><span class="p">),</span> <span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="s2">"Терміновий"</span><span class="p">)]</span>

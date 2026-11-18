@@ -4045,7 +4045,7 @@
 </ul>
 <h3 id="browsable-api-openapi-">Browsable API і OpenAPI-схема<a class="headerlink" href="#browsable-api-openapi-" title="Permanent link">&para;</a></h3>
 <p>Відкрий <code>http://127.0.0.1:8000/api/notes/</code> у <strong>браузері</strong> після входу на сайт — DRF замість сирого JSON покаже HTML-сторінку з відповіддю й заголовками (він дивиться на заголовок <code>Accept</code> браузера). Вхід — той самий, що на сторінках, завдяки <code>SessionAuthentication</code>:</p>
-<p><img alt="Browsable API DRF: список нотаток Олени у форматі JSON" src="img/lesson_36_browsable.png" /></p>
+<p><img alt="Browsable API DRF: список нотаток Олени у форматі JSON" src="../img/lesson_36_browsable.png" /></p>
 <p>drf-spectacular будує опис API за стандартом OpenAPI з ViewSet і серіалізаторів — те, що FastAPI робить сам (урок 33):</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="n">r</span> <span class="o">=</span> <span class="n">api</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"/api/schema/"</span><span class="p">)</span>
 <a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a><span class="n">schema</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">content</span><span class="o">.</span><span class="n">decode</span><span class="p">()</span>

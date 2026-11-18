@@ -4097,7 +4097,7 @@
 </code></pre></div>
 <p>Журнал знову пояснює причину: CSRF-cookie не встановлено, бо запит прийшов не зі сторінки нашої форми.</p>
 <p>Результат рефакторингу 1 — список нотаток на Bootstrap-картках (зелена кнопка праворуч — згорнутий Django Debug Toolbar):</p>
-<p><img alt="Список нотаток django_bootstrap_project: navbar, картки з кнопками редагування й видалення" src="img/lesson_35_bootstrap_list.png" /></p>
+<p><img alt="Список нотаток django_bootstrap_project: navbar, картки з кнопками редагування й видалення" src="../img/lesson_35_bootstrap_list.png" /></p>
 <p>Тести проєкту (додані в курсі) перевіряють форму, PRG, <code>instance=</code>, видалення лише через <code>POST</code>, <code>404</code> і CSRF:</p>
 <p>Приклад виводу (час залежить від машини):</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>$ python manage.py test
@@ -4337,7 +4337,7 @@
 <li>помилки валідації ті самі, що в рефакторингу 1: змінився лише вигляд.</li>
 </ul>
 <p>Сторінка створення нотатки: sidebar (записники й теги Олени — з context processor) і topbar з <code>layouts/dashboard.html</code>, форма — з <code>Layout</code>: три <code>fieldset</code>, пріоритет і записник в одному рядку. Зелена кнопка праворуч — згорнутий Django Debug Toolbar.</p>
-<p><img alt="Форма нової нотатки в crispy_notes_project: sidebar з записниками й тегами, fieldset-и форми" src="img/lesson_35_crispy_form.png" /></p>
+<p><img alt="Форма нової нотатки в crispy_notes_project: sidebar з записниками й тегами, fieldset-и форми" src="../img/lesson_35_crispy_form.png" /></p>
 <div class="admonition tip">
 <p class="admonition-title">Поглиблено</p>
 <ul>

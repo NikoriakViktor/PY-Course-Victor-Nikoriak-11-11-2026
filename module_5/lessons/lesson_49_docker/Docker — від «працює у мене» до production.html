@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<!-- saved from url=(0059)file:///C:/Users/victo/OneDrive/BEETROOT/Docker%20Deck.html -->
 <html lang="uk"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Docker — від «працює у мене» до production</title>
 <link rel="preconnect" href="https://fonts.googleapis.com/">
 <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin="">
 <link href="./Docker — від «працює у мене» до production_files/css2" rel="stylesheet">
-<script src="file:///C:/Users/victo/OneDrive/BEETROOT/deck-stage.js"></script>
+<script src="./Docker — від «працює у мене» до production_files/deck-stage.js"></script>
 <style>
   :root{
     --bg: oklch(0.17 0.012 250);
@@ -305,236 +305,324 @@
     mask-image: radial-gradient(ellipse at 50% 50%, black 30%, transparent 75%);
     pointer-events:none;
   }
+
+  /* =====================================================================
+     Доповнення для покрокової / інтерактивної версії
+     ===================================================================== */
+  .slide > .kicker{ margin-top: 60px; }
+  .slide > h2.section{ margin-top: 14px; font-size: 56px; }
+  .ok{ color: var(--good); } .err{ color: var(--bad); } .dim{ color: var(--fg-3); } .acc{ color: var(--accent); } .wrn{ color: var(--warn); }
+  .route{ display:flex; gap: 10px; font-size: 20px; letter-spacing: 0.06em; }
+  .route span{ color: var(--fg-3); opacity: .55; }
+  .route span.on{ color: var(--accent); opacity: 1; }
+  .route i{ font-style: normal; color: var(--line); }
+
+  .btn{
+    font: 500 24px 'JetBrains Mono', monospace; padding: 14px 26px; border-radius: 12px;
+    border: 1px solid var(--accent-soft); color: var(--fg); cursor: pointer;
+    background: color-mix(in oklab, var(--accent) 16%, var(--surface)); transition: background .15s, transform .1s;
+  }
+  .btn:hover{ background: color-mix(in oklab, var(--accent) 30%, var(--surface)); }
+  .btn:active{ transform: translateY(2px); }
+  .btn.ghost{ border-color: var(--line); background: transparent; color: var(--fg-2); }
+  .btn.ghost:hover{ background: var(--surface); }
+  .btn-row{ display:flex; gap: 14px; flex-wrap: wrap; align-items: center; }
+  .seg{ display:inline-flex; border:1px solid var(--line); border-radius: 12px; overflow:hidden; }
+  .seg button{
+    font: 500 22px 'JetBrains Mono', monospace; padding: 13px 22px; background: transparent;
+    color: var(--fg-3); border: 0; border-right: 1px solid var(--line); cursor: pointer;
+  }
+  .seg button:last-child{ border-right: 0; }
+  .seg button.active{ background: color-mix(in oklab, var(--accent) 22%, var(--surface)); color: var(--fg); }
+  .hint{ font-family:'JetBrains Mono', monospace; font-size: 22px; color: var(--fg-3); letter-spacing: 0.04em; }
+  .rule{
+    border-left: 3px solid var(--accent); padding: 14px 0 14px 26px;
+    font-size: 30px; line-height: 1.35; color: var(--fg);
+  }
+  .rule b{ color: var(--accent); font-weight: 600; }
+  .term{
+    background: oklch(0.15 0.01 250); border: 1px solid var(--line-soft); border-radius: 14px;
+    padding: 22px 26px; font-family:'JetBrains Mono', monospace; font-size: 22px; line-height: 1.5;
+    color: var(--fg-2); white-space: pre-wrap; word-break: break-word;
+  }
+  .term b{ color: var(--fg); font-weight: 500; }
+
+  /* машини (слайди 02–03) */
+  .machine{
+    background: var(--surface); border: 1px solid var(--line-soft); border-radius: 18px; padding: 28px;
+    display:flex; flex-direction:column; gap: 14px; transition: border-color .3s;
+  }
+  .machine.pass{ border-color: color-mix(in oklab, var(--good) 60%, var(--line)); }
+  .machine.fail{ border-color: color-mix(in oklab, var(--bad) 60%, var(--line)); }
+  .machine .label{ font-family:'JetBrains Mono', monospace; font-size: 22px; letter-spacing: 0.12em; color: var(--fg-3); }
+  .machine h3{ margin: 0; font-size: 32px; font-weight: 600; }
+  .machine .env{ display:flex; flex-direction:column; gap: 6px; font-family:'JetBrains Mono', monospace; font-size: 22px; color: var(--fg-2); }
+  .machine .out{
+    margin-top: 4px; min-height: 100px; background: oklch(0.15 0.01 250); border-radius: 10px; padding: 16px 18px;
+    font-family:'JetBrains Mono', monospace; font-size: 21px; line-height: 1.45; color: var(--fg-3); white-space: pre-wrap;
+  }
+  .machine.pass .out{ color: var(--good); } .machine.fail .out{ color: var(--bad); }
+  .machine.boxed .env{ opacity: .35; text-decoration: line-through; }
+
+  .ingredient{
+    display:flex; justify-content:space-between; align-items:center; padding: 16px 22px; border: 1px solid var(--line-soft);
+    border-radius: 12px; background: var(--surface); font-family:'JetBrains Mono', monospace; font-size: 24px;
+  }
+  .ingredient span{ color: var(--fg-3); font-size: 21px; }
+  .imagebox{
+    border: 2px solid var(--accent); border-radius: 14px; padding: 22px 24px; text-align:center;
+    background: color-mix(in oklab, var(--accent) 12%, transparent);
+    font-family:'JetBrains Mono', monospace; font-size: 30px; font-weight: 600;
+  }
+  .imagebox small{ display:block; font-size: 21px; font-weight: 400; color: var(--fg-2); margin-top: 6px; }
+
+  /* вікторини */
+  .quiz{ display:flex; flex-direction:column; gap: 16px; }
+  .quiz .opt{
+    text-align:left; font: 500 30px 'Inter', system-ui, sans-serif; color: var(--fg); cursor:pointer;
+    padding: 24px 30px; border-radius: 14px; border: 1px solid var(--line); background: var(--surface);
+    display:flex; gap: 22px; align-items: baseline;
+  }
+  .quiz .opt::after{ margin-left:auto; font-family:'JetBrains Mono', monospace; }
+  .quiz .opt.right::after{ content:'✓'; color: var(--good); }
+  .quiz .opt.wrong::after{ content:'✕'; color: var(--bad); }
+  .quiz .opt.soso::after{ content:'⚠'; color: var(--warn); }
+  .quiz .opt:hover{ border-color: var(--accent-soft); }
+  .quiz .opt .key{ font-family:'JetBrains Mono', monospace; color: var(--accent); font-size: 24px; }
+  .quiz .opt.right{ border-color: var(--good); background: color-mix(in oklab, var(--good) 14%, var(--surface)); }
+  .quiz .opt.wrong{ border-color: var(--bad); background: color-mix(in oklab, var(--bad) 12%, var(--surface)); }
+  .quiz .opt.soso{ border-color: var(--warn); background: color-mix(in oklab, var(--warn) 12%, var(--surface)); }
+  .quiz .why{ min-height: 120px; font-size: 30px; line-height: 1.4; color: var(--fg); padding: 14px 4px; }
+  .quiz.mono .opt{ font-family:'JetBrains Mono', monospace; font-size: 26px; padding: 18px 26px; }
+
+  /* образ → контейнери (07) */
+  .ctr-area{ display:grid; grid-template-columns: repeat(4, 1fr); gap: 14px; min-height: 190px; }
+  .ctr{
+    border: 1px solid var(--good); border-radius: 12px; padding: 18px 14px; text-align:center;
+    background: color-mix(in oklab, var(--good) 10%, var(--surface));
+    font-family:'JetBrains Mono', monospace; font-size: 24px; animation: pop .3s ease;
+  }
+  .ctr small{ display:block; margin-top: 10px; font-size: 20px; color: var(--good); }
+  .ctr.exited{ border-color: var(--line); border-style: dashed; background: var(--surface); color: var(--fg-3); }
+  .ctr.exited small{ color: var(--fg-3); }
+  .ctr-empty{ grid-column: 1 / -1; display:flex; align-items:center; justify-content:center; border: 1px dashed var(--line); border-radius: 12px; }
+  @keyframes pop{ from{ transform: scale(.85); opacity: 0; } to{ transform:none; opacity: 1; } }
+
+  /* Dockerfile → шари (08) */
+  .dfile{ display:flex; flex-direction:column; gap: 8px; }
+  .dfile .ln{
+    font-family:'JetBrains Mono', monospace; font-size: 24px; padding: 13px 20px; border-radius: 10px;
+    border: 1px solid transparent; color: var(--fg-3); background: oklch(0.15 0.01 250); white-space: pre; transition: all .3s;
+  }
+  .dfile .ln.at{ border-color: var(--accent); color: var(--fg); background: color-mix(in oklab, var(--accent) 14%, oklch(0.15 0.01 250)); }
+  .dfile .ln.done{ color: var(--fg-2); }
+  .dfile .ln .k{ color: var(--accent); }
+  .layers{ display:flex; flex-direction:column-reverse; gap: 8px; }
+  .layer{
+    display:grid; grid-template-columns: 56px 1fr auto; gap: 16px; align-items:center;
+    padding: 13px 20px; border-radius: 10px; border: 1px solid var(--line); background: var(--surface); font-size: 24px;
+  }
+  .layer .n{ font-family:'JetBrains Mono', monospace; color: var(--accent); }
+  .layer .sz{ font-family:'JetBrains Mono', monospace; color: var(--fg-3); font-size: 21px; }
+  .layer.meta-l{ border-style: dashed; }
+
+  /* кеш (09) */
+  .crow{
+    display:grid; grid-template-columns: 1fr 150px 90px; gap: 16px; align-items:center;
+    padding: 14px 20px; border-radius: 10px; border: 1px solid var(--line-soft); background: var(--surface);
+    font-family:'JetBrains Mono', monospace; font-size: 23px; transition: all .25s;
+  }
+  .crow .st{ text-align:center; font-size: 20px; letter-spacing: .08em; border-radius: 8px; padding: 6px 0; color: var(--fg-3); border: 1px solid var(--line); }
+  .crow .tm{ text-align:right; color: var(--fg-3); }
+  .crow.cached .st{ color: var(--good); border-color: color-mix(in oklab, var(--good) 50%, var(--line)); }
+  .crow.build{ border-color: color-mix(in oklab, var(--warn) 60%, var(--line)); background: color-mix(in oklab, var(--warn) 9%, var(--surface)); }
+  .crow.build .st{ color: var(--warn); border-color: var(--warn); }
+  .crow.build .tm{ color: var(--warn); }
+  .crow.changed{ box-shadow: inset 4px 0 0 var(--bad); }
+  .bigtime{ font-size: 110px; font-weight: 600; letter-spacing: -0.03em; line-height: 1; }
+
+  /* життєвий цикл (10) */
+  .state{
+    border: 1px solid var(--line); border-radius: 14px; padding: 18px 22px; background: var(--surface);
+    display:flex; justify-content:space-between; align-items:center; font-family:'JetBrains Mono', monospace; font-size: 24px;
+    opacity: .35; transition: all .35s;
+  }
+  .state.live{ opacity: 1; }
+  .state.cur{ border-color: var(--accent); box-shadow: 0 0 0 1px color-mix(in oklab, var(--accent) 40%, transparent); }
+  .state .badge{ font-size: 20px; padding: 4px 12px; border-radius: 999px; border: 1px solid var(--line); color: var(--fg-3); }
+  .state .badge.run{ color: var(--good); border-color: var(--good); }
+  .state .badge.exit{ color: var(--warn); border-color: var(--warn); }
+  .state .badge.gone{ color: var(--bad); border-color: var(--bad); }
+  .down{ text-align:center; color: var(--fg-3); font-family:'JetBrains Mono', monospace; font-size: 20px; padding: 4px 0; }
+  .tblock{ margin-bottom: 10px; }
+
+  /* архітектура (11) */
+  .arch .col{ transition: all .35s; }
+  .arch .col.lit{ border-color: var(--accent); background: color-mix(in oklab, var(--accent) 10%, var(--surface)); }
+  .cap{ display:none; font-size: 30px; line-height: 1.4; color: var(--fg); }
+  .cap.at{ display:block; }
+  .cap code, .rule code, .why code, p code{ font-family:'JetBrains Mono', monospace; font-size: .88em; color: var(--accent); }
+
+  /* порти (12) */
+  .wire{ display:grid; grid-template-columns: 300px 1fr 420px 1fr 420px; align-items:center; }
+  .wire .zone{ border: 1px solid var(--line); border-radius: 16px; padding: 24px; background: var(--surface); text-align:center; min-height: 170px; display:flex; flex-direction:column; justify-content:center; gap: 10px; }
+  .wire .zone .label{ font-family:'JetBrains Mono', monospace; font-size: 21px; letter-spacing: .1em; color: var(--fg-3); }
+  .wire .zone .big{ font-family:'JetBrains Mono', monospace; font-size: 28px; }
+  .wire .link{ height: 3px; background: var(--line); position: relative; margin: 0 6px; transition: background .3s; }
+  .wire .link.good{ background: var(--good); } .wire .link.bad{ background: var(--bad); }
+  .wire .link span{ position:absolute; left: 50%; top: -40px; transform: translateX(-50%); font-family:'JetBrains Mono', monospace; font-size: 24px; white-space: nowrap; }
+  .door{ display:inline-block; padding: 6px 16px; border-radius: 8px; border: 1px dashed var(--line); color: var(--fg-3); font-family:'JetBrains Mono', monospace; font-size: 24px; }
+  .door.open{ border: 1px solid var(--good); color: var(--good); }
+
+  /* volume (13) */
+  .vbox{ border: 1px solid var(--line); border-radius: 16px; padding: 26px; background: var(--surface); min-height: 170px; }
+  .vbox .label{ font-family:'JetBrains Mono', monospace; font-size: 21px; letter-spacing: .1em; color: var(--fg-3); margin-bottom: 10px; }
+  .vbox .num{ font-size: 72px; font-weight: 600; line-height: 1; letter-spacing: -0.02em; }
+  .vbox.vol{ border-color: var(--accent-soft); background: color-mix(in oklab, var(--accent) 8%, var(--surface)); }
+  .vbox.off{ opacity: .25; border-style: dashed; }
+  .vbox.flash{ animation: flash .5s ease; }
+  @keyframes flash{ from{ background: color-mix(in oklab, var(--bad) 35%, var(--surface)); } }
+
+  /* compose (15) */
+  .svc-grid{ display:grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+  .svc-node{
+    border: 1px dashed var(--line); border-radius: 12px; padding: 16px; text-align:center; opacity: .45;
+    font-family:'JetBrains Mono', monospace; font-size: 24px; transition: all .3s; background: var(--surface);
+  }
+  .svc-node small{ display:block; font-size: 19px; color: var(--fg-3); margin-top: 4px; }
+  .svc-node.up{ opacity: 1; border: 1px solid var(--good); background: color-mix(in oklab, var(--good) 10%, var(--surface)); }
+  .svc-node.up small{ color: var(--good); }
+  .svc-node.keep{ opacity: 1; border: 1px solid var(--accent-soft); }
+
+  /* картки «перевір себе» (18) */
+  .flip{
+    text-align:left; cursor:pointer; background: var(--surface); border: 1px solid var(--line); border-radius: 18px;
+    padding: 30px 34px; color: var(--fg); font-family: inherit; min-height: 270px; display:flex; flex-direction:column; gap: 16px;
+  }
+  .flip:hover{ border-color: var(--accent-soft); }
+  .flip .q{ font-size: 32px; font-weight: 600; line-height: 1.25; }
+  .flip .a{ font-size: 26px; line-height: 1.4; color: var(--fg-2); display:none; }
+  .flip .tap{ font-family:'JetBrains Mono', monospace; font-size: 21px; color: var(--fg-3); margin-top:auto; }
+  .flip.open{ border-color: var(--good); }
+  .flip.open .a{ display:block; } .flip.open .tap{ display:none; }
 </style>
 </head>
 <body>
 <deck-stage>
 
 <!-- ============ 01 TITLE ============ -->
-<section class="slide title-slide" data-screen-label="01 Title">
+<section class="slide title-slide">
   <div class="grid-bg"></div>
   <div class="meta">
-    <div class="brand"><b>docker</b><span class="dot"></span>module 03 · python advanced</div>
+    <div class="brand"><b>docker</b><span class="dot"></span>урок 49</div>
     <div>v.nikoriak · 2026</div>
   </div>
   <div class="title-mark">
     <div class="mark">D</div>
-    <div class="badge">// 13 slides · 25 min</div>
+    <div class="badge">// → далі · O огляд · F весь екран</div>
   </div>
 
   <div style="position:relative; z-index:1;">
-    <div class="kicker" style="margin-bottom: 36px;">// 01 · opening</div>
+    <div class="kicker" style="margin-bottom: 36px;">// одна історія · від проблеми до системи</div>
     <h1 class="display">Docker:<br>від «працює&nbsp;у&nbsp;мене»<br>до production.</h1>
-    <p class="lead" style="margin-top: 48px; max-width: 1100px;">
-      Системне мислення, архітектура, ментальні моделі —
-      не просто список команд.
+    <p class="lead" style="margin-top: 44px; max-width: 1300px;">
+      Ідемо за одним застосунком — <span class="mono acc">myapi</span>: чому він падає на сервері,
+      як його запакувати, запустити, з'єднати з базою і не зламати в production.
     </p>
   </div>
 
   <div class="footer">
-    <div>// press → to continue</div>
-    <div>01 / 13</div>
+    <div>// натисни → щоб почати</div>
+    <div data-slide-num></div>
   </div>
 </section>
 
 <!-- ============ 02 PROBLEM ============ -->
-<section class="slide" data-screen-label="02 Problem">
-  <div class="meta">
-    <div class="brand"><b>docker</b><span class="dot"></span>problem</div>
-    <div>// 02 · the pain</div>
-  </div>
+<section class="slide" data-ch="1" data-topic="проблема" data-foot="// це не проблема коду — це проблема середовища">
+  <div class="kicker">// з чого все починається</div>
+  <h2 class="section">«У мене працює.» — «А на сервері падає.»</h2>
 
-  <div class="kicker" style="margin-top: 64px;">// проблема</div>
-  <h2 class="section" style="margin-top:18px;">Класична розмова<br>розробника й devops.</h2>
-
-  <div class="grid-2" style="margin-top: 56px; gap: 80px;">
-    <div class="quote-block">
-      «У мене працює.»
-      <span class="sub">— developer, локальна машина</span>
+  <div class="grid-3" style="margin-top: 36px;" id="problem">
+    <div class="machine" data-cls="pass" data-out="$ python main.py&#10;✓ Uvicorn running on :8000">
+      <div class="label">// твій ноутбук</div>
+      <h3>Windows 11</h3>
+      <div class="env"><span>Python 3.12</span><span>fastapi · psycopg2 ✓</span></div>
+      <div class="out">$ python main.py</div>
     </div>
-    <div class="quote-block bad">
-      «На сервері падає.»
-      <span class="sub">— production, 02:14 ночі</span>
+    <div class="machine" data-cls="fail" data-out="$ python main.py&#10;✕ SyntaxError: match…&#10;  (match — лише з Python 3.10)">
+      <div class="label">// ноутбук колеги</div>
+      <h3>macOS</h3>
+      <div class="env"><span>Python 3.9</span><span>fastapi · psycopg2 ✓</span></div>
+      <div class="out">$ python main.py</div>
     </div>
-  </div>
-
-  <div class="hsep" style="margin: 80px 0 40px;"></div>
-
-  <div class="grid-3">
-    <div class="card">
-      <div class="label">// причина 01</div>
-      <h3>Різні версії Python</h3>
-      <p>3.9 локально, 3.11 на CI, 3.8 на сервері. Поведінка коду розходиться.</p>
-    </div>
-    <div class="card">
-      <div class="label">// причина 02</div>
-      <h3>Різні залежності</h3>
-      <p>Системні бібліотеки, шляхи, компілятори. Pip-конфлікти між проєктами.</p>
-    </div>
-    <div class="card">
-      <div class="label">// причина 03</div>
-      <h3>Різна ОС</h3>
-      <p>macOS у розробника. Ubuntu у production. Windows у колеги. Drift.</p>
+    <div class="machine" data-cls="fail" data-out="$ python main.py&#10;✕ ModuleNotFoundError:&#10;  No module named 'psycopg2'">
+      <div class="label">// сервер</div>
+      <h3>Ubuntu 22.04</h3>
+      <div class="env"><span>Python 3.12</span><span>fastapi ✓ · psycopg2 —</span></div>
+      <div class="out">$ python main.py</div>
     </div>
   </div>
 
-  <div class="footer">
-    <div>// це не code problem — це environment problem</div>
-    <div>02 / 13</div>
+  <div class="btn-row" style="margin-top: 30px;">
+    <button class="btn" data-runall="problem">▶ запустити той самий main.py усюди</button>
+    <span class="hint">// код однаковий, байт у байт</span>
+  </div>
+
+  <div class="rule" data-step="1" style="margin-top: 30px;">
+    Код той самий. Різне — <b>середовище</b>: версія Python, бібліотеки, операційна система.
   </div>
 </section>
 
-<!-- ============ 03 SOLUTION ============ -->
-<section class="slide" data-screen-label="03 Solution">
-  <div class="meta">
-    <div class="brand"><b>docker</b><span class="dot"></span>solution</div>
-    <div>// 03 · reproducible execution</div>
-  </div>
+<!-- ============ 03 IDEA ============ -->
+<section class="slide" data-ch="1" data-topic="ідея" data-foot="// образ = код + усе, що йому треба для запуску">
+  <div class="kicker">// ідея</div>
+  <h2 class="section">А якщо возити середовище разом із кодом?</h2>
 
-  <div class="kicker" style="margin-top: 48px;">// рішення</div>
-  <h2 class="section" style="margin-top: 12px; font-size: 56px; max-width: 1480px;">
-    Контроль середовища&nbsp;<span style="color: var(--accent); text-shadow: 0 0 32px color-mix(in oklab, var(--accent) 35%, transparent);">→</span>&nbsp;передбачуваний результат.
-  </h2>
+  <div style="display:grid; grid-template-columns: 500px 1fr; gap: 56px; margin-top: 36px; align-items:start;">
+    <div class="stack" style="gap: 12px;">
+      <div class="ingredient">main.py <span>// твій код</span></div>
+      <div class="ingredient">Python 3.12 <span>// runtime</span></div>
+      <div class="ingredient">fastapi, psycopg2 <span>// бібліотеки</span></div>
+      <div class="ingredient">налаштування <span>// порт, команда</span></div>
+      <div class="down" style="font-size: 26px;">↓ docker build</div>
+      <div class="imagebox">myapi:v1<small>один файл-образ (image)</small></div>
+    </div>
 
-  <div style="display:grid; grid-template-columns: 1fr 1px 1fr; gap: 56px; margin-top: 44px; align-items: stretch;">
-
-    <!-- LEFT · the artifact + the pipeline -->
     <div>
-      <div class="label" style="margin-bottom: 22px;">// один артефакт</div>
-
-      <div style="display:grid; grid-template-columns: auto auto; align-items:center; gap: 18px 28px; margin-bottom: 36px;">
-        <div class="mono" style="font-size:26px; color: var(--fg-2);">код</div>
-        <div class="mono" style="font-size:24px; color: var(--fg-3);">// application</div>
-        <div class="mono" style="font-size:26px; color: var(--fg-2);">runtime</div>
-        <div class="mono" style="font-size:24px; color: var(--fg-3);">// python, node, jvm…</div>
-        <div class="mono" style="font-size:26px; color: var(--fg-2);">dependencies</div>
-        <div class="mono" style="font-size:24px; color: var(--fg-3);">// libs, system pkgs</div>
-        <div class="mono" style="font-size:26px; color: var(--fg-2);">config</div>
-        <div class="mono" style="font-size:24px; color: var(--fg-3);">// env, secrets ref</div>
-      </div>
-
-      <div style="display:flex; align-items:center; gap: 18px; margin-bottom: 28px;">
-        <div style="height:1px; flex:1; background: var(--line-soft);"></div>
-        <div class="mono" style="font-size:24px; color: var(--accent);">→ 1 image</div>
-        <div style="height:1px; flex:1; background: var(--line-soft);"></div>
-      </div>
-
-      <!-- pipeline -->
-      <div style="display:flex; gap: 12px; align-items:center; flex-wrap: nowrap;">
-        <span class="pill"><span class="dotc"></span>dev</span>
-        <span class="arrow" style="color: var(--fg-3);">→</span>
-        <span class="pill"><span class="dotc"></span>ci</span>
-        <span class="arrow" style="color: var(--fg-3);">→</span>
-        <span class="pill"><span class="dotc"></span>staging</span>
-        <span class="arrow" style="color: var(--fg-3);">→</span>
-        <span class="pill"><span class="dotc"></span>prod</span>
-      </div>
-      <div class="mono" style="font-size:24px; color: var(--fg-3); margin-top: 14px; text-align:center;">↑ same container, byte-for-byte</div>
-
-      <div class="mono" style="font-size:24px; color: var(--accent); letter-spacing: 0.1em; margin-top: 36px;">// no environment drift</div>
-    </div>
-
-    <!-- vertical divider -->
-    <div style="width:1px; background: linear-gradient(to bottom, transparent, var(--line-soft) 15%, var(--line-soft) 85%, transparent);"></div>
-
-    <!-- RIGHT · before vs after -->
-    <div style="display:flex; flex-direction:column; gap: 28px;">
-
-      <!-- BEFORE -->
-      <div>
-        <div class="mono" style="font-size:24px; color: var(--bad); letter-spacing: 0.12em; margin-bottom: 14px;">// before · chaos</div>
-        <div style="display:flex; flex-direction:column; gap: 10px;">
-          <div class="mono" style="font-size:26px; color: var(--fg-2);"><span style="color: var(--bad); margin-right: 14px;">✕</span>version mismatch</div>
-          <div class="mono" style="font-size:26px; color: var(--fg-2);"><span style="color: var(--bad); margin-right: 14px;">✕</span>«works on my machine»</div>
-          <div class="mono" style="font-size:26px; color: var(--fg-2);"><span style="color: var(--bad); margin-right: 14px;">✕</span>hidden dependencies</div>
-          <div class="mono" style="font-size:26px; color: var(--fg-2);"><span style="color: var(--bad); margin-right: 14px;">✕</span>broken deploy</div>
+      <div class="grid-3" style="gap: 18px;" id="solution">
+        <div class="machine" data-cls="pass" data-out="$ docker run myapi:v1&#10;✓ Python 3.12&#10;✓ Uvicorn :8000">
+          <div class="label">// твій ноутбук</div>
+          <div class="env"><span>Windows · Python 3.12</span></div>
+          <div class="out">$ docker run myapi:v1</div>
+        </div>
+        <div class="machine" data-cls="pass" data-out="$ docker run myapi:v1&#10;✓ Python 3.12&#10;✓ Uvicorn :8000">
+          <div class="label">// колега</div>
+          <div class="env"><span>macOS · Python 3.9</span></div>
+          <div class="out">$ docker run myapi:v1</div>
+        </div>
+        <div class="machine" data-cls="pass" data-out="$ docker run myapi:v1&#10;✓ Python 3.12&#10;✓ Uvicorn :8000">
+          <div class="label">// сервер</div>
+          <div class="env"><span>Ubuntu · без psycopg2</span></div>
+          <div class="out">$ docker run myapi:v1</div>
         </div>
       </div>
-
-      <div class="hsep"></div>
-
-      <!-- AFTER -->
-      <div>
-        <div class="mono" style="font-size:24px; color: var(--accent); letter-spacing: 0.12em; margin-bottom: 14px;">// after · control</div>
-        <div style="display:grid; grid-template-columns: repeat(4, 1fr); gap: 12px;">
-          <!-- 4 identical container tiles -->
-          <div style="aspect-ratio: 1; border: 1px solid var(--accent); border-radius: 8px; background: color-mix(in oklab, var(--accent) 10%, transparent); display:flex; flex-direction:column; align-items:center; justify-content:center; gap: 10px; padding: 12px;">
-            <svg viewBox="0 0 64 64" width="72" height="72" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" style="color: var(--accent);">
-              <rect x="6" y="18" width="52" height="32" rx="2"></rect>
-              <line x1="14" y1="18" x2="14" y2="50"></line>
-              <line x1="22" y1="18" x2="22" y2="50"></line>
-              <line x1="30" y1="18" x2="30" y2="50"></line>
-              <line x1="38" y1="18" x2="38" y2="50"></line>
-              <line x1="46" y1="18" x2="46" y2="50"></line>
-              <line x1="54" y1="18" x2="54" y2="50"></line>
-              <rect x="10" y="14" width="44" height="4" rx="1"></rect>
-            </svg>
-          </div>
-          <div style="aspect-ratio: 1; border: 1px solid var(--accent); border-radius: 8px; background: color-mix(in oklab, var(--accent) 10%, transparent); display:flex; flex-direction:column; align-items:center; justify-content:center; gap: 10px; padding: 12px;">
-            <svg viewBox="0 0 64 64" width="72" height="72" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" style="color: var(--accent);">
-              <rect x="6" y="18" width="52" height="32" rx="2"></rect>
-              <line x1="14" y1="18" x2="14" y2="50"></line>
-              <line x1="22" y1="18" x2="22" y2="50"></line>
-              <line x1="30" y1="18" x2="30" y2="50"></line>
-              <line x1="38" y1="18" x2="38" y2="50"></line>
-              <line x1="46" y1="18" x2="46" y2="50"></line>
-              <line x1="54" y1="18" x2="54" y2="50"></line>
-              <rect x="10" y="14" width="44" height="4" rx="1"></rect>
-            </svg>
-          </div>
-          <div style="aspect-ratio: 1; border: 1px solid var(--accent); border-radius: 8px; background: color-mix(in oklab, var(--accent) 10%, transparent); display:flex; flex-direction:column; align-items:center; justify-content:center; gap: 10px; padding: 12px;">
-            <svg viewBox="0 0 64 64" width="72" height="72" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" style="color: var(--accent);">
-              <rect x="6" y="18" width="52" height="32" rx="2"></rect>
-              <line x1="14" y1="18" x2="14" y2="50"></line>
-              <line x1="22" y1="18" x2="22" y2="50"></line>
-              <line x1="30" y1="18" x2="30" y2="50"></line>
-              <line x1="38" y1="18" x2="38" y2="50"></line>
-              <line x1="46" y1="18" x2="46" y2="50"></line>
-              <line x1="54" y1="18" x2="54" y2="50"></line>
-              <rect x="10" y="14" width="44" height="4" rx="1"></rect>
-            </svg>
-          </div>
-          <div style="aspect-ratio: 1; border: 1px solid var(--accent); border-radius: 8px; background: color-mix(in oklab, var(--accent) 10%, transparent); display:flex; flex-direction:column; align-items:center; justify-content:center; gap: 10px; padding: 12px;">
-            <svg viewBox="0 0 64 64" width="72" height="72" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" style="color: var(--accent);">
-              <rect x="6" y="18" width="52" height="32" rx="2"></rect>
-              <line x1="14" y1="18" x2="14" y2="50"></line>
-              <line x1="22" y1="18" x2="22" y2="50"></line>
-              <line x1="30" y1="18" x2="30" y2="50"></line>
-              <line x1="38" y1="18" x2="38" y2="50"></line>
-              <line x1="46" y1="18" x2="46" y2="50"></line>
-              <line x1="54" y1="18" x2="54" y2="50"></line>
-              <rect x="10" y="14" width="44" height="4" rx="1"></rect>
-            </svg>
-          </div>
-        </div>
-        <div style="display:grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-top: 10px; text-align:center;">
-          <div class="mono" style="font-size:24px; color: var(--fg-2);">dev</div>
-          <div class="mono" style="font-size:24px; color: var(--fg-2);">ci</div>
-          <div class="mono" style="font-size:24px; color: var(--fg-2);">staging</div>
-          <div class="mono" style="font-size:24px; color: var(--fg-2);">prod</div>
-        </div>
-        <div class="mono" style="font-size:24px; color: var(--accent); margin-top: 14px;">→ same image, every stage</div>
+      <div class="btn-row" style="margin-top: 24px;">
+        <button class="btn" data-runall="solution" data-boxed="1">▶ запустити той самий образ усюди</button>
+      </div>
+      <div class="rule" data-step="1" style="margin-top: 26px;">
+        Що встановлено на машині — вже неважливо. Потрібен лише <b>Docker</b>.<br>
+        Python і бібліотеки їдуть <b>усередині образу</b>.
       </div>
     </div>
-  </div>
-
-  <div class="footer">
-    <div>// inconsistency = risk</div>
-    <div>03 / 13</div>
   </div>
 </section>
 
 <!-- ============ 04 MENTAL MODEL ============ -->
-<section class="slide" data-screen-label="04 Mental model">
-  <div class="meta">
-    <div class="brand"><b>docker</b><span class="dot"></span>mental model</div>
-    <div>// 04 · shipping container</div>
-  </div>
+<section class="slide" data-ch="1" data-topic="ментальна модель" data-foot="// морські контейнери · 1956 · для софту · 2013">
+  <div class="kicker">// ментальна модель</div>
+  <h2 class="section">Docker — це вантажний контейнер для софту.</h2>
 
-  <div class="kicker" style="margin-top: 64px;">// ментальна модель</div>
-  <h2 class="section" style="margin-top: 18px;">Docker — це вантажний контейнер<br>для софту.</h2>
-
-  <div class="containers" style="margin-top: 56px; height: 220px;">
+  <div class="containers" style="margin-top: 44px; height: 200px; align-items: stretch;">
     <div class="box">api</div>
     <div class="box accent">postgres</div>
     <div class="box">redis</div>
@@ -543,561 +631,869 @@
     <div class="box accent">ml-model</div>
     <div class="box">grafana</div>
   </div>
-  <div class="mono" style="text-align:center; color: var(--fg-3); margin-top: 16px; font-size:24px; letter-spacing:0.12em;">
-    // різний вміст · однаковий інтерфейс · будь-який «корабель»
+  <div class="mono dim" style="text-align:center; margin-top: 16px; font-size:24px; letter-spacing:0.1em;">
+    // різний вміст · однакова «коробка» · будь-який «корабель»
   </div>
 
-  <div class="grid-3" style="margin-top: 56px;">
-    <div class="card">
-      <div class="label">// 01 standard</div>
-      <h3>Стандартизація</h3>
-      <p>Один формат — OCI. Будь-який runtime знає, як його запустити.</p>
+  <div class="grid-3" style="margin-top: 48px;">
+    <div class="card" data-step="1">
+      <div class="label">// 01 стандарт</div>
+      <h3>Однакова коробка</h3>
+      <p>Крану байдуже, що всередині: банани чи телевізори. Docker'у байдуже: Python чи Postgres.</p>
     </div>
-    <div class="card">
-      <div class="label">// 02 isolation</div>
-      <h3>Ізоляція</h3>
-      <p>Вміст не залежить від транспорту. Транспорт не залежить від вмісту.</p>
+    <div class="card" data-step="2">
+      <div class="label">// 02 ізоляція</div>
+      <h3>Вміст не змішується</h3>
+      <p>Два проєкти з різними версіями Python живуть поруч і не заважають один одному.</p>
     </div>
-    <div class="card">
-      <div class="label">// 03 portable</div>
-      <h3>Портативність</h3>
-      <p>Той самий контейнер їде з ноутбука у CI, у Kubernetes, у клієнта.</p>
+    <div class="card" data-step="3">
+      <div class="label">// 03 переносність</div>
+      <h3>Їде будь-куди</h3>
+      <p>Той самий контейнер: ноутбук → CI → сервер. Нічого не перепаковуємо.</p>
     </div>
-  </div>
-
-  <div class="footer">
-    <div>// shipping containers · circa 1956 · for software · circa 2013</div>
-    <div>04 / 13</div>
   </div>
 </section>
 
-<!-- ============ 05 VM vs DOCKER ============ -->
-<section class="slide" data-screen-label="05 VM vs Docker">
-  <div class="meta">
-    <div class="brand"><b>docker</b><span class="dot"></span>vm vs container</div>
-    <div>// 05 · isolation models</div>
+<!-- ============ 05 PREDICT ============ -->
+<section class="slide" data-ch="1" data-topic="передбач" data-foot="// спершу подумай — потім клацай">
+  <div class="kicker wrn">// передбач</div>
+  <h2 class="section">То що ж таке контейнер?</h2>
+
+  <div class="quiz" style="margin-top: 44px; max-width: 1500px;">
+    <button class="opt" data-res="wrong" data-why="Найпоширеніша помилка. У віртуальної машини є власна операційна система з власним ядром. У контейнера — немає. Дивись наступний слайд.">
+      <span class="key">A</span>Маленька віртуальна машина зі своєю операційною системою</button>
+    <button class="opt" data-res="right" data-why="Так. Контейнер — це звичайний процес на твоїй машині, якому показали власні файли, власну мережу і власний список процесів. Він «думає», що сам у системі.">
+      <span class="key">B</span>Звичайний процес, ізольований від решти системи</button>
+    <button class="opt" data-res="wrong" data-why="Це ближче до образу (image): запакований код і середовище. Контейнер — це вже те, що запущено з образу.">
+      <span class="key">C</span>Архів із кодом і бібліотеками</button>
+    <div class="why"></div>
   </div>
+</section>
 
-  <div class="kicker" style="margin-top: 64px;">// порівняння</div>
-  <h2 class="section" style="margin-top: 18px;">Не віртуальна машина.<br>Ізоляція на рівні процесу.</h2>
+<!-- ============ 06 VM vs DOCKER ============ -->
+<section class="slide" data-ch="1" data-topic="vm чи контейнер" data-foot="// контейнери ділять ядро хоста — у цьому весь трюк">
+  <div class="kicker">// порівняння</div>
+  <h2 class="section">Контейнер ≠ віртуальна машина.</h2>
 
-  <div class="grid-2" style="margin-top: 56px; gap: 64px;">
+  <div class="grid-2" style="margin-top: 32px; gap: 64px;">
     <div>
-      <div class="row" style="margin-bottom: 22px; justify-content:space-between;">
-        <div class="label mono" style="color:var(--fg-3); letter-spacing:0.12em;">// virtual machine</div>
-        <span class="pill">~1–10 GB · ~30–60s</span>
+      <div class="row" style="margin-bottom: 16px; justify-content:space-between;">
+        <div class="mono dim" style="font-size:24px; letter-spacing:0.1em;">// віртуальна машина</div>
+        <span class="pill">~1–10 GB · старт ~30–60 с</span>
       </div>
       <div class="stack-vis">
-        <div class="bar app">App</div>
-        <div class="bar app">Libs / Deps</div>
-        <div class="bar os">Guest OS · повне ядро</div>
-        <div class="bar">Hypervisor</div>
-        <div class="bar kernel">Host OS</div>
-        <div class="bar">Hardware</div>
+        <div class="bar app">Застосунок</div>
+        <div class="bar app">Бібліотеки</div>
+        <div class="bar os">Гостьова ОС · ціле власне ядро</div>
+        <div class="bar">Гіпервізор</div>
+        <div class="bar kernel">ОС хоста</div>
+        <div class="bar">Залізо</div>
       </div>
     </div>
-
     <div>
-      <div class="row" style="margin-bottom: 22px; justify-content:space-between;">
-        <div class="label mono" style="color:var(--accent); letter-spacing:0.12em;">// docker container</div>
-        <span class="pill" style="border-color: var(--accent-soft); color: var(--fg);">~10–500 MB · ~0.1–2s</span>
+      <div class="row" style="margin-bottom: 16px; justify-content:space-between;">
+        <div class="mono acc" style="font-size:24px; letter-spacing:0.1em;">// контейнер</div>
+        <span class="pill" style="border-color: var(--accent-soft); color: var(--fg);">~10–500 MB · старт ~1 с</span>
       </div>
       <div class="stack-vis">
-        <div class="bar app">App</div>
-        <div class="bar app">Libs / Deps</div>
+        <div class="bar app">Застосунок</div>
+        <div class="bar app">Бібліотеки</div>
         <div class="bar">Docker Engine</div>
-        <div class="bar kernel">Host OS · спільне ядро</div>
-        <div class="bar">Hardware</div>
-        <div class="bar" style="opacity: 0.25;">—</div>
+        <div class="bar kernel">ОС хоста · спільне ядро</div>
+        <div class="bar">Залізо</div>
+        <div class="bar" style="opacity: 0.25;">— гостьової ОС немає —</div>
       </div>
     </div>
   </div>
 
-  <div class="footer">
-    <div>// containers share the host kernel — that's the whole trick</div>
-    <div>05 / 13</div>
+  <div class="rule" data-step="1" style="margin-top: 28px;">
+    Контейнер не везе із собою ядро ОС — він <b>позичає ядро хоста</b>. Тому він легкий і стартує за секунду.
   </div>
 </section>
 
-<!-- ============ 06 CORE CONCEPTS ============ -->
-<section class="slide" data-screen-label="06 Core concepts">
-  <div class="meta">
-    <div class="brand"><b>docker</b><span class="dot"></span>core concepts</div>
-    <div>// 06 · the four primitives</div>
-  </div>
+<!-- ============ 07 IMAGE vs CONTAINER ============ -->
+<section class="slide" data-ch="2" data-topic="образ і контейнер" data-foot="// образ один — контейнерів із нього скільки завгодно">
+  <div class="kicker">// спробуй сам</div>
+  <h2 class="section">Образ — це клас. Контейнер — це об'єкт.</h2>
 
-  <div class="kicker" style="margin-top: 64px;">// чотири примітиви</div>
-  <h2 class="section" style="margin-top: 18px;">Все, що тобі треба тримати в голові.</h2>
+  <div style="display:grid; grid-template-columns: 0.8fr 1.2fr; gap: 56px; margin-top: 36px; align-items:start;">
+    <div class="stack" style="gap: 20px;">
+      <div class="imagebox" style="text-align:left;">myapi:v1<small>образ · незмінний шаблон · лежить на диску</small></div>
+      <div class="code" style="font-size: 23px;"><span class="c"># те саме мовою Python</span>
+<span class="k">class</span> MyApi: ...     <span class="c"># образ</span>
 
-  <div class="grid-4" style="margin-top: 64px;">
-    <div class="card" style="padding: 32px;">
-      <div class="label" style="color: var(--accent);">// 01</div>
-      <h3 style="font-size:38px;">Image</h3>
-      <p style="font-size:24px; margin-bottom: 24px;">Незмінний шаруватий знімок файлової системи.</p>
-      <div class="mono" style="font-size:24px; color: var(--fg-3);">≈ blueprint / клас</div>
-      <div class="hsep" style="margin: 18px 0;"></div>
-      <div class="mono" style="font-size:24px; color: var(--fg-3);">build · push · pull</div>
+c1 = MyApi()          <span class="c"># docker run</span>
+c2 = MyApi()          <span class="c"># ще один docker run</span>
+<span class="k">del</span> c1                <span class="c"># docker rm</span>
+<span class="c"># клас MyApi нікуди не зник</span></div>
     </div>
 
-    <div class="card" style="padding: 32px;">
-      <div class="label" style="color: var(--accent);">// 02</div>
-      <h3 style="font-size:38px;">Container</h3>
-      <p style="font-size:24px; margin-bottom: 24px;">Запущений ізольований процес з image + writable layer.</p>
-      <div class="mono" style="font-size:24px; color: var(--fg-3);">≈ instance / об'єкт</div>
-      <div class="hsep" style="margin: 18px 0;"></div>
-      <div class="mono" style="font-size:24px; color: var(--fg-3);">run · stop · exec</div>
+    <div id="play">
+      <div class="btn-row">
+        <button class="btn" data-act="run">docker run myapi:v1</button>
+        <button class="btn ghost" data-act="stop">docker stop</button>
+        <button class="btn ghost" data-act="rm">docker rm</button>
+      </div>
+      <div class="mono dim" style="font-size: 22px; letter-spacing: .1em; margin: 26px 0 12px;">// контейнери</div>
+      <div class="ctr-area"></div>
+      <div class="term" style="margin-top: 20px; min-height: 104px;"></div>
+      <div class="mono" style="font-size: 24px; margin-top: 18px;">
+        образів: <span class="acc">1</span> <span class="dim">·</span> контейнерів: <span class="acc" data-count>0</span>
+      </div>
     </div>
-
-    <div class="card" style="padding: 32px;">
-      <div class="label" style="color: var(--accent);">// 03</div>
-      <h3 style="font-size:38px;">Volume</h3>
-      <p style="font-size:24px; margin-bottom: 24px;">Постійне сховище поза життєвим циклом контейнера.</p>
-      <div class="mono" style="font-size:24px; color: var(--fg-3);">≈ usb-флешка</div>
-      <div class="hsep" style="margin: 18px 0;"></div>
-      <div class="mono" style="font-size:24px; color: var(--fg-3);">named · bind · tmpfs</div>
-    </div>
-
-    <div class="card" style="padding: 32px;">
-      <div class="label" style="color: var(--accent);">// 04</div>
-      <h3 style="font-size:38px;">Network</h3>
-      <p style="font-size:24px; margin-bottom: 24px;">Віртуальна мережа: сервіси бачать один одного за іменем.</p>
-      <div class="mono" style="font-size:24px; color: var(--fg-3);">≈ офісний LAN</div>
-      <div class="hsep" style="margin: 18px 0;"></div>
-      <div class="mono" style="font-size:24px; color: var(--fg-3);">bridge · host · overlay</div>
-    </div>
-  </div>
-
-  <div style="margin-top: 56px; display:flex; gap: 18px; align-items:center; justify-content:center; flex-wrap:wrap;">
-    <span class="pill">Dockerfile</span>
-    <span class="arrow">→ build →</span>
-    <span class="pill" style="border-color:var(--accent-soft);">Image</span>
-    <span class="arrow">→ run →</span>
-    <span class="pill" style="border-color:var(--accent-soft);">Container</span>
-    <span class="arrow">+ mount →</span>
-    <span class="pill">Volume</span>
-    <span class="arrow">+ join →</span>
-    <span class="pill">Network</span>
-  </div>
-
-  <div class="footer">
-    <div>// image is a class · container is an instance</div>
-    <div>06 / 13</div>
   </div>
 </section>
 
-<!-- ============ 07 ARCHITECTURE ============ -->
-<section class="slide" data-screen-label="07 Architecture">
-  <div class="meta">
-    <div class="brand"><b>docker</b><span class="dot"></span>architecture</div>
-    <div>// 07 · client · daemon · registry</div>
-  </div>
+<!-- ============ 08 DOCKERFILE → LAYERS ============ -->
+<section class="slide" data-ch="2" data-topic="dockerfile" data-foot="// docker build читає Dockerfile згори вниз">
+  <div class="kicker">// звідки береться образ</div>
+  <h2 class="section">Dockerfile — це рецепт. Рядок за рядком.</h2>
 
-  <div class="kicker" style="margin-top: 56px;">// архітектура</div>
-  <h2 class="section" style="margin-top: 18px;">Ти не запускаєш Docker напряму —<br>ти говориш з системою.</h2>
-
-  <div class="arch" style="margin-top: 56px; gap: 24px;">
-    <div class="col">
-      <div class="lab">// 01 · you</div>
-      <h4>Developer / CI</h4>
-      <p>Пишеш Dockerfile, виконуєш команди. Працюєш з системою через CLI — не з контейнерами напряму.</p>
-      <div class="mono" style="margin-top:auto; color:var(--fg-3); font-size:24px;">$ docker build / run</div>
-    </div>
-    <div class="col">
-      <div class="lab">// 02 · client</div>
-      <h4>Docker CLI</h4>
-      <p>Тонкий клієнт. Перетворює команди у REST-виклики. Сам нічого не виконує.</p>
-      <div class="mono" style="margin-top:auto; color:var(--fg-3); font-size:24px;">REST · docker.sock</div>
-    </div>
-    <div class="col" style="border-color: var(--accent-soft); background: color-mix(in oklab, var(--accent) 6%, var(--surface));">
-      <div class="lab">// 03 · engine</div>
-      <h4>Docker Daemon · dockerd</h4>
-      <p>Серце системи. Будує образи, керує контейнерами, мережами та volumes. Це він робить всю роботу.</p>
-      <div class="mono" style="margin-top:auto; color:var(--accent); font-size:24px;">images · containers · volumes</div>
-    </div>
-    <div class="col">
-      <div class="lab">// 04 · storage</div>
-      <h4>Registry</h4>
-      <p>Віддалене сховище образів: Docker Hub, GHCR, ECR. Сюди push, звідси pull.</p>
-      <div class="mono" style="margin-top:auto; color:var(--fg-3); font-size:24px;">hub.docker.com · ghcr.io</div>
-    </div>
-  </div>
-
-  <div style="margin-top: 36px; display:grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap:24px; padding: 0 8px;">
-    <div></div>
-    <div style="text-align:center; color: var(--fg-3); font-family:&#39;JetBrains Mono&#39;, monospace; font-size:24px;">command</div>
-    <div style="text-align:center; color: var(--accent); font-family:&#39;JetBrains Mono&#39;, monospace; font-size:24px;">REST API ──────▶</div>
-    <div style="text-align:center; color: var(--fg-3); font-family:&#39;JetBrains Mono&#39;, monospace; font-size:24px;">push / pull</div>
-  </div>
-
-  <div class="footer">
-    <div>// permission denied? → daemon socket access</div>
-    <div>07 / 13</div>
-  </div>
-</section>
-
-<!-- ============ 08 WORKFLOW ============ -->
-<section class="slide" data-screen-label="08 Workflow">
-  <div class="meta">
-    <div class="brand"><b>docker</b><span class="dot"></span>workflow</div>
-    <div>// 08 · lifecycle</div>
-  </div>
-
-  <div class="kicker" style="margin-top: 56px;">// робочий цикл</div>
-  <h2 class="section" style="margin-top: 18px;">Один цикл — багато ітерацій.</h2>
-
-  <div class="lifecycle" style="margin-top: 48px; grid-template-columns: 1fr 40px 1fr 40px 1fr 40px 1fr 40px 1fr;">
-    <div class="step">
-      <div class="n">// 01</div>
-      <div class="t">Code</div>
-      <div class="d">app + Dockerfile</div>
-    </div>
-    <div class="sep">→</div>
-    <div class="step">
-      <div class="n">// 02</div>
-      <div class="t">Build</div>
-      <div class="d">docker build</div>
-    </div>
-    <div class="sep">→</div>
-    <div class="step">
-      <div class="n">// 03</div>
-      <div class="t">Run</div>
-      <div class="d">docker run</div>
-    </div>
-    <div class="sep">→</div>
-    <div class="step">
-      <div class="n">// 04</div>
-      <div class="t">Debug</div>
-      <div class="d">logs · exec</div>
-    </div>
-    <div class="sep">→</div>
-    <div class="step" style="border-color: var(--accent-soft); background: color-mix(in oklab, var(--accent) 6%, var(--surface));">
-      <div class="n" style="color: var(--accent);">// 05</div>
-      <div class="t">Push</div>
-      <div class="d">→ registry</div>
-    </div>
-  </div>
-
-  <div style="margin-top: 24px; display:flex; justify-content:center;">
-    <div class="mono" style="color: var(--fg-3); font-size: 24px; letter-spacing:0.12em;">
-      ↻  loop debug → fix → rebuild  ·  doors out → push to registry
-    </div>
-  </div>
-
-  <div class="grid-2" style="margin-top: 48px; gap: 40px;">
+  <div class="grid-2" style="margin-top: 36px; gap: 56px; align-items:start;" id="df">
     <div>
-      <div class="mono" style="font-size:24px; color:var(--fg-3); letter-spacing:0.12em; margin-bottom:14px;">// dockerfile</div>
-      <div class="code" style="font-size: 24px; line-height: 1.5;"><span class="c"># the recipe</span>
-<span class="k">FROM</span> python:<span class="o">3.11-slim</span>
-<span class="k">WORKDIR</span> /app
-<span class="k">COPY</span> requirements.txt .
-<span class="k">RUN</span> pip install -r requirements.txt
-<span class="k">COPY</span> . .
-<span class="k">CMD</span> [<span class="s">"uvicorn"</span>, <span class="s">"main:app"</span>]</div>
+      <div class="mono dim" style="font-size:22px; letter-spacing:0.1em; margin-bottom:14px;">// Dockerfile · натискай →</div>
+      <div class="dfile">
+        <div class="ln" data-at="1"><span class="k">FROM</span> python:3.12-slim</div>
+        <div class="ln" data-at="2"><span class="k">WORKDIR</span> /app</div>
+        <div class="ln" data-at="3"><span class="k">COPY</span> requirements.txt .</div>
+        <div class="ln" data-at="4"><span class="k">RUN</span> pip install -r requirements.txt</div>
+        <div class="ln" data-at="5"><span class="k">COPY</span> . .</div>
+        <div class="ln" data-at="6"><span class="k">CMD</span> ["uvicorn", "main:app", "--host", "0.0.0.0"]</div>
+      </div>
     </div>
     <div>
-      <div class="mono" style="font-size:24px; color:var(--fg-3); letter-spacing:0.12em; margin-bottom:14px;">// lifecycle</div>
-      <div class="code" style="font-size: 24px; line-height: 1.5;"><span class="c"># one cycle</span>
-$ docker build -t myapi:<span class="o">v1</span> .
-$ docker run -d -p <span class="o">8000:8000</span> myapi:<span class="o">v1</span>
-$ docker logs -f api
-$ docker exec -it api sh
-$ docker push ghcr.io/org/myapi:<span class="o">v1</span></div>
+      <div class="mono dim" style="font-size:22px; letter-spacing:0.1em; margin-bottom:14px;">// образ myapi:v1 · росте знизу вгору</div>
+      <div class="layers" style="min-height: 420px; justify-content: flex-start;">
+        <div class="layer" data-step="1"><span class="n">01</span><span>Linux + Python 3.12</span><span class="sz">~130 MB</span></div>
+        <div class="layer" data-step="2"><span class="n">02</span><span>робоча папка /app</span><span class="sz">0 MB</span></div>
+        <div class="layer" data-step="3"><span class="n">03</span><span>список залежностей</span><span class="sz">1 KB</span></div>
+        <div class="layer" data-step="4"><span class="n">04</span><span>встановлені бібліотеки</span><span class="sz">~80 MB</span></div>
+        <div class="layer" data-step="5"><span class="n">05</span><span>твій код</span><span class="sz">~1 MB</span></div>
+        <div class="layer meta-l" data-step="6"><span class="n">▶</span><span>що запускати при старті</span><span class="sz">не шар</span></div>
+      </div>
     </div>
   </div>
 
-  <div class="footer">
-    <div>// fast loop = small layers + good ordering</div>
-    <div>08 / 13</div>
+  <div class="rule" data-step="6" style="margin-top: 22px;">
+    Кожна інструкція, що змінює файли, додає <b>шар</b>. Образ — це стос таких шарів, і кожен шар можна <b>закешувати</b>.
   </div>
 </section>
 
-<!-- ============ 09 NETWORK ============ -->
-<section class="slide" data-screen-label="09 Network">
-  <div class="meta">
-    <div class="brand"><b>docker</b><span class="dot"></span>network</div>
-    <div>// 09 · how containers talk</div>
-  </div>
+<!-- ============ 09 CACHE ============ -->
+<section class="slide" data-ch="2" data-topic="кеш шарів" data-foot="// рідко змінюване — вище · часто змінюване — нижче">
+  <div class="kicker wrn">// передбач, потім перевір</div>
+  <h2 class="section">Змінив один файл — що збереться заново?</h2>
 
-  <div class="kicker" style="margin-top: 48px;">// мережа</div>
-  <h2 class="section" style="margin-top: 12px; font-size: 56px;">Контейнери — це сервіси.<br>Сервіси спілкуються.</h2>
-
-  <div style="display:grid; grid-template-columns: 1.15fr 0.85fr; gap: 48px; margin-top: 32px; align-items: stretch;">
-
-    <!-- network diagram -->
-    <div style="border:1px solid var(--line-soft); border-radius:18px; padding: 28px; background: var(--bg-2); position:relative;">
-      <div class="mono" style="font-size:24px; color: var(--accent); letter-spacing:0.14em; margin-bottom:18px;">// bridge network · 172.17.0.0/16</div>
-
-      <!-- internet → host -->
-      <div style="display:grid; grid-template-columns: 1fr 60px 1fr; align-items:center; margin-bottom: 14px;">
-        <div class="node" style="padding:14px 18px;">internet<small style="font-size:24px;">0.0.0.0</small></div>
-        <div class="arrow" style="text-align:center;">→</div>
-        <div class="node accent" style="padding:14px 18px;">host : 80<small style="font-size:24px;">published</small></div>
-      </div>
-
-      <div style="display:grid; grid-template-columns: 1fr 60px 1fr 60px 1fr; gap:0; align-items:center; margin-top: 14px;">
-        <div class="node accent" style="padding:14px 18px;">nginx<small style="font-size:24px;">.0.2</small></div>
-        <div class="arrow" style="text-align:center;">→</div>
-        <div class="node" style="padding:14px 18px;">api<small style="font-size:24px;">.0.3</small></div>
-        <div class="arrow" style="text-align:center;">→</div>
-        <div class="node" style="padding:14px 18px;">postgres<small style="font-size:24px;">.0.4 · internal</small></div>
-      </div>
-
-      <div class="hsep" style="margin: 22px 0;"></div>
-
-      <div class="mono" style="font-size:24px; color: var(--fg-2); line-height:1.55;">
-        <span style="color: var(--fg-3);">// from container 'api':</span><br>
-        $ ping <span style="color:var(--accent);">db</span>     → 172.17.0.4<br>
-        $ curl http://<span style="color:var(--accent);">redis</span>:6379<br>
-        <span style="color: var(--fg-3);">// docker dns @ 127.0.0.11</span>
-      </div>
-    </div>
-
-    <!-- principles + drivers -->
-    <div class="stack">
-      <div class="card" style="padding: 24px 28px;">
-        <div class="label" style="color: var(--accent);">// головне правило</div>
-        <h3 style="font-size: 30px;">Service name == hostname</h3>
-        <p style="font-size: 24px;">Docker має вбудований DNS. Конфігуруй за іменами, ніколи — за IP.</p>
-      </div>
-
-      <div class="card" style="padding: 24px 28px;">
-        <div class="label" style="color: var(--bad);">// безпека</div>
-        <h3 style="font-size: 30px;">Публікуй мінімум</h3>
-        <p style="font-size: 24px;"><span class="mono" style="color:var(--bad);">-p 5432:5432</span> на postgres — БД з інтернету. Внутрішня мережа достатня.</p>
-      </div>
-
-      <div class="card" style="padding: 20px 28px;">
-        <div class="label" style="color: var(--fg-3);">// network drivers</div>
-        <div class="mono" style="font-size:24px; line-height:1.5; margin-top: 6px;">
-          <span style="color:var(--accent);">bridge</span> <span style="color:var(--fg-3);">— default, ізольована</span><br>
-          <span style="color:var(--accent);">host</span>   <span style="color:var(--fg-3);">— без ізоляції</span><br>
-          <span style="color:var(--accent);">none</span>   <span style="color:var(--fg-3);">— без мережі</span><br>
-          <span style="color:var(--accent);">overlay</span> <span style="color:var(--fg-3);">— swarm / k8s</span>
+  <div style="display:grid; grid-template-columns: 0.85fr 1.15fr; gap: 56px; margin-top: 32px; align-items:start;" id="cache">
+    <div class="stack" style="gap: 22px;">
+      <div>
+        <div class="hint" style="margin-bottom: 10px;">// 1 · порядок рядків у Dockerfile</div>
+        <div class="seg">
+          <button data-variant="bad" class="active">спершу весь код</button>
+          <button data-variant="good">спершу залежності</button>
         </div>
       </div>
+      <div>
+        <div class="hint" style="margin-bottom: 10px;">// 2 · що ти змінив перед docker build</div>
+        <div class="btn-row">
+          <button class="btn" data-change="code">✎ main.py</button>
+          <button class="btn ghost" data-change="req">✎ requirements.txt</button>
+        </div>
+      </div>
+      <div>
+        <div class="hint">// час збірки</div>
+        <div class="bigtime" data-total>—</div>
+      </div>
+      <div class="rule" data-msg style="font-size: 26px; min-height: 110px;">Обери порядок, зміни файл і подивись, які шари перебудуються.</div>
     </div>
-  </div>
-
-  <div class="footer">
-    <div>// внутрішня мережа · DNS · опубліковані порти</div>
-    <div>09 / 13</div>
+    <div class="stack" style="gap: 10px;" data-rows></div>
   </div>
 </section>
 
-<!-- ============ 10 COMPOSE ============ -->
-<section class="slide" data-screen-label="10 Docker Compose">
-  <div class="meta">
-    <div class="brand"><b>docker</b><span class="dot"></span>compose</div>
-    <div>// 10 · system orchestration</div>
+<!-- ============ 10 LIFECYCLE ============ -->
+<section class="slide" data-ch="3" data-topic="життєвий цикл" data-steps="7" data-foot="// build → run → подивитись → stop → rm">
+  <div class="kicker">// сім команд, які треба знати</div>
+  <h2 class="section">Життя одного контейнера.</h2>
+
+  <div style="display:grid; grid-template-columns: 560px 1fr; gap: 56px; margin-top: 32px; align-items:start;" id="life">
+    <div>
+      <div class="state live" data-s="file"><span>Dockerfile</span><span class="badge">рецепт</span></div>
+      <div class="down">↓ build</div>
+      <div class="state" data-s="image"><span>образ myapi:v1</span><span class="badge">шаблон</span></div>
+      <div class="down">↓ run</div>
+      <div class="state" data-s="ctr"><span>контейнер api</span><span class="badge" data-badge>—</span></div>
+      <div class="rule" data-caption style="margin-top: 28px; font-size: 27px; min-height: 150px;">Натискай → і стеж, що відбувається після кожної команди.</div>
+    </div>
+    <div class="term" style="min-height: 600px; font-size: 21px;"><div class="tblock" data-step="1"><b>$ docker build -t myapi:v1 .</b>
+<span class="ok"> => naming to docker.io/library/myapi:v1</span></div><div class="tblock" data-step="2"><b>$ docker run -d --name api -p 8000:8000 myapi:v1</b>
+3f2a9c1b7d04e8…</div><div class="tblock" data-step="3"><b>$ docker ps</b>
+NAMES  IMAGE     STATUS        PORTS
+api    myapi:v1  Up 5 seconds  0.0.0.0:8000->8000/tcp</div><div class="tblock" data-step="4"><b>$ docker logs api</b>
+INFO:  Uvicorn running on http://0.0.0.0:8000</div><div class="tblock" data-step="5"><b>$ docker exec -it api sh</b>
+/app # ls
+main.py  requirements.txt</div><div class="tblock" data-step="6"><b>$ docker stop api</b>
+api</div><div class="tblock" data-step="7"><b>$ docker rm api</b>
+api</div></div>
+  </div>
+</section>
+
+<!-- ============ 11 ARCHITECTURE ============ -->
+<section class="slide" data-ch="3" data-topic="архітектура" data-steps="3" data-foot="// permission denied? → немає доступу до сокета daemon">
+  <div class="kicker">// хто що робить</div>
+  <h2 class="section">Хто насправді виконує <span class="mono acc">docker run</span>?</h2>
+
+  <div class="arch" style="margin-top: 36px; gap: 24px;" id="arch">
+    <div class="col">
+      <div class="lab">// 01 · ти</div>
+      <h4>Розробник / CI</h4>
+      <p>Пишеш Dockerfile і команди в терміналі.</p>
+      <div class="mono dim" style="margin-top:auto; font-size:22px;">$ docker run myapi:v1</div>
+    </div>
+    <div class="col">
+      <div class="lab">// 02 · клієнт</div>
+      <h4>Docker CLI</h4>
+      <p>Тонкий клієнт. Перетворює команду на запит. Сам нічого не запускає.</p>
+      <div class="mono dim" style="margin-top:auto; font-size:22px;">запит → docker.sock</div>
+    </div>
+    <div class="col">
+      <div class="lab">// 03 · рушій</div>
+      <h4>Docker Daemon</h4>
+      <p>Серце системи. Збирає образи, запускає контейнери, керує мережами й томами.</p>
+      <div class="mono dim" style="margin-top:auto; font-size:22px;">dockerd</div>
+    </div>
+    <div class="col">
+      <div class="lab">// 04 · склад</div>
+      <h4>Registry</h4>
+      <p>Віддалене сховище образів. Туди push, звідти pull.</p>
+      <div class="mono dim" style="margin-top:auto; font-size:22px;">Docker Hub · ghcr.io</div>
+    </div>
   </div>
 
-  <div class="kicker" style="margin-top: 56px;">// багатоконтейнерні системи</div>
-  <h2 class="section" style="margin-top: 14px; font-size: 56px;">Реальний застосунок — це не один контейнер.</h2>
+  <div class="rule" style="margin-top: 36px; min-height: 130px;">
+    <div class="cap" data-at="0">Натискай → і простеж шлях однієї команди.</div>
+    <div class="cap" data-at="1"><b>1.</b> Ти пишеш <code>docker run myapi:v1</code>. CLI нічого не запускає — він лише надсилає запит.</div>
+    <div class="cap" data-at="2"><b>2.</b> Daemon шукає образ у себе на диску. Знайшов — створює і запускає контейнер.</div>
+    <div class="cap" data-at="3"><b>3.</b> Образу немає? Daemon сам робить <code>pull</code> із registry — і лише тоді запускає.</div>
+  </div>
+</section>
 
-  <div style="display:grid; grid-template-columns: 1.05fr 0.95fr; gap: 56px; margin-top: 40px; align-items: start;">
+<!-- ============ 12 PORTS ============ -->
+<section class="slide" data-ch="4" data-topic="порти" data-foot="// -p ХОСТ:КОНТЕЙНЕР — зліва зовні, справа всередині">
+  <div class="kicker">// контейнер і зовнішній світ · 1 з 3</div>
+  <h2 class="section">Контейнер — закрита кімната. Порт — двері.</h2>
 
-    <!-- system diagram -->
-    <div style="border:1px solid var(--line-soft); border-radius:18px; padding: 28px; background: var(--bg-2);">
-      <div class="mono" style="font-size:24px; color: var(--accent); letter-spacing:0.14em; margin-bottom:18px;">// network: backend</div>
-
-      <div style="display:grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px;">
-        <div class="node accent" style="padding:18px;">nginx<small style="font-size:24px;">:80 / :443</small></div>
-        <div class="node accent" style="padding:18px;">api<small style="font-size:24px;">fastapi</small></div>
-        <div class="node" style="padding:18px;">worker<small style="font-size:24px;">celery</small></div>
-
-        <div class="arrow" style="grid-column: 1 / span 3; text-align:center; padding: 2px 0;">↓ ↓ ↓</div>
-
-        <div class="node" style="padding:18px;">redis<small style="font-size:24px;">queue</small></div>
-        <div class="node" style="padding:18px;">postgres<small style="font-size:24px;">main db</small></div>
-        <div class="node muted" style="padding:18px;">volume<small style="font-size:24px;">pgdata</small></div>
-      </div>
-
-      <div class="hsep" style="margin: 20px 0;"></div>
-      <div class="mono" style="font-size:24px; color: var(--fg-2); line-height:1.5;">
-        api → postgres://<span style="color:var(--accent);">db</span><br>
-        api → redis://<span style="color:var(--accent);">redis</span><br>
-        <span style="color: var(--fg-3);">// service name == hostname</span>
+  <div id="ports" style="margin-top: 36px;">
+    <div class="btn-row">
+      <span class="hint">// як запустили:</span>
+      <div class="seg">
+        <button data-map="" class="active">docker run myapi</button>
+        <button data-map="8000">-p 8000:8000</button>
+        <button data-map="8080">-p 8080:8000</button>
       </div>
     </div>
 
-    <!-- compose yml -->
-    <div class="code" style="font-size: 22px; line-height: 1.45; padding: 24px 28px;"><span class="c"># docker-compose.yml</span>
+    <div class="wire" style="margin-top: 70px;">
+      <div class="zone"><div class="label">// браузер</div><div class="big" data-url>—</div></div>
+      <div class="link" data-l1><span></span></div>
+      <div class="zone"><div class="label">// твій комп'ютер (хост)</div><div><span class="door" data-door>дверей немає</span></div></div>
+      <div class="link" data-l2><span></span></div>
+      <div class="zone" style="border-color: var(--accent-soft);"><div class="label">// контейнер api</div><div class="big">uvicorn :8000</div></div>
+    </div>
+
+    <div class="btn-row" style="margin-top: 44px;">
+      <span class="hint">// відкрити в браузері:</span>
+      <button class="btn" data-open="8000">localhost:8000</button>
+      <button class="btn" data-open="8080">localhost:8080</button>
+    </div>
+    <div class="rule" data-msg style="margin-top: 30px; min-height: 90px;">Обери, як запущено контейнер, і спробуй відкрити сторінку.</div>
+  </div>
+</section>
+
+<!-- ============ 13 VOLUME ============ -->
+<section class="slide" data-ch="4" data-topic="дані" data-foot="// усе, що має пережити контейнер, живе у volume">
+  <div class="kicker">// контейнер і зовнішній світ · 2 з 3</div>
+  <h2 class="section">Контейнер видалили. Що з даними?</h2>
+
+  <div id="vol" style="margin-top: 36px;">
+    <div class="btn-row">
+      <span class="hint">// як запустили базу:</span>
+      <div class="seg">
+        <button data-vol="0" class="active">без volume</button>
+        <button data-vol="1">-v pgdata:/var/lib/postgresql/data</button>
+      </div>
+    </div>
+
+    <div style="display:grid; grid-template-columns: 1fr 120px 1fr; gap: 0; align-items:center; margin-top: 36px;">
+      <div class="vbox" data-cbox>
+        <div class="label" data-cname>// контейнер db · №1</div>
+        <div class="num" data-rows>0</div>
+        <div class="mono dim" style="font-size: 22px; margin-top: 8px;">записів бачить Postgres</div>
+      </div>
+      <div class="mono dim" style="text-align:center; font-size: 30px;" data-varrow>✕</div>
+      <div class="vbox vol off" data-vbox>
+        <div class="label">// volume pgdata · поза контейнером</div>
+        <div class="num" data-vrows>—</div>
+        <div class="mono dim" style="font-size: 22px; margin-top: 8px;">записів на диску хоста</div>
+      </div>
+    </div>
+
+    <div class="btn-row" style="margin-top: 36px;">
+      <button class="btn" data-act="add">+ додати запис у БД</button>
+      <button class="btn ghost" data-act="recreate">docker rm db → docker run (новий контейнер)</button>
+    </div>
+    <div class="rule" data-msg style="margin-top: 28px; min-height: 90px;">Додай кілька записів, а потім видали контейнер і створи новий.</div>
+  </div>
+</section>
+
+<!-- ============ 14 NETWORK ============ -->
+<section class="slide" data-ch="4" data-topic="мережа" data-foot="// ім'я сервісу == hostname · працює у власних мережах і в compose">
+  <div class="kicker">// контейнер і зовнішній світ · 3 з 3</div>
+  <h2 class="section">Як <span class="mono acc">api</span> знайде базу даних?</h2>
+
+  <div style="display:grid; grid-template-columns: 1fr 1fr; gap: 56px; margin-top: 36px; align-items:start;">
+    <div>
+      <div style="border:1px solid var(--line-soft); border-radius:18px; padding: 26px; background: var(--bg-2);">
+        <div class="mono acc" style="font-size:22px; letter-spacing:0.12em; margin-bottom:18px;">// мережа backend</div>
+        <div style="display:grid; grid-template-columns: 1fr 50px 1fr 50px 1fr; align-items:center;">
+          <div class="node accent" style="padding:14px 10px; min-width:0;">nginx<small>:80 назовні</small></div>
+          <div class="arrow" style="text-align:center;">→</div>
+          <div class="node" style="padding:14px 10px; min-width:0;">api<small>172.18.0.3</small></div>
+          <div class="arrow" style="text-align:center;">→</div>
+          <div class="node" style="padding:14px 10px; min-width:0;">db<small>172.18.0.4</small></div>
+        </div>
+      </div>
+      <div class="code" style="margin-top: 20px; font-size: 22px; white-space: pre-wrap;"><span class="c"># налаштування в контейнері api</span>
+DATABASE_URL=postgresql://app:pass@<span class="o">???</span>:5432/app</div>
+      <div class="card" data-step="1" style="margin-top: 20px; padding: 22px 26px;">
+        <div class="label err" style="margin-bottom: 8px;">// безпека</div>
+        <p>Не публікуй порт бази назовні (<span class="mono err">-p 5432:5432</span>). Усередині мережі api бачить db і без цього.</p>
+      </div>
+    </div>
+
+    <div class="quiz mono">
+      <div class="hint">// що написати замість ???</div>
+      <button class="opt" data-res="wrong" data-why="✕ Connection refused. Усередині контейнера api «localhost» — це сам контейнер api. Postgres там немає."><span class="key">A</span>localhost</button>
+      <button class="opt" data-res="soso" data-why="⚠ Спрацює… до першого перезапуску. IP-адреси контейнерам видаються заново, і завтра там буде інший сервіс."><span class="key">B</span>172.18.0.4</button>
+      <button class="opt" data-res="right" data-why="✓ Так. Docker має вбудований DNS: ім'я сервісу перетворюється на його актуальну IP-адресу. Пиши імена, не адреси."><span class="key">C</span>db</button>
+      <div class="why" style="font-family: 'Inter', system-ui, sans-serif;"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 15 COMPOSE ============ -->
+<section class="slide" data-ch="5" data-topic="compose" data-foot="// одна команда · уся система">
+  <div class="kicker">// багато контейнерів разом</div>
+  <h2 class="section">Справжній застосунок — це не один контейнер.</h2>
+
+  <div style="display:grid; grid-template-columns: 0.92fr 1.08fr; gap: 48px; margin-top: 28px; align-items:start;" id="compose">
+    <div class="code" style="font-size: 20px; line-height: 1.42; padding: 22px 26px;"><span class="c"># docker-compose.yml</span>
 <span class="k">services</span>:
+  <span class="k">nginx</span>:
+    image: nginx:<span class="o">1.27-alpine</span>
+    ports: [<span class="s">"80:80"</span>]
+    depends_on: [api]
   <span class="k">api</span>:
     build: ./api
-    ports: [<span class="s">"8000:8000"</span>]
+    environment:
+      DATABASE_URL: postgresql://app:pass@<span class="o">db</span>:5432/app
+    depends_on: [db, redis]
+  <span class="k">worker</span>:
+    build: ./worker
     depends_on: [db, redis]
   <span class="k">db</span>:
     image: postgres:<span class="o">16-alpine</span>
-    volumes: [pgdata:/data]
+    volumes: [pgdata:/var/lib/postgresql/data]
   <span class="k">redis</span>:
     image: redis:<span class="o">7-alpine</span>
-  <span class="k">worker</span>:
-    build: ./worker
-<span class="k">volumes</span>: { pgdata: }</div>
-  </div>
+<span class="k">volumes</span>:
+  pgdata:</div>
 
-  <div class="footer">
-    <div>// compose up · one command · whole system</div>
-    <div>10 / 13</div>
+    <div>
+      <div class="btn-row">
+        <button class="btn" data-act="up">docker compose up -d</button>
+        <button class="btn ghost" data-act="down">docker compose down</button>
+      </div>
+      <div class="svc-grid" style="margin-top: 22px;">
+        <div class="svc-node" data-s="nginx">nginx<small>:80 назовні</small></div>
+        <div class="svc-node" data-s="api">api<small>fastapi</small></div>
+        <div class="svc-node" data-s="worker">worker<small>фонові задачі</small></div>
+        <div class="svc-node" data-s="redis">redis<small>черга</small></div>
+        <div class="svc-node" data-s="db">db<small>postgres</small></div>
+        <div class="svc-node" data-s="pgdata">pgdata<small>volume</small></div>
+      </div>
+      <div class="term" style="margin-top: 20px; min-height: 292px; font-size: 20px;" data-log><span class="dim"># натисни «docker compose up -d» і стеж за порядком запуску</span></div>
+    </div>
   </div>
 </section>
 
-<!-- ============ 10 MISTAKES ============ -->
-<section class="slide" data-screen-label="11 Common mistakes">
-  <div class="meta">
-    <div class="brand"><b>docker</b><span class="dot"></span>anti-patterns</div>
-    <div>// 11 · common mistakes</div>
-  </div>
+<!-- ============ 16 MISTAKES ============ -->
+<section class="slide" data-ch="6" data-topic="типові помилки" data-foot="// будь-який «разовий фікс» усередині контейнера — це майбутній баг">
+  <div class="kicker err">// типові помилки</div>
+  <h2 class="section">Те, що ламається через місяць.</h2>
 
-  <div class="kicker" style="margin-top: 64px; color: var(--bad);">// типові помилки</div>
-  <h2 class="section" style="margin-top: 18px;">Те, що ламається через місяць.</h2>
-
-  <div class="grid-3" style="margin-top: 64px;">
-    <div class="card" style="border-color: color-mix(in oklab, var(--bad) 35%, var(--line-soft));">
-      <div class="label" style="color: var(--bad);">// 01 · версії</div>
+  <div class="grid-3" style="margin-top: 44px;">
+    <div class="card" data-step="1" style="border-color: color-mix(in oklab, var(--bad) 35%, var(--line-soft));">
+      <div class="label err">// 01 · версії</div>
       <h3>Тег <span class="mono">latest</span></h3>
-      <p>Сьогодні python 3.12, завтра 3.13. Збірка перестає бути відтворюваною. Фіксуй точну версію.</p>
+      <p>Сьогодні це Python 3.12, завтра 3.13 — і збірка поводиться інакше. Фіксуй точну версію.</p>
       <div class="hsep" style="margin: 22px 0;"></div>
-      <div class="mono" style="font-size:24px;"><span style="color:var(--bad);">FROM python:latest</span><br><span style="color:var(--good);">FROM python:3.11-slim</span></div>
+      <div class="mono" style="font-size:24px;"><span class="err">FROM python:latest</span><br><span class="ok">FROM python:3.12-slim</span></div>
     </div>
-
-    <div class="card" style="border-color: color-mix(in oklab, var(--bad) 35%, var(--line-soft));">
-      <div class="label" style="color: var(--bad);">// 02 · дані</div>
+    <div class="card" data-step="2" style="border-color: color-mix(in oklab, var(--bad) 35%, var(--line-soft));">
+      <div class="label err">// 02 · дані</div>
       <h3>Дані всередині контейнера</h3>
-      <p>Контейнер ефемерний. Все, що записано у writable layer — зникає при rm чи redeploy. Використовуй volumes.</p>
+      <p>Ти вже бачив: <span class="mono">docker rm</span> — і записів немає. Усе важливе — у volume.</p>
       <div class="hsep" style="margin: 22px 0;"></div>
-      <div class="mono" style="font-size:24px;"><span style="color:var(--bad);">/app/data → 🗑</span><br><span style="color:var(--good);">vol:/app/data → ok</span></div>
+      <div class="mono" style="font-size:24px;"><span class="err">/app/data → зникне</span><br><span class="ok">vol:/app/data → живе</span></div>
     </div>
-
-    <div class="card" style="border-color: color-mix(in oklab, var(--bad) 35%, var(--line-soft));">
-      <div class="label" style="color: var(--bad);">// 03 · хотфікси</div>
-      <h3><span class="mono">docker exec</span> для фіксу</h3>
-      <p>Поправив файл всередині запущеного контейнера? Це не фікс — це міна. Зміни йдуть у Dockerfile або код.</p>
+    <div class="card" data-step="3" style="border-color: color-mix(in oklab, var(--bad) 35%, var(--line-soft));">
+      <div class="label err">// 03 · хотфікси</div>
+      <h3><span class="mono">docker exec</span> як ремонт</h3>
+      <p>Поправив файл у запущеному контейнері? Після перезапуску фікс зникне. Зміни — у код або Dockerfile.</p>
       <div class="hsep" style="margin: 22px 0;"></div>
-      <div class="mono" style="font-size:24px;"><span style="color:var(--bad);">exec → vim main.py</span><br><span style="color:var(--good);">exec → inspect only</span></div>
+      <div class="mono" style="font-size:24px;"><span class="err">exec → vim main.py</span><br><span class="ok">exec → лише подивитись</span></div>
     </div>
   </div>
 
-  <div style="margin-top: 40px; display:flex; gap:14px; flex-wrap:wrap; justify-content:center;">
-    <span class="pill">+ забуте <span class="mono">--rm</span></span>
-    <span class="pill">+ <span class="mono">.dockerignore</span></span>
-    <span class="pill">+ <span class="mono">COPY .</span> перед deps</span>
-    <span class="pill">+ публікація db-портів</span>
-    <span class="pill">+ запуск як <span class="mono">root</span></span>
-  </div>
-
-  <div class="footer">
-    <div>// any «one-time fix» inside a container is a bug to file</div>
-    <div>11 / 13</div>
+  <div data-step="4" style="margin-top: 36px; display:flex; gap:14px; flex-wrap:wrap; justify-content:center;">
+    <span class="pill">немає <span class="mono">.dockerignore</span></span>
+    <span class="pill"><span class="mono">COPY . .</span> перед залежностями</span>
+    <span class="pill">порт бази відкритий назовні</span>
+    <span class="pill">секрети в образі</span>
+    <span class="pill">запуск від <span class="mono">root</span></span>
   </div>
 </section>
 
-<!-- ============ 11 BEST PRACTICES ============ -->
-<section class="slide" data-screen-label="12 Best practices">
-  <div class="meta">
-    <div class="brand"><b>docker</b><span class="dot"></span>best practices</div>
-    <div>// 12 · production patterns</div>
-  </div>
+<!-- ============ 17 BEST PRACTICES ============ -->
+<section class="slide" data-ch="6" data-topic="production" data-foot="// slim-база + правильний порядок шарів + multi-stage">
+  <div class="kicker ok">// як роблять у production</div>
+  <h2 class="section">Маленькі, кешовані, багатоетапні.</h2>
 
-  <div class="kicker" style="margin-top: 56px; color: var(--good);">// найкращі практики</div>
-  <h2 class="section" style="margin-top: 18px;">Маленькі, кешовані, багатоетапні.</h2>
-
-  <div style="display:grid; grid-template-columns: 1fr 1.1fr; gap: 64px; margin-top: 48px;">
+  <div style="display:grid; grid-template-columns: 1fr 1.1fr; gap: 56px; margin-top: 36px;">
     <div class="stack">
-      <div class="card">
-        <div class="label" style="color: var(--good);">// 01 small images</div>
-        <h3>slim · alpine · distroless</h3>
-        <p style="margin-bottom: 22px;">Менший образ — швидший pull, менша поверхня атаки.</p>
-        <div style="display:grid; grid-template-columns: 1fr auto; gap: 12px; font-family:&#39;JetBrains Mono&#39;, monospace; font-size: 20px;">
-          <div style="color: var(--fg-2);">python:3.11</div><div style="color: var(--bad);">~1 GB</div>
-          <div style="color: var(--fg-2);">python:3.11-slim</div><div style="color: var(--fg);">~130 MB</div>
-          <div style="color: var(--fg-2);">python:3.11-alpine</div><div style="color: var(--good);">~50 MB</div>
-          <div style="color: var(--fg-2);">distroless/python3</div><div style="color: var(--good);">~30 MB</div>
+      <div class="card" data-step="1">
+        <div class="label ok">// 01 малий образ</div>
+        <h3>slim замість повного</h3>
+        <p style="margin-bottom: 18px;">Менший образ — швидший pull і менше зайвого всередині.</p>
+        <div style="display:grid; grid-template-columns: 1fr auto; gap: 10px; font-family:'JetBrains Mono', monospace; font-size: 22px;">
+          <div class="dim">python:3.12</div><div class="err">~1 GB</div>
+          <div class="dim">python:3.12-slim</div><div class="ok">~130 MB</div>
+          <div class="dim">python:3.12-alpine</div><div class="ok">~50 MB</div>
         </div>
       </div>
-
-      <div class="card">
-        <div class="label" style="color: var(--good);">// 02 layer caching</div>
+      <div class="card" data-step="2">
+        <div class="label ok">// 02 кеш шарів</div>
         <h3>Стабільне → мінливе</h3>
-        <p>Залежності копіюй <b>до</b> коду. Тоді pip install кешується, поки <span class="mono">requirements.txt</span> не змінюється.</p>
+        <p>Ти це вже перевірив: залежності копіюємо <b>до</b> коду — і <span class="mono">pip install</span> береться з кешу.</p>
       </div>
     </div>
 
-    <div class="code" style="font-size: 22px;"><span class="c"># multi-stage · production pattern</span>
+    <div class="code" data-step="3" style="font-size: 21px; line-height: 1.5;"><span class="c"># 03 multi-stage: зібрали в одному образі, запускаємо в іншому</span>
 
-<span class="k">FROM</span> python:<span class="o">3.11-slim</span> <span class="k">AS</span> builder
+<span class="k">FROM</span> python:<span class="o">3.12-slim</span> <span class="k">AS</span> builder
 <span class="k">WORKDIR</span> /build
 <span class="k">COPY</span> requirements.txt .
 <span class="k">RUN</span> pip install --prefix=/install -r requirements.txt
 
-<span class="k">FROM</span> python:<span class="o">3.11-slim</span> <span class="k">AS</span> production
+<span class="k">FROM</span> python:<span class="o">3.12-slim</span>
+<span class="k">RUN</span> useradd --create-home app
 <span class="k">WORKDIR</span> /app
 <span class="k">COPY</span> --from=builder /install /usr/local
-<span class="k">COPY</span> src/ .
+<span class="k">COPY</span> . .
 <span class="k">USER</span> app
-<span class="k">CMD</span> [<span class="s">"python"</span>, <span class="s">"main.py"</span>]
+<span class="k">CMD</span> [<span class="s">"uvicorn"</span>, <span class="s">"main:app"</span>, <span class="s">"--host"</span>, <span class="s">"0.0.0.0"</span>]
 
-<span class="c"># builder має компілятори</span>
-<span class="c"># production — тільки код + deps</span>
-<span class="c"># менша атака · менший образ</span></div>
-  </div>
-
-  <div class="footer">
-    <div>// slim base + ordered layers + multi-stage = production-grade</div>
-    <div>12 / 13</div>
+<span class="c"># builder — з інструментами збірки, його викидаємо</span>
+<span class="c"># фінальний образ — лише код і бібліотеки, не root</span></div>
   </div>
 </section>
 
-<!-- ============ 12 CONCLUSION ============ -->
-<section class="slide" data-screen-label="13 Conclusion">
+<!-- ============ 18 RECAP ============ -->
+<section class="slide" data-ch="6" data-topic="перевір себе" data-foot="// спершу скажи відповідь уголос — потім клацай">
+  <div class="kicker wrn">// перевір себе · без підглядання</div>
+  <h2 class="section">Чотири запитання на виході.</h2>
+
+  <div class="grid-2" style="margin-top: 36px; gap: 28px;">
+    <button class="flip">
+      <div class="q">1 · Чим образ відрізняється від контейнера?</div>
+      <div class="a">Образ — незмінний шаблон на диску (як клас). Контейнер — запущений із нього ізольований процес (як об'єкт). З одного образу — скільки завгодно контейнерів.</div>
+      <div class="tap">// клацни, щоб побачити відповідь</div>
+    </button>
+    <button class="flip">
+      <div class="q">2 · Ти змінив лише main.py. Чому pip install не запустився знову?</div>
+      <div class="a">Бо шар із залежностями стоїть у Dockerfile вище за <span class="mono">COPY . .</span> і його вхідні файли не змінились — Docker узяв його з кешу.</div>
+      <div class="tap">// клацни, щоб побачити відповідь</div>
+    </button>
+    <button class="flip">
+      <div class="q">3 · Контейнер із базою видалили. Що з даними?</div>
+      <div class="a">Без volume — зникли разом із контейнером. З volume — лежать на хості, і новий контейнер їх побачить.</div>
+      <div class="tap">// клацни, щоб побачити відповідь</div>
+    </button>
+    <button class="flip">
+      <div class="q">4 · Сторінка не відкривається на localhost:8000. Що перевірити першим?</div>
+      <div class="a">Чи опубліковано порт: <span class="mono">-p 8000:8000</span> (зліва хост, справа контейнер). Без <span class="mono">-p</span> дверей назовні немає.</div>
+      <div class="tap">// клацни, щоб побачити відповідь</div>
+    </button>
+  </div>
+</section>
+
+<!-- ============ 19 CONCLUSION ============ -->
+<section class="slide" data-ch="6" data-topic="підсумок" data-foot="// думай системами · не командами">
   <div class="grid-bg"></div>
-  <div class="meta">
-    <div class="brand"><b>docker</b><span class="dot"></span>conclusion</div>
-    <div>// 13 · the takeaway</div>
-  </div>
-
-  <div style="position:relative; z-index:1; margin-top: 80px;">
+  <div style="position:relative; z-index:1; margin-top: 50px;">
     <div class="kicker">// головне</div>
-    <h1 class="title" style="font-size: 110px; margin-top: 18px;">
-      Docker — не про команди.
-    </h1>
-    <p class="lead" style="margin-top: 28px;">Команди — це синтаксис. Сила — в моделі мислення.</p>
+    <h1 class="title" style="font-size: 104px; margin-top: 18px;">Docker — не про команди.</h1>
+    <p class="lead" style="margin-top: 24px;">Команди — це синтаксис. Сила — в моделі: образ → контейнер → система.</p>
   </div>
 
-  <div class="grid-3" style="margin-top: 96px;">
-    <div class="card" style="padding: 48px;">
-      <div class="label" style="color: var(--accent);">// 01</div>
-      <h3 style="font-size:42px;">Reproducibility</h3>
-      <p style="font-size:24px;">Один артефакт — однакова поведінка скрізь. Збірка завтра = збірка сьогодні.</p>
+  <div class="grid-3" style="margin-top: 64px; position:relative; z-index:1;">
+    <div class="card" data-step="1" style="padding: 40px;">
+      <div class="label acc">// 01 відтворюваність</div>
+      <h3>Один образ — усюди</h3>
+      <p>Середовище їде разом із кодом. «У мене працює» = «працює скрізь».</p>
     </div>
-    <div class="card" style="padding: 48px;">
-      <div class="label" style="color: var(--accent);">// 02</div>
-      <h3 style="font-size:42px;">System control</h3>
-      <p style="font-size:24px;">Ти володієш середовищем — від ОС до runtime. Без сюрпризів від сервера.</p>
+    <div class="card" data-step="2" style="padding: 40px;">
+      <div class="label acc">// 02 контроль</div>
+      <h3>Ти керуєш середовищем</h3>
+      <p>Версія Python, бібліотеки, порти, дані — усе записано у файлах, а не «в голові сервера».</p>
     </div>
-    <div class="card" style="padding: 48px;">
-      <div class="label" style="color: var(--accent);">// 03</div>
-      <h3 style="font-size:42px;">Architecture thinking</h3>
-      <p style="font-size:24px;">Сервіси, межі, контракти, мережі. Те, що відрізняє інженера від кодера.</p>
+    <div class="card" data-step="3" style="padding: 40px;">
+      <div class="label acc">// 03 система</div>
+      <h3>Сервіси, а не скрипти</h3>
+      <p>api, db, redis, nginx — окремі контейнери, з'єднані мережею. Одна команда піднімає все.</p>
     </div>
   </div>
 
-  <div style="margin-top: 80px; display:flex; align-items:center; gap: 24px;">
+  <div style="margin-top: 56px; display:flex; align-items:center; gap: 24px; position:relative; z-index:1;">
     <div class="mark">D</div>
     <div>
-      <div class="mono" style="font-size:18px; color: var(--fg-3); letter-spacing:0.12em;">// thank you</div>
-      <div style="font-size: 32px; font-weight:600; letter-spacing:-0.01em;">questions → live demo · compose up</div>
+      <div class="mono dim" style="font-size:22px; letter-spacing:0.12em;">// далі</div>
+      <div style="font-size: 32px; font-weight:600; letter-spacing:-0.01em;">ноутбук уроку 49 → Dockerfile, .dockerignore, кеш, секрети</div>
     </div>
-  </div>
-
-  <div class="footer">
-    <div>// думай системами · не командами</div>
-    <div>13 / 13</div>
   </div>
 </section>
 
 </deck-stage>
 
+<script>
+/* ======================================================================
+   Логіка демо на слайдах. Рушій показу — у deck-stage.js.
+   ====================================================================== */
+(function () {
+  'use strict';
+  var $ = function (sel, root) { return (root || document).querySelector(sel); };
+  var $$ = function (sel, root) { return Array.prototype.slice.call((root || document).querySelectorAll(sel)); };
+
+  /* --- шапка й підвал кожного слайда --- */
+  var chapters = ['навіщо', 'образ', 'контейнер', 'назовні', 'система', 'production'];
+  $$('section.slide[data-ch]').forEach(function (s) {
+    var ch = Number(s.dataset.ch);
+    var route = chapters.map(function (name, i) {
+      return '<span class="' + (i + 1 === ch ? 'on' : '') + '">' + name + '</span>';
+    }).join('<i>›</i>');
+    s.insertAdjacentHTML('afterbegin',
+      '<div class="meta"><div class="brand"><b>docker</b><span class="dot"></span>' + s.dataset.topic +
+      '</div><div class="route">' + route + '</div></div>');
+    s.insertAdjacentHTML('beforeend',
+      '<div class="footer"><div>' + (s.dataset.foot || '') + '</div><div data-slide-num></div></div>');
+  });
+
+  /* --- 02 / 03: запустити на всіх машинах --- */
+  $$('[data-runall]').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var machines = $$('.machine', document.getElementById(btn.dataset.runall));
+      machines.forEach(function (m) {
+        m.classList.remove('pass', 'fail', 'boxed');
+        $('.out', m).textContent = m.dataset.out.split('\n')[0] + '\n…';
+      });
+      machines.forEach(function (m, i) {
+        setTimeout(function () {
+          $('.out', m).textContent = m.dataset.out;
+          m.classList.add(m.dataset.cls);
+          if (btn.dataset.boxed) m.classList.add('boxed');
+        }, 500 + i * 450);
+      });
+    });
+  });
+
+  /* --- вікторини --- */
+  $$('.quiz').forEach(function (quiz) {
+    $$('.opt', quiz).forEach(function (opt) {
+      opt.addEventListener('click', function () {
+        opt.classList.add(opt.dataset.res);
+        $('.why', quiz).textContent = opt.dataset.why;
+      });
+    });
+  });
+  $$('.flip').forEach(function (card) {
+    card.addEventListener('click', function () { card.classList.toggle('open'); });
+  });
+
+  /* --- 07: образ → контейнери --- */
+  (function () {
+    var root = document.getElementById('play');
+    var list = [], n = 0;
+    function id() { return Math.random().toString(16).slice(2, 14); }
+    function render(cmd, out, cls) {
+      var area = $('.ctr-area', root);
+      area.innerHTML = list.length ? '' : '<div class="ctr-empty hint">// поки що жодного — натисни docker run</div>';
+      list.forEach(function (c) {
+        area.insertAdjacentHTML('beforeend',
+          '<div class="ctr ' + (c.up ? '' : 'exited') + '">' + c.name + '<small>' + (c.up ? '● running' : '○ exited') + '</small></div>');
+      });
+      $('[data-count]', root).textContent = list.length;
+      $('.term', root).innerHTML = cmd ? '<b>$ ' + cmd + '</b>\n<span class="' + (cls || '') + '">' + out + '</span>'
+        : '<span class="dim"># тут з\'являтиметься остання команда</span>';
+    }
+    var acts = {
+      run: function () {
+        if (list.length >= 4) return render('docker run -d myapi:v1', '# для демо досить чотирьох — але Docker запустив би й п\'ятий', 'dim');
+        n += 1; list.push({ name: 'api-' + n, up: true });
+        render('docker run -d --name api-' + n + ' myapi:v1', id() + '   ← новий контейнер, образ той самий', 'ok');
+      },
+      stop: function () {
+        var c = list.slice().reverse().find(function (x) { return x.up; });
+        if (!c) return render('docker stop', '# немає запущених контейнерів', 'dim');
+        c.up = false;
+        render('docker stop ' + c.name, c.name + '   ← процес зупинено, контейнер ще існує', 'wrn');
+      },
+      rm: function () {
+        var i = list.findIndex(function (x) { return !x.up; });
+        if (i < 0 && list.length) return render('docker rm ' + list[0].name, 'Error: cannot remove a running container.\nСпершу docker stop (або docker rm -f).', 'err');
+        if (i < 0) return render('docker rm', '# нема чого видаляти', 'dim');
+        var c = list.splice(i, 1)[0];
+        render('docker rm ' + c.name, c.name + '   ← контейнера немає, образ myapi:v1 на місці', 'ok');
+      }
+    };
+    $$('[data-act]', root).forEach(function (b) { b.addEventListener('click', acts[b.dataset.act]); });
+    render();
+  })();
+
+  /* --- 08: рядки Dockerfile, які вже виконано --- */
+  document.getElementById('df').closest('section').addEventListener('deck-step', function (e) {
+    $$('.ln', this).forEach(function (ln) { ln.classList.toggle('done', Number(ln.dataset.at) < e.detail.step); });
+  });
+
+  /* --- 09: симулятор кешу --- */
+  (function () {
+    var root = document.getElementById('cache');
+    var FROM = { t: 'FROM python:3.12-slim', sec: 0, uses: [] };
+    var WORK = { t: 'WORKDIR /app', sec: 0, uses: [] };
+    var REQ = { t: 'COPY requirements.txt .', sec: 1, uses: ['req'] };
+    var PIP = { t: 'RUN pip install -r requirements.txt', sec: 45, uses: [] };
+    var ALL = { t: 'COPY . .', sec: 1, uses: ['code', 'req'] };
+    var CMD = { t: 'CMD ["uvicorn", "main:app"]', sec: 0, uses: [] };
+    var variants = { bad: [FROM, WORK, ALL, PIP, CMD], good: [FROM, WORK, REQ, PIP, ALL, CMD] };
+    var variant = 'bad', timers = [];
+
+    function draw() {
+      $('[data-rows]', root).innerHTML = variants[variant].map(function (r) {
+        return '<div class="crow cached"><span>' + r.t + '</span><span class="st">CACHED</span><span class="tm">0 с</span></div>';
+      }).join('');
+      $('[data-total]', root).textContent = '—';
+      $('[data-total]', root).className = 'bigtime';
+    }
+    function build(changed) {
+      timers.forEach(clearTimeout); timers = [];
+      draw();
+      var rows = $$('.crow', root), dirty = false, total = 0;
+      variants[variant].forEach(function (r, i) {
+        var hit = r.uses.indexOf(changed) >= 0;
+        if (hit) dirty = true;
+        var rebuild = dirty, sec = rebuild ? r.sec : 0;
+        total += sec;
+        timers.push(setTimeout(function () {
+          rows[i].className = 'crow ' + (rebuild ? 'build' : 'cached') + (hit ? ' changed' : '');
+          $('.st', rows[i]).textContent = rebuild ? 'BUILD' : 'CACHED';
+          $('.tm', rows[i]).textContent = sec + ' с';
+        }, 250 * (i + 1)));
+      });
+      timers.push(setTimeout(function () {
+        var el = $('[data-total]', root);
+        el.textContent = total + ' с';
+        el.className = 'bigtime ' + (total > 5 ? 'err' : 'ok');
+        var file = changed === 'code' ? 'main.py' : 'requirements.txt';
+        $('[data-msg]', root).innerHTML = total > 5
+          ? (changed === 'code'
+              ? 'Змінився <b>' + file + '</b> → шар <code>COPY . .</code> інший → <b>усе нижче</b> збирається заново, разом із pip install.'
+              : 'Змінився <b>' + file + '</b> — тут перевстановлення бібліотек чесне: залежності справді інші.')
+          : 'Змінився лише <b>' + file + '</b> → бібліотеки взято <b>з кешу</b>. Перезбирається тільки шар із кодом.';
+      }, 250 * (rows.length + 1)));
+    }
+    $$('[data-variant]', root).forEach(function (b) {
+      b.addEventListener('click', function () {
+        variant = b.dataset.variant;
+        $$('[data-variant]', root).forEach(function (x) { x.classList.toggle('active', x === b); });
+        timers.forEach(clearTimeout);
+        draw();
+        $('[data-msg]', root).textContent = 'Тепер зміни файл і порівняй час збірки.';
+      });
+    });
+    $$('[data-change]', root).forEach(function (b) {
+      b.addEventListener('click', function () { build(b.dataset.change); });
+    });
+    draw();
+  })();
+
+  /* --- 10: життєвий цикл --- */
+  (function () {
+    var root = document.getElementById('life');
+    var captions = [
+      'Натискай → і стеж, що відбувається після кожної команди.',
+      '<b>build</b> — із рецепта зібрано образ. Нічого ще не запущено.',
+      '<b>run</b> — з образу створено й запущено контейнер <code>api</code>.',
+      '<b>ps</b> — список запущених контейнерів. Наш працює.',
+      '<b>logs</b> — що застосунок надрукував. Перше місце, куди дивитись, коли щось не так.',
+      '<b>exec</b> — зазирнути всередину працюючого контейнера. Дивитись, а не лагодити.',
+      '<b>stop</b> — процес зупинено. Контейнер ще існує, його можна запустити знову.',
+      '<b>rm</b> — контейнера більше немає. А образ <code>myapi:v1</code> лишився.'
+    ];
+    root.closest('section').addEventListener('deck-step', function (e) {
+      var s = e.detail.step;
+      var image = $('[data-s="image"]', root), ctr = $('[data-s="ctr"]', root), badge = $('[data-badge]', root);
+      image.classList.toggle('live', s >= 1);
+      image.classList.toggle('cur', s === 1);
+      ctr.classList.toggle('live', s >= 2);
+      ctr.classList.toggle('cur', s >= 2);
+      var st = s < 2 ? ['—', ''] : s < 6 ? ['● running', 'run'] : s < 7 ? ['○ exited', 'exit'] : ['✕ видалено', 'gone'];
+      badge.textContent = st[0];
+      badge.className = 'badge ' + st[1];
+      $('[data-caption]', root).innerHTML = captions[s];
+    });
+  })();
+
+  /* --- 11: шлях команди --- */
+  (function () {
+    var lit = { 0: [], 1: [0, 1], 2: [2], 3: [2, 3] };
+    var root = document.getElementById('arch');
+    root.closest('section').addEventListener('deck-step', function (e) {
+      $$('.col', root).forEach(function (col, i) { col.classList.toggle('lit', lit[e.detail.step].indexOf(i) >= 0); });
+    });
+  })();
+
+  /* --- 12: порти --- */
+  (function () {
+    var root = document.getElementById('ports');
+    var hostPort = '';
+    function reset() {
+      var door = $('[data-door]', root);
+      door.textContent = hostPort ? 'двері :' + hostPort : 'дверей немає';
+      door.classList.toggle('open', !!hostPort);
+      $('[data-url]', root).textContent = '—';
+      [$('[data-l1]', root), $('[data-l2]', root)].forEach(function (l) { l.className = 'link'; $('span', l).textContent = ''; });
+    }
+    $$('[data-map]', root).forEach(function (b) {
+      b.addEventListener('click', function () {
+        hostPort = b.dataset.map;
+        $$('[data-map]', root).forEach(function (x) { x.classList.toggle('active', x === b); });
+        reset();
+        $('[data-msg]', root).innerHTML = hostPort
+          ? 'Порт <b>' + hostPort + '</b> на твоєму комп\'ютері тепер веде на порт <b>8000</b> усередині контейнера.'
+          : 'Без <code>-p</code> застосунок працює, але ззовні до нього не дістатися.';
+      });
+    });
+    $$('[data-open]', root).forEach(function (b) {
+      b.addEventListener('click', function () {
+        var port = b.dataset.open, ok = port === hostPort;
+        reset();
+        $('[data-url]', root).textContent = 'localhost:' + port;
+        var l1 = $('[data-l1]', root), l2 = $('[data-l2]', root);
+        l1.classList.add(ok ? 'good' : 'bad');
+        $('span', l1).textContent = ok ? '→ :' + port : '✕';
+        $('span', l1).className = ok ? 'ok' : 'err';
+        if (ok) { l2.classList.add('good'); $('span', l2).textContent = '→ :8000'; $('span', l2).className = 'ok'; }
+        $('[data-msg]', root).innerHTML = ok
+          ? '<span class="ok">✓ 200 OK</span> — запит пройшов: хост <b>:' + port + '</b> → контейнер <b>:8000</b>.'
+          : '<span class="err">✕ ERR_CONNECTION_REFUSED</span> — на порту <b>' + port + '</b> хоста ніхто не слухає' +
+            (hostPort ? ': двері відкрито на <b>' + hostPort + '</b>.' : ': контейнер запущено без <code>-p</code>.');
+      });
+    });
+    reset();
+  })();
+
+  /* --- 13: volume --- */
+  (function () {
+    var root = document.getElementById('vol');
+    var useVol = false, rows = 0, saved = 0, gen = 1;
+    function render(msg) {
+      $('[data-cname]', root).textContent = '// контейнер db · №' + gen;
+      $('[data-rows]', root).textContent = rows;
+      $('[data-vbox]', root).classList.toggle('off', !useVol);
+      $('[data-vrows]', root).textContent = useVol ? saved : '—';
+      $('[data-varrow]', root).textContent = useVol ? '⇄' : '✕';
+      if (msg) $('[data-msg]', root).innerHTML = msg;
+    }
+    $$('[data-vol]', root).forEach(function (b) {
+      b.addEventListener('click', function () {
+        useVol = b.dataset.vol === '1'; rows = 0; saved = 0; gen = 1;
+        $$('[data-vol]', root).forEach(function (x) { x.classList.toggle('active', x === b); });
+        render(useVol ? 'Тепер папка з даними Postgres — це volume на хості. Спробуй ще раз те саме.'
+                      : 'Дані лежать у самому контейнері. Додай записи й видали контейнер.');
+      });
+    });
+    $('[data-act="add"]', root).addEventListener('click', function () {
+      rows += 1; if (useVol) saved = rows;
+      render(useVol ? 'Запис ліг у <b>volume</b> — контейнер лише читає і пише туди.'
+                    : 'Запис ліг у <b>шар самого контейнера</b>.');
+    });
+    $('[data-act="recreate"]', root).addEventListener('click', function () {
+      var lost = rows;
+      gen += 1; rows = useVol ? saved : 0;
+      var box = $('[data-cbox]', root);
+      box.classList.remove('flash'); void box.offsetWidth; box.classList.add('flash');
+      render(useVol
+        ? '<span class="ok">✓ Новий контейнер №' + gen + ' бачить ті самі ' + rows + ' записів.</span> Volume пережив видалення контейнера.'
+        : (lost ? '<span class="err">✕ ' + lost + ' записів зникло</span> разом із контейнером. Новий контейнер стартує з образу — тобто з нуля.'
+                : 'Новий контейнер №' + gen + '. Спершу додай записи — тоді буде видно різницю.'));
+    });
+    render();
+  })();
+
+  /* --- 15: compose up / down --- */
+  (function () {
+    var root = document.getElementById('compose');
+    var log = $('[data-log]', root), timers = [], isUp = false;
+    var upSeq = [
+      [null, ' ✔ Network myapp_default   Created', 'dim'],
+      ['pgdata', ' ✔ Volume  myapp_pgdata    Created', 'keep'],
+      ['db', ' ✔ Container myapp-db-1      Started', 'up'],
+      ['redis', ' ✔ Container myapp-redis-1   Started', 'up'],
+      ['api', ' ✔ Container myapp-api-1     Started   ← після db і redis', 'up'],
+      ['worker', ' ✔ Container myapp-worker-1  Started', 'up'],
+      ['nginx', ' ✔ Container myapp-nginx-1   Started   ← після api', 'up']
+    ];
+    var downSeq = [
+      ['nginx', ' ✔ Container myapp-nginx-1   Removed'], ['worker', ' ✔ Container myapp-worker-1  Removed'],
+      ['api', ' ✔ Container myapp-api-1     Removed'], ['redis', ' ✔ Container myapp-redis-1   Removed'],
+      ['db', ' ✔ Container myapp-db-1      Removed'], [null, ' ✔ Network myapp_default   Removed'],
+      [null, '# volume pgdata лишився — дані бази на місці']
+    ];
+    function play(cmd, seq, apply) {
+      timers.forEach(clearTimeout); timers = [];
+      log.innerHTML = '<b>$ ' + cmd + '</b>\n';
+      seq.forEach(function (step, i) {
+        timers.push(setTimeout(function () {
+          log.insertAdjacentHTML('beforeend', '<span class="' + (step[1].charAt(0) === '#' ? 'dim' : 'ok') + '">' + step[1] + '</span>\n');
+          apply(step);
+        }, 420 * (i + 1)));
+      });
+    }
+    $('[data-act="up"]', root).addEventListener('click', function () {
+      $$('.svc-node', root).forEach(function (n) { n.classList.remove('up'); });
+      isUp = true;
+      play('docker compose up -d', upSeq, function (step) {
+        if (step[0]) $('[data-s="' + step[0] + '"]', root).classList.add(step[2]);
+      });
+    });
+    $('[data-act="down"]', root).addEventListener('click', function () {
+      if (!isUp) { log.innerHTML = '<b>$ docker compose down</b>\n<span class="dim"># нічого не запущено — спершу up</span>'; return; }
+      isUp = false;
+      play('docker compose down', downSeq, function (step) {
+        if (step[0]) $('[data-s="' + step[0] + '"]', root).classList.remove('up');
+      });
+    });
+  })();
+})();
+</script>
 
 </body></html>

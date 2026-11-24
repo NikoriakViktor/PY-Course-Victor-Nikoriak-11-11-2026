@@ -22,7 +22,11 @@
 
 **Задача розділу.** База диспетчерської: ресторани, кур'єри, замовлення — і звіти для власниці. Повний приклад — у розділі [«Практика»](#practice).
 
-**Ноутбук заняття:** [Відкрити вправи в Colab](https://colab.research.google.com/github/NikoriakViktor/PY-Course-Victor-Nikoriak-11-11-2026/blob/main/module_3/lessons/lesson_30_sql_basics/note_lesson_30_sql_student.ipynb){ .md-button .md-button--primary } [Переглянути розв’язки](https://github.com/NikoriakViktor/PY-Course-Victor-Nikoriak-11-11-2026/blob/main/module_3/lessons/lesson_30_sql_basics/note_lesson_30_sql.ipynb){ .solutions-link } — з кліткою, що встановлює PostgreSQL прямо в Colab.
+**Ноутбуки заняття** — від простого до складнішого:
+
+1. [Конспект: SQL на `sqlite3`](https://github.com/NikoriakViktor/PY-Course-Victor-Nikoriak-11-11-2026/blob/main/module_3/lessons/lesson_30_sql_basics/note_lesson_30_sql_basics.ipynb) [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/NikoriakViktor/PY-Course-Victor-Nikoriak-11-11-2026/blob/main/module_3/lessons/lesson_30_sql_basics/note_lesson_30_sql_basics.ipynb) — п'ять підмов SQL, `CREATE` / `INSERT` / `SELECT`, транзакції, `JOIN`. Нічого встановлювати не треба.
+2. [Лабораторна: бібліотечна система](https://github.com/NikoriakViktor/PY-Course-Victor-Nikoriak-11-11-2026/blob/main/module_3/lessons/lesson_30_sql_basics/lab_lesson_30_sql_basics.ipynb) [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/NikoriakViktor/PY-Course-Victor-Nikoriak-11-11-2026/blob/main/module_3/lessons/lesson_30_sql_basics/lab_lesson_30_sql_basics.ipynb) — сім завдань на `sqlite3`: від схеми таблиць до транзакції з `ROLLBACK` і підзапитів.
+3. [PostgreSQL: архітектура та практика](https://github.com/NikoriakViktor/PY-Course-Victor-Nikoriak-11-11-2026/blob/main/module_3/lessons/lesson_30_sql_basics/postgresql/note_lesson_30_postgresql.ipynb) [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/NikoriakViktor/PY-Course-Victor-Nikoriak-11-11-2026/blob/main/module_3/lessons/lesson_30_sql_basics/postgresql/note_lesson_30_postgresql.ipynb) — типи даних, `RETURNING`, `EXPLAIN ANALYZE`, JSONB, віконні функції, рівні ізоляції. Потрібен запущений Docker-контейнер `course-postgres`, тому відкривай на своєму комп'ютері.
 
 ## Пригадай
 
@@ -99,7 +103,7 @@ flowchart LR
 
 === "Google Colab"
 
-    Colab — це віртуальна машина з Ubuntu, тож PostgreSQL ставиться в неї так само. Готова клітинка — на початку ноутбука заняття; сервер живе, доки працює сесія Colab.
+    Colab — це віртуальна машина з Ubuntu, тож PostgreSQL ставиться в неї так само. Сервер живе, доки працює сесія Colab. Перші два ноутбуки заняття працюють на `sqlite3` і в Colab запускаються без встановлення; ноутбук із PostgreSQL розрахований на локальний Docker-контейнер `course-postgres`.
 
 Перевірка — запит до сервера:
 
@@ -1103,7 +1107,7 @@ ORDER BY c.name;
 
 ### Що далі
 
-- Ноутбук заняття: [Відкрити вправи в Colab](https://colab.research.google.com/github/NikoriakViktor/PY-Course-Victor-Nikoriak-11-11-2026/blob/main/module_3/lessons/lesson_30_sql_basics/note_lesson_30_sql_student.ipynb){ .md-button .md-button--primary } [Переглянути розв’язки](https://github.com/NikoriakViktor/PY-Course-Victor-Nikoriak-11-11-2026/blob/main/module_3/lessons/lesson_30_sql_basics/note_lesson_30_sql.ipynb){ .solutions-link } — встановлення PostgreSQL у Colab, запити з перевірками, ін'єкція і параметри, репозиторій.
+- Ноутбуки заняття, від простого до складнішого: [конспект на `sqlite3`](https://github.com/NikoriakViktor/PY-Course-Victor-Nikoriak-11-11-2026/blob/main/module_3/lessons/lesson_30_sql_basics/note_lesson_30_sql_basics.ipynb) [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/NikoriakViktor/PY-Course-Victor-Nikoriak-11-11-2026/blob/main/module_3/lessons/lesson_30_sql_basics/note_lesson_30_sql_basics.ipynb), [лабораторна «Бібліотечна система»](https://github.com/NikoriakViktor/PY-Course-Victor-Nikoriak-11-11-2026/blob/main/module_3/lessons/lesson_30_sql_basics/lab_lesson_30_sql_basics.ipynb) [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/NikoriakViktor/PY-Course-Victor-Nikoriak-11-11-2026/blob/main/module_3/lessons/lesson_30_sql_basics/lab_lesson_30_sql_basics.ipynb), далі [PostgreSQL](https://github.com/NikoriakViktor/PY-Course-Victor-Nikoriak-11-11-2026/blob/main/module_3/lessons/lesson_30_sql_basics/postgresql/note_lesson_30_postgresql.ipynb) [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/NikoriakViktor/PY-Course-Victor-Nikoriak-11-11-2026/blob/main/module_3/lessons/lesson_30_sql_basics/postgresql/note_lesson_30_postgresql.ipynb) — для нього потрібен Docker-контейнер `course-postgres`.
 - Наступний урок — 31, Redis: база в пам'яті для кешу, черг і лічильників — ті самі структури з уроку 29, але спільні для багатьох програм.
 - У модулі 4 до бази під'єднаються веб-застосунки: ORM у Django (урок 34) і SQLAlchemy / SQLModel у FastAPI (урок 39) пишуть SQL за тебе — але читати й перевіряти його доведеться самому.
 

@@ -23,6 +23,9 @@
 
 **Ноутбук заняття:** [Відкрити вправи в Colab](https://colab.research.google.com/github/NikoriakViktor/PY-Course-Victor-Nikoriak-11-11-2026/blob/main/module_3/lessons/lesson_31_redis_overview/note_lesson_31_redis_student.ipynb){ .md-button .md-button--primary } [Переглянути розв’язки](https://github.com/NikoriakViktor/PY-Course-Victor-Nikoriak-11-11-2026/blob/main/module_3/lessons/lesson_31_redis_overview/note_lesson_31_redis.ipynb){ .solutions-link } — зі встановленням Redis прямо в Colab.
 
+!!! tip "Загальна картина: PostgreSQL · Redis · DuckDB"
+    Інтерактивний гайд [«Бази даних: загальна картина»](https://github.com/NikoriakViktor/PY-Course-Victor-Nikoriak-11-11-2026/blob/main/module_3/bonus/%D0%91%D0%B0%D0%B7%D0%B8%20%D0%B4%D0%B0%D0%BD%D0%B8%D1%85%20%E2%80%94%20%D0%B7%D0%B0%D0%B3%D0%B0%D0%BB%D1%8C%D0%BD%D0%B0%20%D0%BA%D0%B0%D1%80%D1%82%D0%B8%D0%BD%D0%B0.html) (завантаж HTML і відкрий у браузері) показує всі три бази як одну систему: картки сутностей, пісочниця Redis, патерни (кеш, черги, захоплення кур'єра, транзакції) і архітектура проєкту з логами. Проєкт, де це все працює разом: [`taxi_delivery_redis`](https://github.com/NikoriakViktor/PY-Course-Victor-Nikoriak-11-11-2026/blob/main/module_3/lessons/taxi_delivery_redis/) — див. його `ARCHITECTURE.md`.
+
 ## Пригадай
 
 1. Чому `balance = balance + 1` з кількох потоків губить оплати (урок 28)?

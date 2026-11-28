@@ -6,9 +6,34 @@
 
 ## Запуск
 
+**0. Запусти Docker Desktop** і дочекайся напису «Engine running» унизу зліва. Перевірка в терміналі: `docker version` має показати і `Client`, і `Server`.
+
+**1. Відкрий термінал у корені репозиторію курсу.** У PyCharm — вкладка **Terminal** унизу: вона відкривається саме в корені проєкту. Або PowerShell чи cmd і `cd` до папки, куди ти склонував курс.
+
+**2. Перейди в папку цього проєкту** — туди, де лежить `docker-compose.yml`:
+
+```bash
+cd module_3/lessons/taxi_delivery_redis
+```
+
+Перевір, що ти на місці: `dir` (Windows) або `ls` (macOS, Linux) має показати `docker-compose.yml`, `Dockerfile`, `app` і `sql`.
+
+**3. Запусти:**
+
 ```bash
 docker compose up --build
 ```
+
+Перший запуск збирає образ і завантажує PostgreSQL та Redis — це кілька хвилин. Термінал залишиться зайнятим логами сервісів: так і має бути, не закривай його. Зупинка — `Ctrl+C`, потім `docker compose down` (`-v` — разом з даними) у тій самій папці.
+
+> **Помилка `no configuration file provided: not found`** означає, що ти не в тій папці: `docker compose` шукає `docker-compose.yml` лише в поточній. Повернись до кроку 2.
+>
+> **Не хочеш переходити в папку?** З кореня репозиторію можна вказати файл явно:
+> `docker compose -f module_3/lessons/taxi_delivery_redis/docker-compose.yml up --build`
+>
+> **Помилка `port is already allocated`** — порт 5433, 6390, 8060 чи 8100 уже зайнятий іншим контейнером або програмою (часто — іншим PostgreSQL). `docker ps` покаже, хто його тримає. Зупини той контейнер або зміни лівий номер у `ports:` у `docker-compose.yml`, наприклад `"5434:5432"`.
+
+Коли все піднялось:
 
 | Що | Адреса |
 |---|---|
@@ -17,7 +42,7 @@ docker compose up --build
 | ⚡ Redis | `redis-cli -p 6390` |
 | 🐘 PostgreSQL | `psql postgresql://taxi:taxi@localhost:5433/smachno` |
 
-Через ~10 секунд на мапі з'являться замовлення та кур'єри в дорозі. Зупинка: `docker compose down` (`-v` — разом з даними).
+Через ~10 секунд на мапі з'являться замовлення та кур'єри в дорозі. Команди `redis-cli` і `docker compose run/kill` із завдань нижче теж виконуй у цій папці.
 
 ## Як це працює
 

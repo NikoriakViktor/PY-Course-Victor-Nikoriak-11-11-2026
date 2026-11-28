@@ -5,6 +5,7 @@ import redis
 
 from . import config as C
 from . import db
+from .log import log
 
 
 def seed_redis(r: redis.Redis) -> None:
@@ -17,6 +18,7 @@ def seed_redis(r: redis.Redis) -> None:
             "name": rest["name"], "cuisine": rest["cuisine"], "district": rest["district"],
             "lat": rest["lat"], "lon": rest["lon"]})
     pipe.execute()
+    log.redis("GEOADD %s + HSET restaurant:* — ресторани з PostgreSQL прогріто в Redis", C.RESTAURANTS_GEO)
 
     rng = random.Random(42)
     for cour in db.fetch_couriers():
@@ -34,6 +36,7 @@ def seed_redis(r: redis.Redis) -> None:
 
     try:  # Consumer group для Stream; MKSTREAM створює стрім, якщо його ще нема
         r.xgroup_create(C.ORDERS_STREAM, C.ORDERS_GROUP, id="0", mkstream=True)
+        log.queue("XGROUP CREATE %s %s MKSTREAM → черга і група диспетчерів створені", C.ORDERS_STREAM, C.ORDERS_GROUP)
     except redis.ResponseError as e:
         if "BUSYGROUP" not in str(e):
             raise

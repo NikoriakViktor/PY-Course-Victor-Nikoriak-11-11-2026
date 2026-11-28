@@ -8,7 +8,7 @@ import os
 import redis
 
 REDIS_URL = os.getenv("REDIS_URL", "redis://localhost:6379/0")
-PG_DSN = os.getenv("PG_DSN", "postgresql://taxi:taxi@localhost:5433/smachno")
+PG_DSN = os.getenv("PG_DSN", "postgresql://taxi:taxi@localhost:5434/smachno")
 
 # центр Києва та параметри симуляції
 CITY_LAT, CITY_LON = 50.4501, 30.5234
@@ -46,6 +46,10 @@ def menu_cache_key(rid) -> str: return f"cache:menu:{rid}"        # STRING + TTL
 def ratelimit_key(customer: str) -> str: return f"ratelimit:{customer}"  # STRING + TTL
 
 
+SERVICE = os.getenv("SERVICE", "local")     # ім'я сервісу з docker-compose.yml
+
+
 def get_redis() -> redis.Redis:
-    """decode_responses=True → працюємо зі str, а не з bytes."""
-    return redis.Redis.from_url(REDIS_URL, decode_responses=True)
+    """decode_responses=True → працюємо зі str, а не з bytes.
+    client_name → у `CLIENT LIST` і в redis-monitor видно, ЯКИЙ сервіс надіслав команду."""
+    return redis.Redis.from_url(REDIS_URL, decode_responses=True, client_name=SERVICE)

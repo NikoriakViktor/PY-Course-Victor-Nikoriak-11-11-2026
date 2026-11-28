@@ -5,6 +5,7 @@ import time
 import redis
 
 from . import config as C
+from .log import log
 from .menu import get_menu
 
 
@@ -14,7 +15,10 @@ def check_rate_limit(r: redis.Redis, customer: str) -> bool:
     n = r.incr(key)
     if n == 1:
         r.expire(key, 60)
-    return n <= C.ORDERS_PER_MIN_LIMIT
+    allowed = n <= C.ORDERS_PER_MIN_LIMIT
+    log.redis("INCR %s → %d з %d за хвилину%s", key, n, C.ORDERS_PER_MIN_LIMIT,
+              "" if allowed else " → ВІДМОВА (429, rate limit)")
+    return allowed
 
 
 def publish_event(r: redis.Redis, order_id, status: str, text: str, **extra) -> None:
@@ -27,7 +31,9 @@ def publish_event(r: redis.Redis, order_id, status: str, text: str, **extra) -> 
     pipe.publish(C.EVENTS_CHANNEL, event)
     pipe.lpush(C.EVENTS_LOG, event)
     pipe.ltrim(C.EVENTS_LOG, 0, 29)
-    pipe.execute()
+    receivers, *_ = pipe.execute()
+    log.event("PUBLISH %s → почули %d підписників · LPUSH %s · %s",
+              C.EVENTS_CHANNEL, receivers, C.EVENTS_LOG, text)
 
 
 def create_order(r: redis.Redis, customer: str, restaurant_id: int,
@@ -58,7 +64,11 @@ def create_order(r: redis.Redis, customer: str, restaurant_id: int,
     pipe.zadd(C.ORDERS_ACTIVE, {str(order_id): now})     # «активні» для дашборду
     pipe.incr(f"stats:orders:{time.strftime('%Y-%m-%d')}")   # лічильник «замовлень за день»
     pipe.pfadd(C.CUSTOMERS_UNIQUE, customer)             # унікальні клієнти (HyperLogLog)
-    pipe.execute()
+    _, msg_id, *_ = pipe.execute()
+    log.task("замовлення #%s від %s: %d поз., %.0f грн", order_id, customer, len(lines), total)
+    log.redis("INCR %s → %s (новий id) · MULTI: HSET %s, ZADD %s, PFADD %s · EXEC",
+              C.ORDER_SEQ, order_id, C.order_key(order_id), C.ORDERS_ACTIVE, C.CUSTOMERS_UNIQUE)
+    log.queue("XADD %s → %s  (#%s чекає на диспетчера)", C.ORDERS_STREAM, msg_id, order_id)
 
     rest_name = r.hget(C.restaurant_key(restaurant_id), "name")
     publish_event(r, order_id, "new", f"Нове замовлення #{order_id} · {rest_name} · {total:.0f} грн")

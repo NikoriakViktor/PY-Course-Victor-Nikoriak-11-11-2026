@@ -1,14 +1,23 @@
 # 🍕🚕 Смачно + Таксі на Redis — підсумковий проєкт уроків 30 (PostgreSQL) і 31 (Redis)
-# Запуск:  docker compose up --build
+# Запуск (з ЦІЄЇ папки):  docker compose up --build
 #   Дашборд  → http://localhost:8060
 #   API docs → http://localhost:8100/docs
 #   Redis    → localhost:6390   (redis-cli -p 6390)
-#   Postgres → localhost:5433   (psql postgresql://taxi:taxi@localhost:5433/smachno)
+#   Postgres → localhost:5434   (psql postgresql://taxi:taxi@localhost:5434/smachno)
+#
+# Логи (з іншого терміналу, теж з цієї папки):
+#   docker compose logs -f dispatcher simulator generator api   — черга і задачі
+#   docker compose logs -f redis-monitor                         — кожна команда Redis і хто її надіслав
+#   docker compose logs -f postgres                              — кожен SQL-запит і хто його виконав
+
+x-env: &env
+  REDIS_URL: redis://redis:6379/0
+  PG_DSN: postgresql://taxi:taxi@postgres:5432/smachno
+  LOG_LEVEL: ${LOG_LEVEL:-INFO}     # DEBUG — ще й кожен крок кур'єра і кожне пусте опитування черги
+  PYTHONUNBUFFERED: "1"             # логи одразу, без буфера
+
 x-app: &app
   build: .
-  environment:
-    REDIS_URL: redis://redis:6379/0
-    PG_DSN: postgresql://taxi:taxi@postgres:5432/smachno
   depends_on:
     redis:
       condition: service_healthy
@@ -23,14 +32,19 @@ services:
       POSTGRES_DB: smachno
       POSTGRES_USER: taxi
       POSTGRES_PASSWORD: taxi
-    ports: ["5433:5432"]          # не 5432 — щоб не конфліктувати з course-postgres
+    # log_statement=all — кожен SQL-запит у `docker compose logs postgres`;
+    # %a — application_name, тобто який сервіс виконав запит
+    command: ["postgres", "-c", "log_statement=all", "-c", "log_line_prefix=%m [%a] "]
+    ports: ["5434:5432"]          # не 5432/5433 — щоб не конфліктувати з іншими PostgreSQL на машині
     volumes:
       - ./sql/init.sql:/docker-entrypoint-initdb.d/01_init.sql:ro
       - pg_data:/var/lib/postgresql/data
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U taxi -d smachno"]
+      # -h 127.0.0.1: перевіряємо TCP. Під час першої ініціалізації Postgres слухає лише сокет,
+      # тож сервіси не стартують, поки база не готова насправді
+      test: ["CMD-SHELL", "pg_isready -h 127.0.0.1 -U taxi -d smachno"]
       interval: 3s
-      retries: 15
+      retries: 20
 
   redis:
     image: redis:7-alpine
@@ -42,25 +56,35 @@ services:
       interval: 3s
       retries: 10
 
+  redis-monitor:                  # MONITOR: кожна команда Redis з іменем сервісу, що її надіслав
+    <<: *app
+    environment: {<<: *env, SERVICE: redis-monitor, MONITOR_ALL: "${MONITOR_ALL:-0}"}
+    command: python -m app.redis_monitor
+
   api:
     <<: *app
+    environment: {<<: *env, SERVICE: api}
     command: uvicorn app.api:app --host 0.0.0.0 --port 8000
     ports: ["8100:8000"]
 
   dispatcher:                     # Stream → GEO → найближчий вільний кур'єр
     <<: *app
+    environment: {<<: *env, SERVICE: dispatcher}
     command: python -m app.dispatcher
 
   simulator:                      # кур'єри їдуть по мапі, завершені замовлення → PostgreSQL
     <<: *app
+    environment: {<<: *env, SERVICE: simulator}
     command: python -m app.simulator
 
   generator:                      # «клієнти» самі роблять замовлення
     <<: *app
+    environment: {<<: *env, SERVICE: generator}
     command: python -m app.generator
 
   dashboard:
     <<: *app
+    environment: {<<: *env, SERVICE: dashboard}
     command: python -m app.dashboard
     ports: ["8060:8050"]
 

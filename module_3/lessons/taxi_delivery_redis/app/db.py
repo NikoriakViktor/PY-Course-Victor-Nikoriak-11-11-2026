@@ -9,20 +9,27 @@ import psycopg
 from psycopg.rows import dict_row
 
 from . import config as C
+from .log import log
 
 
 def connect() -> psycopg.Connection:
-    return psycopg.connect(C.PG_DSN, row_factory=dict_row, autocommit=True)
+    # application_name → у логах PostgreSQL видно, який сервіс виконав запит
+    return psycopg.connect(C.PG_DSN, row_factory=dict_row, autocommit=True, application_name=C.SERVICE)
 
 
-def wait_for_db(retries: int = 40) -> None:
-    for _ in range(retries):
+def wait_for_db(retries: int = 60) -> None:
+    for attempt in range(1, retries + 1):
         try:
             connect().close()
+            log.pg("підключився до PostgreSQL (спроба %d)", attempt)
             return
-        except psycopg.OperationalError:
+        except psycopg.OperationalError as exc:
+            reason = str(exc).strip().splitlines()[0] if str(exc).strip() else type(exc).__name__
+            log.warn("PostgreSQL ще недоступний (спроба %d/%d): %s", attempt, retries, reason)
             time.sleep(1)
-    raise RuntimeError("PostgreSQL недоступний")
+    raise RuntimeError(
+        "PostgreSQL недоступний. Перевір `docker compose ps` і `docker compose logs postgres`; "
+        "якщо контейнер postgres без мережі чи порту — `docker compose down`, потім `docker compose up --build`.")
 
 
 def fetch_restaurants() -> list[dict]:
@@ -36,6 +43,7 @@ def fetch_menu(restaurant_id: int) -> list[dict]:
             "SELECT id, name, price FROM menu_items WHERE restaurant_id = %s ORDER BY id",
             (restaurant_id,),                       # параметри, а не f-рядок!
         ).fetchall()
+    log.pg("SELECT menu_items WHERE restaurant_id=%s → страв у меню: %d", restaurant_id, len(rows))
     return [{"id": r["id"], "name": r["name"], "price": float(r["price"])} for r in rows]
 
 
@@ -61,6 +69,7 @@ def save_delivered_order(o: dict) -> None:
              float(o["created_at"]), float(o["delivered_at"]),
              float(o["lat"]), float(o["lon"])),
         )
+    log.pg("INSERT INTO orders #%s (%s грн) — замовлення збережено назавжди", o["id"], o["total"])
 
 
 def history(limit: int = 20) -> list[dict]:

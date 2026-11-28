@@ -10,6 +10,7 @@ from pydantic import BaseModel, Field
 from . import config as C
 from . import db
 from .config import get_redis
+from .log import log
 from .menu import get_menu, invalidate_menu
 from .orders import check_rate_limit, create_order
 from .seed import seed_redis
@@ -20,6 +21,7 @@ r = get_redis()
 @asynccontextmanager
 async def lifespan(_: FastAPI):
     seed_redis(r)
+    log.task("API готове → http://localhost:8100/docs")
     yield
 
 
@@ -135,10 +137,12 @@ def events():
     def stream():
         ps = get_redis().pubsub()                  # окреме з'єднання: підписник «зайнятий» слуханням
         ps.subscribe(C.EVENTS_CHANNEL)
+        log.event("SUBSCRIBE %s — новий слухач SSE /events", C.EVENTS_CHANNEL)
         try:
             while True:
                 msg = ps.get_message(ignore_subscribe_messages=True, timeout=15)
                 yield f"data: {msg['data']}\n\n" if msg else ": keep-alive\n\n"
         finally:
             ps.close()
+            log.event("UNSUBSCRIBE %s — слухач SSE відключився", C.EVENTS_CHANNEL)
     return StreamingResponse(stream(), media_type="text/event-stream")

@@ -1,5 +1,6 @@
 """Дашборд диспетчерської: читає Redis раз на секунду. Мапа, KPI, рейтинг, стрічка подій."""
 import json
+import logging
 import time
 
 import plotly.graph_objects as go
@@ -7,7 +8,11 @@ from dash import Dash, Input, Output, dcc, html
 
 from . import config as C
 from .config import get_redis
+from .log import log
 from .seed import seed_redis
+
+# Dash опитує сервер щосекунди — без цього кожне опитування давало б рядок у лозі
+logging.getLogger("werkzeug").setLevel(logging.WARNING)
 
 r = get_redis()
 seed_redis(r)
@@ -90,4 +95,5 @@ def refresh(_):
 
 
 if __name__ == "__main__":
+    log.task("дашборд читає Redis раз на секунду → http://localhost:8060")
     app.run(host="0.0.0.0", port=8050, debug=False)

@@ -1083,6 +1083,91 @@ ORDER BY c.name;
 | psycopg | `with psycopg.connect(...)`; дані — лише параметрами `%s` |
 | Індекс | `O(log n)` пошук за стовпцем; `EXPLAIN` показує план |
 
+### Шпаргалка: команди SQL { #sql-cheatsheet }
+
+Усі команди уроку в одному місці: для чого кожна і як її записати. Приклади — на таблицях диспетчерської (`restaurants`, `couriers`, `orders`). Позначка **+** — команди, яких у розділі не було: вони знадобляться в ноутбуках і далі в курсі.
+
+**Структура бази (DDL).** Описують, *які* таблиці є і що в них можна зберігати.
+
+| Команда | Для чого | Приклад |
+|---|---|---|
+| `CREATE TABLE` | створити таблицю: стовпці, типи, обмеження | `CREATE TABLE reviews (id integer GENERATED ALWAYS AS IDENTITY PRIMARY KEY, order_id integer NOT NULL REFERENCES orders (id), rating integer NOT NULL CHECK (rating BETWEEN 1 AND 5));` |
+| `ALTER TABLE … ADD COLUMN` **+** | додати стовпець у наявну таблицю, дані лишаються | `ALTER TABLE reviews ADD COLUMN comment text;` |
+| `ALTER TABLE … RENAME COLUMN` **+** | перейменувати стовпець | `ALTER TABLE reviews RENAME COLUMN comment TO note;` |
+| `ALTER TABLE … DROP COLUMN` **+** | прибрати стовпець разом з його даними | `ALTER TABLE reviews DROP COLUMN note;` |
+| `CREATE INDEX` | прискорити пошук за стовпцем | `CREATE INDEX orders_customer_idx ON orders (customer);` |
+| `DROP INDEX` **+** | прибрати індекс, який не використовують | `DROP INDEX orders_customer_idx;` |
+| `TRUNCATE` **+** | швидко видалити всі рядки, таблиця лишається | `TRUNCATE TABLE reviews;` |
+| `DROP TABLE` **+** | видалити таблицю повністю: структуру й дані | `DROP TABLE IF EXISTS reviews;` |
+
+**Зміна даних (DML).** Додають, змінюють і видаляють рядки.
+
+| Команда | Для чого | Приклад |
+|---|---|---|
+| `INSERT INTO … VALUES` | додати рядок | `INSERT INTO restaurants (name, district) VALUES ('Борщ і сало', 'Поділ');` |
+| `INSERT` кількох рядків | додати кілька рядків однією командою | `INSERT INTO couriers (name, phone) VALUES ('Марія', '0501112233'), ('Олег', '0672223344');` |
+| `INSERT … RETURNING` | додати рядок і одразу отримати те, що згенерувала база (новий `id`) | `INSERT INTO orders (restaurant_id, customer, total) VALUES (1, 'Ірина', 320.00) RETURNING id;` |
+| `INSERT … ON CONFLICT` **+** | не падати на повторі `UNIQUE`: пропустити рядок або оновити наявний | `INSERT INTO restaurants (name, district) VALUES ('Борщ і сало', 'Оболонь') ON CONFLICT (name) DO UPDATE SET district = EXCLUDED.district;` |
+| `UPDATE … SET … WHERE` | змінити значення в рядках, що підходять під умову | `UPDATE orders SET status = 'delivering', courier_id = 1 WHERE id = 1;` |
+| `DELETE FROM … WHERE` | видалити рядки, що підходять під умову | `DELETE FROM orders WHERE status = 'cancelled';` |
+
+`UPDATE` і `DELETE` без `WHERE` змінюють або видаляють **усі** рядки таблиці.
+
+**Запити (DQL).** Читають дані й нічого не змінюють.
+
+| Команда | Для чого | Приклад |
+|---|---|---|
+| `SELECT … FROM` | обрати стовпці з таблиці | `SELECT customer, total FROM orders;` |
+| `SELECT *` | усі стовпці — зручно під час перевірки, у коді краще перелічувати | `SELECT * FROM couriers;` |
+| `AS` | дати стовпцю або таблиці коротке ім'я | `SELECT total * 0.1 AS tip FROM orders AS o;` |
+| `WHERE` | лишити тільки рядки, що підходять під умову | `SELECT * FROM orders WHERE total > 300;` |
+| `AND`, `OR`, `NOT` | поєднати кілька умов | `SELECT * FROM orders WHERE status = 'new' AND total > 300;` |
+| `IN (…)` | значення є у списку | `SELECT * FROM orders WHERE status IN ('new', 'delivering');` |
+| `BETWEEN … AND …` | значення в діапазоні, межі включно | `SELECT * FROM orders WHERE total BETWEEN 200 AND 400;` |
+| `LIKE` / `ILIKE` | рядок за шаблоном: `%` — будь-які символи, `_` — один; `ILIKE` не зважає на регістр | `SELECT * FROM restaurants WHERE name ILIKE 'борщ%';` |
+| `IS NULL` / `IS NOT NULL` | значення немає / є | `SELECT * FROM orders WHERE courier_id IS NULL;` |
+| `DISTINCT` | прибрати повтори в результаті | `SELECT DISTINCT district FROM restaurants;` |
+| `ORDER BY … ASC` / `DESC` | відсортувати: за зростанням / за спаданням | `SELECT * FROM orders ORDER BY total DESC;` |
+| `LIMIT` / `OFFSET` | взяти не більше `n` рядків / пропустити перші `m` | `SELECT * FROM orders ORDER BY created_at DESC LIMIT 10 OFFSET 20;` |
+| `COUNT`, `SUM`, `AVG`, `MIN`, `MAX` | згорнути багато рядків в одне число | `SELECT count(*), sum(total), avg(total) FROM orders;` |
+| `GROUP BY` | порахувати агрегат окремо для кожної групи | `SELECT status, count(*) FROM orders GROUP BY status;` |
+| `HAVING` | відфільтрувати групи (після `GROUP BY`) | `SELECT courier_id, sum(total) FROM orders GROUP BY courier_id HAVING sum(total) > 1000;` |
+| `JOIN … ON` | з'єднати таблиці: лише рядки, що мають пару | `SELECT o.id, r.name FROM orders AS o JOIN restaurants AS r ON r.id = o.restaurant_id;` |
+| `LEFT JOIN … ON` | усі рядки лівої таблиці; де пари немає — `NULL` | `SELECT c.name, count(o.id) FROM couriers AS c LEFT JOIN orders AS o ON o.courier_id = c.id GROUP BY c.name;` |
+| Підзапит | використати результат одного запиту всередині іншого | `SELECT * FROM orders WHERE total > (SELECT avg(total) FROM orders);` |
+| `EXISTS` **+** | перевірити, чи є хоч один пов'язаний рядок | `SELECT name FROM couriers AS c WHERE NOT EXISTS (SELECT 1 FROM orders AS o WHERE o.courier_id = c.id);` |
+| `WITH` | дати проміжному результату ім'я й використати його нижче | `WITH big AS (SELECT * FROM orders WHERE total > 300) SELECT status, count(*) FROM big GROUP BY status;` |
+| `CASE` **+** | обрати значення за умовою — як `if` / `else` | `SELECT id, CASE WHEN total >= 300 THEN 'велике' ELSE 'звичайне' END AS size FROM orders;` |
+| `UNION` / `UNION ALL` **+** | скласти результати двох запитів: без повторів / з повторами | `SELECT name FROM couriers UNION SELECT name FROM restaurants;` |
+
+**Транзакції (TCL).** Групують кілька змін в одну дію: або всі, або жодна.
+
+| Команда | Для чого | Приклад |
+|---|---|---|
+| `BEGIN` | почати транзакцію | `BEGIN;` |
+| `COMMIT` | зберегти всі зміни транзакції | `COMMIT;` |
+| `ROLLBACK` | скасувати всі зміни транзакції | `ROLLBACK;` |
+| `SAVEPOINT` **+** | поставити позначку всередині транзакції | `SAVEPOINT before_bonus;` |
+| `ROLLBACK TO` **+** | відкотитися до позначки, транзакція триває | `ROLLBACK TO before_bonus;` |
+
+**Доступ (DCL)** **+**. Вирішують, хто і що може робити з таблицями.
+
+| Команда | Для чого | Приклад |
+|---|---|---|
+| `CREATE ROLE` | створити користувача бази | `CREATE ROLE operator LOGIN PASSWORD 'secret';` |
+| `GRANT` | дати права на таблицю | `GRANT SELECT, INSERT ON orders TO operator;` |
+| `REVOKE` | забрати права | `REVOKE INSERT ON orders FROM operator;` |
+
+**Перевірка і `psql`.** `EXPLAIN` — команда SQL; команди з `\` розуміє лише клієнт `psql`.
+
+| Команда | Для чого | Приклад |
+|---|---|---|
+| `EXPLAIN` | показати план: як база виконуватиме запит | `EXPLAIN SELECT * FROM orders WHERE customer = 'Ірина';` |
+| `EXPLAIN ANALYZE` **+** | виконати запит і показати справжній час | `EXPLAIN ANALYZE SELECT * FROM orders WHERE customer = 'Ірина';` |
+| `\l`, `\c назва` | список баз / під'єднатися до бази | `\c dispatch` |
+| `\dt`, `\d таблиця` | список таблиць / будова таблиці | `\d orders` |
+| `\x`, `\q` | показувати рядок по одному полю / вийти | `\q` |
+
 ### Самоперевірка
 
 1. Чим база даних краща за JSON-файл, коли в сервісу три оператори?

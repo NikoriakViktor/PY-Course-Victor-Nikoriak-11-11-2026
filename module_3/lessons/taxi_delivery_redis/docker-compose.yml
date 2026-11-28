@@ -1,0 +1,69 @@
+# 🍕🚕 Смачно + Таксі на Redis — підсумковий проєкт уроків 30 (PostgreSQL) і 31 (Redis)
+# Запуск:  docker compose up --build
+#   Дашборд  → http://localhost:8060
+#   API docs → http://localhost:8100/docs
+#   Redis    → localhost:6390   (redis-cli -p 6390)
+#   Postgres → localhost:5433   (psql postgresql://taxi:taxi@localhost:5433/smachno)
+x-app: &app
+  build: .
+  environment:
+    REDIS_URL: redis://redis:6379/0
+    PG_DSN: postgresql://taxi:taxi@postgres:5432/smachno
+  depends_on:
+    redis:
+      condition: service_healthy
+    postgres:
+      condition: service_healthy
+  restart: on-failure
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: smachno
+      POSTGRES_USER: taxi
+      POSTGRES_PASSWORD: taxi
+    ports: ["5433:5432"]          # не 5432 — щоб не конфліктувати з course-postgres
+    volumes:
+      - ./sql/init.sql:/docker-entrypoint-initdb.d/01_init.sql:ro
+      - pg_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U taxi -d smachno"]
+      interval: 3s
+      retries: 15
+
+  redis:
+    image: redis:7-alpine
+    command: ["redis-server", "--appendonly", "yes"]
+    ports: ["6390:6379"]          # не 6379 — щоб не конфліктувати з іншими Redis на машині
+    volumes: [redis_data:/data]
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 3s
+      retries: 10
+
+  api:
+    <<: *app
+    command: uvicorn app.api:app --host 0.0.0.0 --port 8000
+    ports: ["8100:8000"]
+
+  dispatcher:                     # Stream → GEO → найближчий вільний кур'єр
+    <<: *app
+    command: python -m app.dispatcher
+
+  simulator:                      # кур'єри їдуть по мапі, завершені замовлення → PostgreSQL
+    <<: *app
+    command: python -m app.simulator
+
+  generator:                      # «клієнти» самі роблять замовлення
+    <<: *app
+    command: python -m app.generator
+
+  dashboard:
+    <<: *app
+    command: python -m app.dashboard
+    ports: ["8060:8050"]
+
+volumes:
+  pg_data:
+  redis_data:

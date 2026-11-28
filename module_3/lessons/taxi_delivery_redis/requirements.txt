@@ -1,0 +1,7 @@
+redis>=5.0
+psycopg[binary]>=3.1
+fastapi>=0.110
+uvicorn>=0.29
+pydantic>=2.0
+dash>=3.0
+plotly>=6.0

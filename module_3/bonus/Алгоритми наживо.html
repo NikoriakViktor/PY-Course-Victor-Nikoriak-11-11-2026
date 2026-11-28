@@ -1,4 +1,22 @@
-<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style><style>
+/* roadmap tab */
+#roadmap .flowline,#build .flowline{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;counter-reset:f}
+.flowline>div{border:1px solid var(--line);border-radius:10px;padding:10px 12px;background:var(--bg);position:relative}
+.flowline b{display:block;margin-bottom:4px}.flowline span{font-size:13.5px;color:var(--muted)}
+.roadlist{list-style:none;margin:0;padding:0;display:grid;gap:12px}
+.roadlist li{display:grid;grid-template-columns:38px minmax(0,1fr);gap:12px;border:1px solid var(--line);border-radius:10px;padding:12px 14px;background:var(--bg)}
+.roadlist h4{margin:0 0 6px;font-size:16px}.roadlist p{margin:8px 0 0}
+.rnum{width:34px;height:34px;border-radius:50%;background:var(--ink);color:var(--bg);display:flex;align-items:center;justify-content:center;font-weight:700}
+.rtopics{display:flex;flex-wrap:wrap;gap:6px}
+a.rtopic{font-size:13px;border:1px solid var(--line);border-radius:999px;padding:2px 10px;text-decoration:none;color:var(--fg);background:var(--panel);white-space:nowrap}
+a.rtopic:hover{border-color:var(--ink)}
+#build-pick .btn[aria-pressed="true"],#flow .btn[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+#flow .controls,#build-pick{display:flex;flex-wrap:wrap;gap:8px}
+#flow-out th{white-space:nowrap;vertical-align:top}
+.steps9 li{margin-bottom:8px}
+#method pre.code code{display:block;padding:0 16px;white-space:pre}
+</style>
+</head><body>
 <title>Алгоритми наживо — повний гайд</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
@@ -370,6 +388,121 @@ pre.rcode{background:var(--codebg);color:var(--codefg);font-family:var(--mono);f
     </div>
   </div>
 </section>
+<section class="lesson" id="roadmap" data-title="Роадмап">
+  <h2>Роадмап: від «хочу програму» до алгоритму</h2>
+  <p class="lead">Алгоритми вчать не заради самих алгоритмів. Кожен із них відповідає на якесь питання, яке рано чи пізно ставить твоя програма: <b>як швидко знайти</b>, <b>як упорядкувати</b>, <b>як обрати найкраще</b>, <b>як пройти зв'язки</b>. На цій вкладці є чотири сторінки, які варто читати по черзі: <b>роадмап</b> (у якому порядку вчити і що після кожного етапу ти вже вмієш будувати), <b>«Що хочу побудувати»</b> (обираєш проєкт і бачиш, які алгоритми потрібні на кожному його кроці), <b>«Як обрати алгоритм»</b> (покроково, від питання до інструмента) і <b>«Як писати програму»</b> (метод: гіпотеза, вимір, перевірка).</p>
+  <details class="predict"><summary>🔮 Прогноз: ти пишеш Telegram-бота. Користувач надсилає слово, бот має відповісти, чи є воно в списку з 200 000 заборонених слів. Перевірка <code>word in banned_list</code> — це добре чи погано?</summary><p>Погано: <code>in</code> для списку переглядає елементи по черзі, тобто до 200 000 порівнянь на кожне повідомлення (O(n)). Якщо один раз зробити <code>banned = set(banned_list)</code>, перевірка займатиме сталий час (O(1) у середньому). Саме таке рішення — «яку структуру даних обрати» — і є практичною користю алгоритмів. Етап 1 роадмапу.</p></details>
+  <div class="card">
+    <h3>Як рухатися по курсу</h3>
+    <div class="flowline">
+      <div><b>1. Задача</b><span>що програма має робити для людини</span></div>
+      <div><b>2. Дані</b><span>список, пари «ключ → значення», ієрархія, мережа, потік подій</span></div>
+      <div><b>3. Питання</b><span>знайти, упорядкувати, порахувати, обрати найкраще, пройти зв'язки</span></div>
+      <div><b>4. Алгоритм</b><span>тема гайду, яка відповідає на це питання</span></div>
+      <div><b>5. Готовий інструмент</b><span>dict, sorted, heapq, індекс БД, бібліотека</span></div>
+      <div><b>6. Перевірка</b><span>тест проти простого рішення і вимір часу</span></div>
+    </div>
+    <p class="note">Власну реалізацію пишуть, щоб зрозуміти алгоритм. У робочій програмі майже завжди беруть готову. Розуміння потрібне, щоб обрати правильну і знати, скільки вона коштує.</p>
+  </div>
+  <div class="card">
+    <h3>Етапи: що вчити і що після цього можна побудувати</h3>
+    <p class="note" style="margin:0 0 10px">Порядок етапів — рекомендований для побудови програм; він трохи відрізняється від порядку вкладок. Назви тем ведуть до демонстрацій.</p>
+    <div id="road-stages"></div>
+  </div>
+</section>
+
+<section class="lesson" id="build" data-title="Що хочу побудувати">
+  <h2>Що хочу побудувати</h2>
+  <p class="lead">Обери проєкт, схожий на той, що хочеш зробити. Для нього показано, з яких кроків складається програма, яке питання ставить кожен крок, яка тема гайду на нього відповідає і що взяти готове в Python. Унизу — мінімальна версія, з якої варто почати.</p>
+  <div class="controls" id="build-pick"></div>
+  <div id="build-out"></div>
+</section>
+
+<section class="lesson" id="flow" data-title="Як обрати алгоритм">
+  <h2>Як обрати алгоритм: три питання</h2>
+  <p class="lead">Почни з питання, яке ставить задача, а не з назви алгоритму. Відповідай по черзі на три питання: <b>що треба зробити з даними</b>, <b>скільки їх</b>, <b>як часто це повторюється</b>. Унизу з'явиться рекомендація: що використати, яку тему відкрити і на чому найчастіше помиляються.</p>
+  <div class="card">
+    <h3>1. Що треба зробити з даними?</h3>
+    <div class="controls" id="flow-q"></div>
+  </div>
+  <div class="grid">
+    <div class="card">
+      <h3>2. Скільки даних?</h3>
+      <div class="controls" id="flow-n"></div>
+    </div>
+    <div class="card">
+      <h3>3. Як часто?</h3>
+      <div class="controls" id="flow-f"></div>
+    </div>
+  </div>
+  <div class="card" id="flow-out"></div>
+</section>
+
+<section class="lesson" id="method" data-title="Як писати програму">
+  <h2>Як писати програму: науковий метод</h2>
+  <p class="lead">Щоб програма була «згідно з наукою», не треба вгадувати, який алгоритм швидший. Треба поставити гіпотезу, перевірити її вимірюванням і порівняти з простим рішенням, правильність якого очевидна. Це той самий цикл, що в будь-якій науці: <b>гіпотеза → експеримент → вимір → висновок</b>.</p>
+  <div class="card">
+    <h3>Дев'ять кроків</h3>
+    <ol class="steps9">
+      <li><b>Сформулюй вхід і вихід.</b> Що приходить (тип, приклад, розмір <i>n</i>) і що має вийти. Якщо не можеш написати одним реченням — задача ще не зрозуміла.</li>
+      <li><b>Розв'яжи 2–3 приклади вручну.</b> Обов'язково граничні випадки: порожні дані, один елемент, дублікати, від'ємні числа, вже впорядковані дані.</li>
+      <li><b>Напиши найпростіше правильне рішення.</b> Навіть O(n²) перебором. Це твій еталон: з ним ти порівнюватимеш усе швидше.</li>
+      <li><b>Напиши тести.</b> <code>assert</code> або <code>pytest</code> для прикладів із кроку 2. Додай перевірку на випадкових даних: швидке рішення має давати той самий результат, що й еталон.</li>
+      <li><b>Оціни складність.</b> Скільки кроків для n = 10⁶? Використай <a href="#bigo" data-go="bigo">класи складності</a>: при 10⁸ простих операцій за секунду O(n²) для n = 10⁶ — це години.</li>
+      <li><b>Виміряй.</b> <code>timeit</code> для n = 10³, 10⁴, 10⁵. Якщо n зросло вдесятеро, а час — у сто разів, це O(n²). Вимір перевіряє твою гіпотезу про складність.</li>
+      <li><b>Знайди вузьке місце.</b> <code>python -m cProfile -s cumtime script.py</code> показує, де справді йде час. Не оптимізуй навмання.</li>
+      <li><b>Заміни структуру або алгоритм.</b> Список → множина, повторне сортування → купа, перебір → бінарний пошук. Спершу шукай готове: стандартна бібліотека, пакет, індекс у базі даних. Прожени ті самі тести.</li>
+      <li><b>Запиши рішення.</b> У коментарі чи README: чому ця структура, яка складність, при якому n вона перестане працювати.</li>
+    </ol>
+  </div>
+  <div class="card">
+    <h3>Шаблон: еталон, швидке рішення, перевірка, вимір</h3>
+    <p class="note" style="margin:0 0 8px">Задача: чи є в списку дублікати. Цей шаблон підходить для будь-якої теми гайду — заміни дві функції.</p>
+<pre class="code"><code>import random
+import timeit
+
+def has_dup_slow(items):            # еталон: очевидно правильний, O(n²)
+    for i in range(len(items)):
+        for j in range(i + 1, len(items)):
+            if items[i] == items[j]:
+                return True
+    return False
+
+def has_dup_fast(items):            # гіпотеза: множина дає O(n)
+    seen = set()
+    for x in items:
+        if x in seen:
+            return True
+        seen.add(x)
+    return False
+
+# 1. Правильність: граничні випадки + 500 випадкових порівнянь з еталоном
+for case in ([], [1], [1, 1], [1, 2, 3], [-1, 2, -1]):
+    assert has_dup_fast(case) == has_dup_slow(case), case
+for _ in range(500):
+    data = [random.randint(0, 50) for _ in range(random.randint(0, 30))]
+    assert has_dup_fast(data) == has_dup_slow(data), data
+print("тести пройдено")
+
+# 2. Вимір: як росте час при зростанні n (дані без дублікатів — найгірший випадок)
+for n in (500, 1000, 2000):
+    data = list(range(n))
+    slow = timeit.timeit(lambda: has_dup_slow(data), number=3)
+    fast = timeit.timeit(lambda: has_dup_fast(data), number=3)
+    print(f"n={n:5}  еталон {slow:.4f} с   множина {fast:.5f} с")
+# n подвоюється: час еталона росте приблизно вчетверо (O(n²)), множини — удвічі (O(n))</code></pre>
+  </div>
+  <div class="card">
+    <h3>Що читати далі</h3>
+    <ul style="margin:0;padding-left:20px">
+      <li>Дьордь Пойа, «Як розв'язувати задачу» (1945) — класичний метод: зрозуміти задачу, скласти план, виконати, оглянутися назад.</li>
+      <li>Кормен, Лейзерсон, Рівест, Штайн, «Вступ до алгоритмів» (CLRS) — довідник з доведеннями.</li>
+      <li>Адітья Бгаргава, «Грокаємо алгоритми» — те саме простою мовою з малюнками.</li>
+      <li>Джон Бентлі, «Перлини програмування» — як з вимірювань і оцінок народжується швидка програма.</li>
+    </ul>
+  </div>
+</section>
+
 <section class="lesson" id="bigo" data-title="Класи складності">
   <h2>Чому це важливо: кількість кроків залежно від n</h2>
   <p class="lead">Одна задача, різні алгоритми, одна й та сама машина (умовно 10⁸ простих операцій за секунду). Пересувайте n і дивіться, як розходяться класи складності.</p>
@@ -1864,13 +1997,14 @@ const COURSE={
 };
 function course(host,keys){host.innerHTML='<span class="lab">У курсі:</span>'+keys.map(k=>`<a href="${COURSE[k].u}" target="_blank" rel="noopener">${esc(COURSE[k].t)}</a>`).join('');}
 
-const CHAPTERS=[["start", "Старт", ["kart", "bigo", "dupl"]], ["search", "Пошук", ["poshuk", "bisect", "twoptr", "window"]], ["hash", "Хешування", ["hashtable", "twosum", "anagram"]], ["rec", "Рекурсія", ["callstack", "backtrack"]], ["sort", "Сортування", ["sortuvannya", "sortrace"]], ["dp", "Жадібні і ДП", ["zhadibnyi", "intervals", "wis", "dp", "coindp"]], ["lin", "Списки, стеки, черги", ["arrlist", "revlist", "brackets", "queue", "windowmax"]], ["tree", "Дерева, купи, кеші", ["bst", "traverse", "heap", "trie", "lru"]], ["graph", "Графи", ["hrafy", "dijkstra", "bellman"]], ["heur", "Евристики", ["henetyka"]], ["real", "У реальних проєктах", ["ready"]], ["cheat", "Шпаргалка", ["cheat"]]];
+const CHAPTERS=[["start", "Старт", ["kart", "bigo", "dupl"]], ["road", "Роадмап", ["roadmap", "build", "flow", "method"]], ["search", "Пошук", ["poshuk", "bisect", "twoptr", "window"]], ["hash", "Хешування", ["hashtable", "twosum", "anagram"]], ["rec", "Рекурсія", ["callstack", "backtrack"]], ["sort", "Сортування", ["sortuvannya", "sortrace"]], ["dp", "Жадібні і ДП", ["zhadibnyi", "intervals", "wis", "dp", "coindp"]], ["lin", "Списки, стеки, черги", ["arrlist", "revlist", "brackets", "queue", "windowmax"]], ["tree", "Дерева, купи, кеші", ["bst", "traverse", "heap", "trie", "lru"]], ["graph", "Графи", ["hrafy", "dijkstra", "bellman"]], ["heur", "Евристики", ["henetyka"]], ["real", "У реальних проєктах", ["ready"]], ["cheat", "Шпаргалка", ["cheat"]]];
 
 /* ---------- frag_base ---------- */
 /* ===================== MAP ===================== */
 (function(){
   const DESC={
     start:'Як порівнювати алгоритми: скільки кроків, як росте робота з n.',
+    road:'Що хочу побудувати → які алгоритми потрібні → як перевірити: етапи навчання, проєкти, вибір алгоритму, науковий метод.',
     search:'Знайти елемент чи діапазон швидше, ніж перебором.',
     hash:'Словник і множина: пошук за O(1) і що для цього потрібно.',
     rec:'Задача, що містить меншу копію себе; повний перебір із відсіканням.',
@@ -3414,6 +3548,165 @@ const rdOrders = k => RD_ORDERS[k].map(([name, start, end, reward]) => ({ name, 
     if(off.has(k))off.delete(k);else off.add(k);b.setAttribute('aria-pressed',String(!off.has(k)));drawMap();};
   drawMap();
   $('#ready-filter').oninput=draw;$('#ready-kind').onchange=draw;draw();
+})();
+
+
+/* ================= ROADMAP: stages, project builder, algorithm chooser ================= */
+(function(){
+  const T=id=>{const s=document.getElementById(id);return s?s.dataset.title:id;};
+  const L=ids=>ids.filter(id=>document.getElementById(id)).map(id=>'<a href="#'+id+'" data-go="'+id+'" class="rtopic">'+esc(T(id))+'</a>').join(' ');
+  /* ---- stages ---- */
+  const STAGES=[
+    ['Мислити кроками',['bigo','dupl'],'Оцінити, чи витримає код 10⁶ записів, ще до запуску. Побачити, що вкладений цикл по тих самих даних — це O(n²).'],
+    ['Словник і множина',['hashtable','twosum','anagram'],'Підрахунки й групування (Counter, defaultdict), видалення дублікатів, швидкі перевірки «чи є», індекс «слово → документи» для пошуку по нотатках.'],
+    ['Пошук у впорядкованих даних',['poshuk','bisect','twoptr','window'],'Фільтр «ціна від і до», пошук найближчої дати, обмеження кількості запитів за хвилину (rate limiter), метрики за останні N хвилин.'],
+    ['Сортування',['sortuvannya','sortrace'],'Рейтинги й таблиці лідерів, сортування за кількома полями (<code>key=lambda x: (-x.score, x.name)</code>), підготовка даних до бінарного пошуку.'],
+    ['Рекурсія і перебір',['callstack','backtrack'],'Обхід вкладеного JSON і дерева каталогів, генерація всіх варіантів (комбінації, розклади), судоку, лабіринти.'],
+    ['Лінійні структури',['arrlist','revlist','brackets','queue','windowmax'],'Скасування дій (undo/redo), перевірка дужок і простий парсер, черга задач чи повідомлень, «максимум за останні N» у потоці даних.'],
+    ['Дерева, купа, кеш',['bst','traverse','heap','trie','lru'],'Дерево категорій і меню, автодоповнення, планувальник «що виконати першим», топ-k без повного сортування, кеш результатів API.'],
+    ['Графи',['hrafy','dijkstra','bellman'],'Маршрути й мапи, «друзі друзів», залежності задач і пакетів, пошук циклу, арбітраж валют.'],
+    ['Оптимізація',['zhadibnyi','intervals','wis','dp','coindp','henetyka'],'Розклад зустрічей і бронювань, бюджет і набір товарів, видача решти, логістика, де точний перебір неможливий.'],
+    ['Реальні системи',['ready','cheat'],'Обирати індекс у базі даних, кеш, чергу і бібліотеку з розумінням їхньої ціни, а не навмання.']];
+  $('#road-stages').innerHTML='<ol class="roadlist">'+STAGES.map(([t,ids,can],i)=>
+    '<li><div class="rnum">'+i+'</div><div><h4>'+esc(t)+'</h4><div class="rtopics">'+L(ids)+'</div><p><b>Після етапу ти можеш:</b> '+can+'</p></div></li>').join('')+'</ol>';
+
+  /* ---- projects ---- */
+  const P=[
+   {id:'bot',name:'Telegram-бот',what:'Бот-довідник: відповідає на запитання, шукає по базі, не дає себе заспамити.',
+    steps:[['Привести текст до одного вигляду, щоб «Привіт!» і «привіт» збігалися','Канонічний ключ',['anagram'],'<code>text.casefold().strip()</code>'],
+           ['Миттєво знайти відповідь на точне запитання','Хеш-таблиця',['hashtable'],'<code>dict</code>: запитання → відповідь'],
+           ['Підказувати команди за першими літерами','Префіксне дерево',['trie'],'для малого списку — <code>startswith</code>; для великого — trie'],
+           ['Не більше 5 повідомлень на хвилину від одного користувача','Ковзне вікно',['window','queue'],'<code>deque</code> часових міток на кожного користувача'],
+           ['Обробляти повідомлення в порядку надходження','Черга',['queue'],'<code>asyncio.Queue</code>, черга aiogram'],
+           ['Сценарій «крок 1 → крок 2 → підтвердження»','Скінченний автомат (граф станів)',['hrafy'],'FSM в aiogram']],
+    start:'Словник із 10 запитань і відповідей та обробник, що шукає в ньому <code>text.casefold()</code>. Потім додай ліміт повідомлень.'},
+   {id:'shop',name:'Інтернет-магазин',what:'Каталог товарів із фільтрами, сортуванням, категоріями й рейтингом продажів.',
+    steps:[['Фільтр «ціна від 200 до 500»','Бінарний пошук по впорядкованих цінах',['bisect','poshuk'],'<code>bisect_left/right</code>; у БД — індекс B-дерево і <code>WHERE price BETWEEN</code>'],
+           ['Сортувати за ціною, потім за рейтингом','Стабільне сортування за кількома ключами',['sortuvannya'],'<code>sorted(items, key=lambda p: (p.price, -p.rating))</code>; у БД — <code>ORDER BY</code>'],
+           ['Дерево категорій «Електроніка → Ноутбуки → Ігрові»','Обходи дерева',['traverse'],'рекурсивний обхід; у БД — <code>WITH RECURSIVE</code>'],
+           ['Топ-10 найпродаваніших із мільйона','Купа',['heap'],'<code>heapq.nlargest(10, items, key=…)</code>'],
+           ['Порахувати продажі за кожним товаром','Хеш-таблиця',['hashtable'],'<code>collections.Counter</code>; у БД — <code>GROUP BY</code>'],
+           ['Не рахувати те саме при кожному запиті сторінки','LRU-кеш',['lru'],'<code>functools.lru_cache</code>, Redis']],
+    start:'Список словників-товарів, функції «фільтр за ціною» і «сортування за двома полями». Потім винеси дані в SQLite й порівняй з <code>EXPLAIN QUERY PLAN</code> із індексом і без.'},
+   {id:'route',name:'Доставка і маршрути',what:'Сервіс, що знаходить найкоротший маршрут, призначає найближчого кур\'єра і впорядковує замовлення.',
+    steps:[['Представити дороги як дані','Граф: список суміжності',['hrafy'],'<code>dict</code>: вузол → список (сусід, відстань); networkx'],
+           ['Чи можна доїхати з A в B','BFS або DFS',['hrafy'],'<code>deque</code> для BFS'],
+           ['Найкоротший шлях за часом у дорозі','Дейкстра',['dijkstra'],'<code>heapq</code>; networkx <code>shortest_path(weight=…)</code>'],
+           ['Терміновіші замовлення — першими','Купа',['heap'],'<code>heapq</code> з парою (пріоритет, замовлення)'],
+           ['Об\'їхати 30 адрес найкоротшим колом','Евристика: точний перебір неможливий',['henetyka','zhadibnyi'],'жадібний «найближчий сусід», генетичний алгоритм, OR-Tools']],
+    start:'Граф із 6–8 вузлів у словнику, BFS «чи досяжно», потім Дейкстра з <code>heapq</code>. Перевір на графі, який можеш порахувати вручну.'},
+   {id:'sched',name:'Розклад і бронювання',what:'Календар, що знаходить конфлікти, вміщує найбільше подій і впорядковує задачі із залежностями.',
+    steps:[['Чи перетинаються дві зустрічі','Порівняння інтервалів після сортування',['intervals','sortuvannya'],'сортування за початком і один прохід'],
+           ['Вмістити найбільше зустрічей в одну кімнату','Жадібний вибір за часом завершення',['intervals'],'<code>sorted(…, key=end)</code>'],
+           ['Обрати замовлення з найбільшим сумарним заробітком','Динамічне програмування',['wis'],'ДП + <code>bisect</code>'],
+           ['Задача B лише після задачі A','Граф залежностей, топологічне сортування',['hrafy'],'<code>graphlib.TopologicalSorter</code>'],
+           ['Найближча подія — першою','Купа',['heap'],'<code>heapq</code>, <code>sched</code>, планувальник Celery beat']],
+    start:'Список пар (початок, кінець), функція «знайти всі конфлікти» за O(n log n). Перевір її проти подвійного циклу на випадкових даних.'},
+   {id:'api',name:'Швидкий API і LLM-сервіс',what:'Бекенд на FastAPI, що кешує відповіді, обмежує частоту запитів і віддає важку роботу у фон.',
+    steps:[['Не викликати модель чи БД вдруге з тими самими даними','Мемоізація, LRU-кеш',['lru','dp'],'<code>functools.lru_cache</code>, Redis з TTL'],
+           ['Ліміт 60 запитів на хвилину на ключ','Ковзне вікно',['window'],'<code>deque</code> часових міток; у Redis — відсортована множина'],
+           ['Важкі задачі виконувати у фоні по черзі','Черга',['queue'],'Celery + Redis, <code>BackgroundTasks</code>'],
+           ['Історія діалогу не влазить у контекст','Ковзне вікно останніх повідомлень',['window','queue'],'<code>deque(maxlen=N)</code>'],
+           ['Знайти схожі документи для RAG','Хешування і пошук найближчих (поза демо: HNSW)',['hashtable','heap'],'векторна база, top-k через купу']],
+    start:'FastAPI з одним ендпоінтом, що довго рахує. Додай <code>lru_cache</code> і виміряй час першого й другого запиту.'},
+   {id:'stats',name:'Аналітика і дашборд',what:'Збирає події, рахує метрики за останню годину, знаходить аномалії й дублікати.',
+    steps:[['Скільки подій кожного типу','Хеш-таблиця',['hashtable','anagram'],'<code>Counter</code>; pandas <code>groupby</code>'],
+           ['Середнє за останні 5 хвилин у потоці','Ковзне вікно',['window'],'pandas <code>rolling()</code>'],
+           ['Максимум за кожне вікно','Монотонна deque',['windowmax'],'pandas <code>rolling().max()</code>'],
+           ['Прибрати дублікати записів','Множина замість подвійного циклу',['dupl'],'<code>set</code>, pandas <code>drop_duplicates</code>'],
+           ['Медіана й перцентилі','Сортування або вибір k-го',['sortuvannya','heap'],'<code>statistics.median</code>, NumPy <code>percentile</code>']],
+    start:'CSV із подіями, <code>Counter</code> за типами і ковзне середнє вручну. Потім порівняй із pandas на тих самих даних.'},
+   {id:'editor',name:'Редактор тексту чи коду',what:'Підсвічує помилки в дужках, вміє скасовувати дії, підказує слова й показує різницю між версіями.',
+    steps:[['Чи правильно закриті дужки','Стек',['brackets'],'<code>list</code> як стек'],
+           ['Скасувати і повторити дію (Ctrl+Z / Ctrl+Y)','Два стеки',['brackets','arrlist'],'два <code>list</code>'],
+           ['Підказка слова за першими літерами','Префіксне дерево',['trie'],'trie або відсортований список + <code>bisect</code>'],
+           ['Що змінилося між двома версіями','ДП: найдовша спільна підпослідовність',['dp','wis'],'<code>difflib</code>'],
+           ['Вкладені блоки й дерево розбору','Рекурсія',['callstack','traverse'],'<code>ast</code>, <code>json</code>']],
+    start:'Перевірка дужок через стек і undo/redo на двох стеках у консольній програмі.'},
+   {id:'social',name:'Соцмережа і рекомендації',what:'Показує друзів друзів, спільні інтереси й те, наскільки далеко двоє людей одне від одного.',
+    steps:[['Хто з ким дружить','Граф: словник множин',['hrafy','hashtable'],'<code>dict[str, set[str]]</code>'],
+           ['Спільні друзі','Перетин множин',['hashtable'],'<code>a &amp; b</code>'],
+           ['Друзі друзів і «через скільки рукостискань»','BFS по рівнях',['hrafy'],'<code>deque</code>; Neo4j'],
+           ['Кого порадити першим','Купа: top-k за кількістю спільних друзів',['heap'],'<code>heapq.nlargest</code>']],
+    start:'Граф на 10 людей у словнику множин, функції «спільні друзі» і «відстань між двома» через BFS.'},
+   {id:'files',name:'Утиліта для файлів',what:'Знаходить дублікати файлів, рахує розмір папок, шукає за назвою.',
+    steps:[['Обійти всі вкладені папки','Обхід дерева, рекурсія',['traverse','callstack'],'<code>os.walk</code>, <code>pathlib.Path.rglob</code>'],
+           ['Знайти однакові файли','Хеш вмісту як ключ словника',['dupl','hashtable'],'<code>hashlib.sha256</code> + <code>defaultdict(list)</code>'],
+           ['Спершу групувати за розміром, щоб не хешувати все','Канонічний ключ, відсікання',['anagram'],'<code>os.path.getsize</code>'],
+           ['Найбільші 20 файлів','Купа',['heap'],'<code>heapq.nlargest</code>']],
+    start:'Скрипт, що обходить папку й групує файли за розміром, потім за хешем.'},
+   {id:'game',name:'Гра чи головоломка',what:'Судоку, лабіринт, гра проти комп\'ютера.',
+    steps:[['Розв\'язати судоку чи головоломку','Перебір з поверненням',['backtrack'],'рекурсія з відсіканням'],
+           ['Найкоротший вихід із лабіринту','BFS на сітці',['hrafy'],'<code>deque</code>'],
+           ['Хід комп\'ютера (хрестики-нулики)','Рекурсивний перебір ходів (поза демо: minimax)',['callstack','backtrack'],'рекурсія + мемоізація'],
+           ['Таблиця рекордів','Сортування або купа',['sortuvannya','heap'],'<code>sorted</code>, <code>heapq</code>']],
+    start:'Лабіринт у вигляді списку рядків і BFS, що друкує шлях.'},
+   {id:'money',name:'Фінанси',what:'Видача решти, бюджет на набір покупок, пошук вигідного обміну валют.',
+    steps:[['Видати решту найменшою кількістю монет','Жадібний алгоритм — працює не для всіх номіналів',['zhadibnyi','coindp'],'ДП там, де жадібний помиляється'],
+           ['Що купити на 1000 грн, щоб користь була найбільшою','ДП: задача про рюкзак',['coindp','wis'],'таблиця ДП'],
+           ['Чи є ланцюжок обмінів, що дає прибуток','Беллман–Форд: від\'ємний цикл',['bellman'],'ваги <code>-log(курс)</code>']],
+    start:'Решта жадібно й через ДП; знайди номінали, для яких відповіді різні.'},
+   {id:'search',name:'Пошук по нотатках',what:'Шукає слова в тисячах документів і показує найрелевантніші.',
+    steps:[['Слово → список документів, де воно є','Інвертований індекс (хеш-таблиця)',['hashtable'],'<code>defaultdict(set)</code>; PostgreSQL GIN, Elasticsearch'],
+           ['Документи з усіма словами запиту','Перетин множин',['hashtable','twoptr'],'<code>set.intersection</code>; злиття двома вказівниками'],
+           ['10 найрелевантніших','Купа',['heap'],'<code>heapq.nlargest</code>'],
+           ['Пошук за початком слова','Префіксне дерево або бінарний пошук',['trie','bisect'],'відсортований словник + <code>bisect</code>']],
+    start:'Індекс <code>defaultdict(set)</code> для 20 текстових файлів і пошук з кількох слів.'}];
+  const pick=$('#build-pick');
+  pick.innerHTML=P.map(p=>'<button class="btn" data-proj="'+p.id+'" aria-pressed="false">'+esc(p.name)+'</button>').join('');
+  function drawP(id){const p=P.find(x=>x.id===id)||P[0];
+    [...pick.children].forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.proj===p.id)));
+    $('#build-out').innerHTML='<div class="card"><h3>'+esc(p.name)+'</h3><p style="margin-top:0">'+esc(p.what)+'</p>'+
+      '<div class="tablewrap"><table class="t"><tr><th>#</th><th>Що має робити програма</th><th>Алгоритм або структура</th><th>Тема гайду</th><th>Готове в Python</th></tr>'+
+      p.steps.map((s,i)=>'<tr><td>'+(i+1)+'</td><td>'+esc(s[0])+'</td><td>'+esc(s[1])+'</td><td>'+L(s[2])+'</td><td>'+s[3]+'</td></tr>').join('')+
+      '</table></div><p class="note"><b>Почни з мінімальної версії:</b> '+p.start+'</p></div>';}
+  pick.onclick=e=>{const b=e.target.closest('[data-proj]');if(b)drawP(b.dataset.proj);};
+  drawP('bot');
+
+  /* ---- chooser ---- */
+  const Q=[
+   ['has','Перевірити, чи є елемент, або знайти за ключем',['hashtable'],'<code>set</code> або <code>dict</code>: O(1) у середньому','<code>x in list</code> у циклі — це O(n) на кожну перевірку. Елементи множини мають бути хешованими: список не можна, кортеж можна.'],
+   ['range','Знайти діапазон, найближче значення, «скільки між a і b»',['bisect','poshuk'],'відсортувати один раз і <code>bisect</code>; у БД — індекс і <code>BETWEEN</code>','Бінарний пошук працює лише на відсортованих даних. Сортувати перед кожним пошуком — O(n log n) замість O(log n).'],
+   ['count','Порахувати, згрупувати, прибрати дублікати',['hashtable','anagram','dupl'],'<code>Counter</code>, <code>defaultdict(list)</code>, <code>set</code>','Для групування «однакових з точністю до…» потрібен канонічний ключ (<code>sorted(word)</code>, <code>casefold()</code>).'],
+   ['pair','Знайти пару чи відрізок з умовою (сума, довжина, вікно)',['twosum','twoptr','window'],'словник «що бачив» або два вказівники','Два вказівники вимагають відсортованих даних. Подвійний цикл по парах — O(n²).'],
+   ['order','Упорядкувати',['sortuvannya','sortrace'],'<code>sorted(…, key=…)</code>, <code>list.sort()</code>','Власне сортування в робочому коді не потрібне: Timsort стабільний і O(n log n). Для кількох ключів — кортеж у <code>key</code>.'],
+   ['topk','Взяти k найбільших чи найменших або завжди найтерміновіше',['heap'],'<code>heapq.nlargest/nsmallest</code>, <code>heapq.heappush/heappop</code>','Якщо k ≪ n, повне сортування зайве: купа дає O(n log k). <code>heapq</code> — мінімальна купа; для максимуму бери від\'ємний ключ.'],
+   ['fifo','Обробляти в порядку надходження',['queue'],'<code>collections.deque</code>, <code>asyncio.Queue</code>','<code>list.pop(0)</code> зсуває всі елементи — O(n). <code>deque.popleft()</code> — O(1).'],
+   ['nest','Вкладеність: дужки, скасування дій, повернення назад',['brackets','callstack'],'<code>list</code> як стек: <code>append</code>/<code>pop</code>','Глибока рекурсія впирається в ліміт Python (~1000 викликів): тоді явний стек.'],
+   ['tree','Ієрархія: каталоги, категорії, коментарі, меню',['traverse','bst'],'рекурсивний обхід, <code>os.walk</code>, <code>WITH RECURSIVE</code>','Обери обхід під задачу: у глибину (DFS), щоб вивести дерево; по рівнях (BFS), щоб іти поверх за поверхом.'],
+   ['prefix','Пошук і підказки за початком слова',['trie','bisect'],'trie або відсортований список + <code>bisect</code>','Для кількох тисяч слів досить <code>startswith</code> у циклі — вимір покаже, чи потрібне дерево.'],
+   ['cache','Не рахувати те саме вдруге',['lru','dp'],'<code>functools.lru_cache</code>, <code>functools.cache</code>, Redis','Кешують лише чисті функції з хешованими аргументами. Кеш без межі може з\'їсти пам\'ять.'],
+   ['graph','Зв\'язки: досяжність, маршрут, залежності',['hrafy','dijkstra','bellman'],'BFS/DFS, Дейкстра з <code>heapq</code>, <code>graphlib</code>, networkx','Дейкстра не працює з від\'ємними вагами — тоді Беллман–Форд. Без ваг найкоротший шлях дає звичайний BFS.'],
+   ['best','Обрати найкращий варіант з обмеженнями',['zhadibnyi','intervals','wis','coindp'],'спершу жадібний вибір, якщо доведено, що він правильний; інакше ДП','Жадібний алгоритм швидкий, але для багатьох задач дає неоптимальну відповідь. Перевір його проти перебору на малих даних.'],
+   ['all','Перебрати всі варіанти',['backtrack','callstack'],'<code>itertools.permutations/combinations/product</code>, рекурсія з відсіканням','Кількість варіантів росте як n! або 2ⁿ: при n = 20 це вже 2,4·10¹⁸ перестановок.'],
+   ['huge','Точна відповідь задорога, досить хорошої',['henetyka'],'евристики, генетичний алгоритм, OR-Tools','Евристика не гарантує оптимуму. Порівняй з точним розв\'язком на малих даних і зафіксуй, наскільки гірше.']];
+  const N=[['s','до 10 000','При такому n підійде майже будь-яке рішення, навіть O(n²) — це до 10⁸ кроків, близько секунди. Пиши найпростіший зрозумілий код і переходь до швидшого лише після виміру.'],
+           ['m','10⁴–10⁷','Тут O(n²) уже години. Потрібні O(n log n) або O(n): сортування, словник, купа. Перевір складність кожного циклу.'],
+           ['l','не влазить у пам\'ять','Дані мають жити в базі даних або оброблятися потоком: індекси B-дерево в PostgreSQL, <code>GROUP BY</code> в SQL, читання файлу частинами, генератори замість списків.']];
+  const F=[['once','один раз','Підготовка не окупиться: роби один прохід по даних.'],
+           ['many','багато запитів до тих самих даних','Окупається підготовка: відсортуй один раз, побудуй словник чи індекс один раз, кешуй результати. Платиш один раз, кожен запит потім дешевий.'],
+           ['stream','дані надходять постійно','Тримай структуру, яка оновлюється за O(1) чи O(log n) на подію: <code>deque</code> для вікна, купа для пріоритетів, лічильник для підсумків. Не перераховуй усе заново.']];
+  const st={q:null,n:'s',f:'once'};
+  const btns=(arr,key)=>arr.map(a=>'<button class="btn" data-'+key+'="'+a[0]+'" aria-pressed="false">'+esc(a[1])+'</button>').join('');
+  $('#flow-q').innerHTML=btns(Q,'fq');$('#flow-n').innerHTML=btns(N,'fn');$('#flow-f').innerHTML=btns(F,'ff');
+  function drawF(){
+    document.querySelectorAll('#flow [data-fq]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.fq===st.q)));
+    document.querySelectorAll('#flow [data-fn]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.fn===st.n)));
+    document.querySelectorAll('#flow [data-ff]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.ff===st.f)));
+    const q=Q.find(x=>x[0]===st.q);
+    if(!q){$('#flow-out').innerHTML='<p class="note" style="margin:0">Обери, що треба зробити з даними, — тут з\'явиться рекомендація.</p>';return;}
+    const n=N.find(x=>x[0]===st.n),f=F.find(x=>x[0]===st.f);
+    $('#flow-out').innerHTML='<h3>Рекомендація</h3><div class="tablewrap"><table class="t">'+
+      '<tr><th>Задача</th><td>'+esc(q[1])+'</td></tr>'+
+      '<tr><th>Що використати</th><td>'+q[3]+'</td></tr>'+
+      '<tr><th>Відкрий тему</th><td>'+L(q[2])+'</td></tr>'+
+      '<tr><th>Пастка</th><td>'+q[4]+'</td></tr>'+
+      '<tr><th>Розмір: '+esc(n[1])+'</th><td>'+n[2]+'</td></tr>'+
+      '<tr><th>Частота: '+esc(f[1])+'</th><td>'+f[2]+'</td></tr>'+
+      '</table></div><p class="note">Далі — <a href="#method" data-go="method">науковий метод</a>: напиши простий еталон, порівняй з ним швидке рішення і виміряй час.</p>';}
+  $('#flow').addEventListener('click',e=>{const b=e.target.closest('[data-fq],[data-fn],[data-ff]');if(!b)return;
+    if(b.dataset.fq)st.q=b.dataset.fq;if(b.dataset.fn)st.n=b.dataset.fn;if(b.dataset.ff)st.f=b.dataset.ff;drawF();});
+  drawF();
 })();
 
 /* ================= NAVIGATION (two levels: chapter → algorithm) ================= */

@@ -1,8 +1,10 @@
 from __future__ import annotations
 
+import hashlib
 import json
 import os
 import re
+import threading
 from pathlib import Path
 
 import duckdb
@@ -104,33 +106,87 @@ WHERE file_year BETWEEN 2019 AND 2023
 """)
 
 
+# ── «Куб» — головне прискорення ────────────────────────────────────────────────
+# Сирі дані: ~200 млн поїздок. Кожен клік фільтра раніше сканував їх усі кілька разів.
+# Тепер ОДИН раз згортаємо їх у компактну таблицю (рік × місяць × година × день тижня × зона,
+# ~мільйони рядків) і кешуємо у parquet. Усі запити нижче рахуються по ній — за мілісекунди.
+# Середні рахуємо як SUM / кількість, тож результати збігаються з AVG по сирих даних.
+CACHE_DIR = HERE / ".cache"
+
+
+def _lake_signature() -> str:
+    """Підпис data lake: змінились файли → кеш автоматично перебудується."""
+    h = hashlib.md5()
+    for f in PARQUET_FILES:
+        st = f.stat()
+        h.update(f"{f.relative_to(DATA_ROOT).as_posix()}:{st.st_size}:{int(st.st_mtime)}".encode())  # as_posix: однаковий підпис у Windows і Linux
+    return h.hexdigest()[:12]
+
+
+CUBE_PATH = CACHE_DIR / f"trips_cube_{_lake_signature()}.parquet"
+
+if not CUBE_PATH.exists():
+    print("[startup] Building trips cube (one-time scan of the data lake, ~10-30 s)...")
+    CACHE_DIR.mkdir(exist_ok=True)
+    for old in CACHE_DIR.glob("trips_cube_*.parquet"):
+        old.unlink()
+    con.execute(f"""
+        COPY (
+            SELECT
+                file_year,
+                file_month,
+                pickup_hour,
+                EXTRACT(dow FROM tpep_pickup_datetime)::INTEGER AS weekday_num,
+                PULocationID AS location_id,
+                COUNT(*)::BIGINT        AS trips,
+                SUM(total_amount)       AS revenue,
+                SUM(trip_distance)      AS distance_sum,
+                SUM(tip_amount)         AS tip_sum
+            FROM base_trips
+            GROUP BY ALL
+        ) TO '{CUBE_PATH.as_posix()}' (FORMAT parquet)
+    """)
+
+con.execute(f"""
+    CREATE OR REPLACE TABLE trips_cube AS
+    SELECT * FROM read_parquet('{CUBE_PATH.as_posix()}')
+""")
+print(f"[startup] Cube ready: {con.execute('SELECT count(*) FROM trips_cube').fetchone()[0]:,} rows")
+
+# Dash обробляє колбеки ПАРАЛЕЛЬНО в різних потоках, а одне з'єднання DuckDB не потокобезпечне:
+# дві одночасні `execute().df()` перемішують результати (KeyError, None, чужі дані).
+# Тому кожен потік працює зі СВОЇМ cursor() — він бачить ті самі таблиці й VIEW.
+_local = threading.local()
+
+
+def db() -> duckdb.DuckDBPyConnection:
+    if not hasattr(_local, "cursor"):
+        _local.cursor = con.cursor()
+    return _local.cursor
+
+
+WEEKDAYS = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
+
+
 def available_years() -> list[int]:
-    rows = con.execute("""
-        SELECT DISTINCT file_year
-        FROM base_trips
-        WHERE file_year IS NOT NULL
-        ORDER BY file_year
+    rows = db().execute("""
+        SELECT DISTINCT file_year FROM trips_cube
+        WHERE file_year IS NOT NULL ORDER BY file_year
     """).fetchall()
     return [int(r[0]) for r in rows]
 
 
 def available_months(year: int | None = None) -> list[int]:
     if year:
-        rows = con.execute("""
-            SELECT DISTINCT file_month
-            FROM base_trips
-            WHERE file_year = ?
-              AND file_month IS NOT NULL
-            ORDER BY file_month
+        rows = db().execute("""
+            SELECT DISTINCT file_month FROM trips_cube
+            WHERE file_year = ? AND file_month IS NOT NULL ORDER BY file_month
         """, [year]).fetchall()
     else:
-        rows = con.execute("""
-            SELECT DISTINCT file_month
-            FROM base_trips
-            WHERE file_month IS NOT NULL
-            ORDER BY file_month
+        rows = db().execute("""
+            SELECT DISTINCT file_month FROM trips_cube
+            WHERE file_month IS NOT NULL ORDER BY file_month
         """).fetchall()
-
     return [int(r[0]) for r in rows]
 
 
@@ -140,54 +196,36 @@ DEFAULT_YEAR = max(YEARS) if YEARS else 2023
 
 def where_clause(year: int | None, month: int | None) -> str:
     clauses = []
-
     if year:
         clauses.append(f"file_year = {int(year)}")
-
     if month:
         clauses.append(f"file_month = {int(month)}")
-
     return "WHERE " + " AND ".join(clauses) if clauses else ""
 
 
 def get_kpi(year: int | None = None, month: int | None = None) -> dict:
-    row = con.execute(f"""
+    row = db().execute(f"""
         SELECT
-            COUNT(*) AS total_trips,
-            SUM(total_amount) AS total_revenue,
-            AVG(total_amount) AS avg_revenue,
-            AVG(trip_distance) AS avg_distance,
-            AVG(tip_amount) AS avg_tip,
-            SUM(tip_amount) AS total_tips
-        FROM base_trips
+            SUM(trips)::BIGINT                              AS total_trips,
+            SUM(revenue)                                    AS total_revenue,
+            SUM(revenue)      / NULLIF(SUM(trips), 0)       AS avg_revenue,
+            SUM(distance_sum) / NULLIF(SUM(trips), 0)       AS avg_distance,
+            SUM(tip_sum)      / NULLIF(SUM(trips), 0)       AS avg_tip,
+            SUM(tip_sum)                                    AS total_tips
+        FROM trips_cube
         {where_clause(year, month)}
     """).fetchone()
 
-    keys = [
-        "total_trips",
-        "total_revenue",
-        "avg_revenue",
-        "avg_distance",
-        "avg_tip",
-        "total_tips",
-    ]
+    keys = ["total_trips", "total_revenue", "avg_revenue", "avg_distance", "avg_tip", "total_tips"]
 
-    # 💥 ГОЛОВНИЙ ФІКС
-    if row is None:
-        return dict(zip(keys, [0, 0, 0, 0, 0, 0]))
-
-    # 💥 DuckDB може повернути None в колонках
-    clean = [x if x is not None else 0 for x in row]
-
+    # SUM по порожній вибірці дає NULL → показуємо нулі
+    clean = [x if x is not None else 0 for x in (row or [None] * len(keys))]
     return dict(zip(keys, clean))
+
 
 def get_yoy(year: int | None) -> dict:
     if not year or year - 1 not in YEARS:
-        return {
-            "revenue_growth": None,
-            "trips_growth": None,
-            "prev_year": None,
-        }
+        return {"revenue_growth": None, "trips_growth": None, "prev_year": None}
 
     current = get_kpi(year)
     previous = get_kpi(year - 1)
@@ -205,16 +243,16 @@ def get_yoy(year: int | None) -> dict:
 
 
 def get_monthly_series(year: int | None = None):
-    return con.execute(f"""
+    return db().execute(f"""
         SELECT
-            file_year AS year,
+            file_year  AS year,
             file_month AS month_num,
-            MAKE_DATE(file_year, file_month, 1) AS month_date,
-            COUNT(*) AS trips,
-            ROUND(SUM(total_amount), 0) AS revenue,
-            ROUND(AVG(total_amount), 2) AS avg_fare,
-            ROUND(AVG(trip_distance), 2) AS avg_distance
-        FROM base_trips
+            MAKE_DATE(file_year, file_month, 1)                AS month_date,
+            SUM(trips)::BIGINT                                 AS trips,
+            ROUND(SUM(revenue), 0)                             AS revenue,
+            ROUND(SUM(revenue)      / SUM(trips), 2)           AS avg_fare,
+            ROUND(SUM(distance_sum) / SUM(trips), 2)           AS avg_distance
+        FROM trips_cube
         {where_clause(year, None)}
         GROUP BY 1, 2, 3
         ORDER BY 1, 2
@@ -222,26 +260,26 @@ def get_monthly_series(year: int | None = None):
 
 
 def get_yearly_summary():
-    return con.execute("""
+    return db().execute("""
         SELECT
             file_year AS year,
-            COUNT(*) AS trips,
-            ROUND(SUM(total_amount), 0) AS revenue,
-            ROUND(AVG(total_amount), 2) AS avg_fare,
-            ROUND(AVG(trip_distance), 2) AS avg_distance
-        FROM base_trips
+            SUM(trips)::BIGINT                                 AS trips,
+            ROUND(SUM(revenue), 0)                             AS revenue,
+            ROUND(SUM(revenue)      / SUM(trips), 2)           AS avg_fare,
+            ROUND(SUM(distance_sum) / SUM(trips), 2)           AS avg_distance
+        FROM trips_cube
         GROUP BY 1
         ORDER BY 1
     """).df()
 
 
 def get_hourly(year: int | None = None, month: int | None = None):
-    return con.execute(f"""
+    return db().execute(f"""
         SELECT
             pickup_hour AS hour,
-            COUNT(*) AS trips,
-            ROUND(SUM(total_amount), 0) AS revenue
-        FROM base_trips
+            SUM(trips)::BIGINT     AS trips,
+            ROUND(SUM(revenue), 0) AS revenue
+        FROM trips_cube
         {where_clause(year, month)}
         GROUP BY 1
         ORDER BY 1
@@ -249,46 +287,50 @@ def get_hourly(year: int | None = None, month: int | None = None):
 
 
 def get_weekday(year: int | None = None, month: int | None = None):
-    return con.execute(f"""
+    df = db().execute(f"""
         SELECT
-            STRFTIME(tpep_pickup_datetime, '%w')::INTEGER AS weekday_num,
-            STRFTIME(tpep_pickup_datetime, '%A') AS weekday,
-            COUNT(*) AS trips,
-            ROUND(SUM(total_amount), 0) AS revenue
-        FROM base_trips
+            weekday_num,
+            SUM(trips)::BIGINT     AS trips,
+            ROUND(SUM(revenue), 0) AS revenue
+        FROM trips_cube
         {where_clause(year, month)}
-        GROUP BY 1, 2
+        GROUP BY 1
         ORDER BY 1
     """).df()
+    df["weekday"] = df["weekday_num"].map(lambda n: WEEKDAYS[int(n)])
+    return df
 
 
 def get_zone_stats(year: int | None = None, month: int | None = None):
-    return con.execute(f"""
+    return db().execute(f"""
         SELECT
-            PULocationID AS location_id,
-            COUNT(*) AS trips,
-            ROUND(SUM(total_amount), 0) AS revenue,
-            ROUND(AVG(total_amount), 2) AS avg_fare,
-            ROUND(AVG(trip_distance), 2) AS avg_distance
-        FROM base_trips
+            location_id,
+            SUM(trips)::BIGINT                                 AS trips,
+            ROUND(SUM(revenue), 0)                             AS revenue,
+            ROUND(SUM(revenue)      / SUM(trips), 2)           AS avg_fare,
+            ROUND(SUM(distance_sum) / SUM(trips), 2)           AS avg_distance
+        FROM trips_cube
         {where_clause(year, month)}
         GROUP BY 1
     """).df()
 
 
-def get_top_zones(year: int | None = None, month: int | None = None, limit: int = 15):
-    stats = get_zone_stats(year, month)
+def get_top_zones(year: int | None = None, month: int | None = None, limit: int = 15, stats=None):
+    if stats is None:
+        stats = get_zone_stats(year, month)
     merged = stats.merge(ZONE_META, left_on="location_id", right_on="LocationID", how="left")
     merged["zone_label"] = merged["zone"].fillna("Unknown") + " · " + merged["borough"].fillna("Unknown")
     return merged.sort_values("trips", ascending=False).head(limit)
 
 
-def get_business_insights(year: int | None = None, month: int | None = None) -> list[str]:
-    kpi = get_kpi(year, month)
-    monthly = get_monthly_series(year)
-    hourly = get_hourly(year, month)
-    zones = get_top_zones(year, month, limit=1)
-    yoy = get_yoy(year)
+def get_business_insights(year: int | None = None, month: int | None = None, *,
+                          kpi=None, monthly=None, hourly=None, zones=None, yoy=None) -> list[str]:
+    """Усе, що вже пораховано в колбеку, передаємо сюди — і не рахуємо вдруге."""
+    kpi = kpi if kpi is not None else get_kpi(year, month)
+    monthly = monthly if monthly is not None else get_monthly_series(year)
+    hourly = hourly if hourly is not None else get_hourly(year, month)
+    zones = zones if zones is not None else get_top_zones(year, month, limit=1)
+    yoy = yoy if yoy is not None else get_yoy(year)
 
     insights = []
 
@@ -338,10 +380,13 @@ GDF = (
 
 GDF["geometry"] = GDF.geometry.simplify(tolerance=0.0005)
 ZONE_META = GDF.drop(columns="geometry").copy()
+# геометрію зон перетворюємо на GeoJSON ОДИН раз (раніше — на кожен клік)
+GEOJSON = json.loads(GDF[["LocationID", "geometry"]].to_json())
 
 
-def build_map_figure(year: int | None = None, month: int | None = None) -> go.Figure:
-    stats = get_zone_stats(year, month)
+def build_map_figure(year: int | None = None, month: int | None = None, stats=None) -> go.Figure:
+    if stats is None:
+        stats = get_zone_stats(year, month)
     gdf = GDF.merge(stats, left_on="LocationID", right_on="location_id", how="left")
 
     gdf["trips"] = gdf["trips"].fillna(0)
@@ -351,7 +396,7 @@ def build_map_figure(year: int | None = None, month: int | None = None) -> go.Fi
 
     fig = px.choropleth_map(
         gdf,
-        geojson=json.loads(gdf.to_json()),
+        geojson=GEOJSON,
         locations="LocationID",
         featureidkey="properties.LocationID",
         color="trips",
@@ -380,14 +425,34 @@ def build_map_figure(year: int | None = None, month: int | None = None) -> go.Fi
     return fig
 
 
-def fig_yearly(df) -> go.Figure:
+def _highlight(values, selected, on: str, off: str = "#cfd8e3") -> list[str] | str:
+    """Колір стовпчиків: вибраний рік/місяць — яскравий, решта — бліді. Нічого не вибрано — усі яскраві."""
+    if not selected:
+        return on
+    return [on if int(v) == int(selected) else off for v in values]
+
+
+def _dual_axis_layout(fig: go.Figure, title: str, bottom: int = 40) -> None:
+    """Заголовок зверху, легенда під ним — щоб вони не накладались."""
+    fig.update_layout(
+        title=dict(text=title, x=0, xanchor="left", y=0.98, yanchor="top"),
+        paper_bgcolor="white",
+        plot_bgcolor="white",
+        margin=dict(l=40, r=40, t=90, b=bottom),
+        yaxis=dict(title="Revenue ($)", gridcolor="#eee"),
+        yaxis2=dict(title="Trips", overlaying="y", side="right", showgrid=False),
+        legend=dict(orientation="h", x=0, xanchor="left", y=1.02, yanchor="bottom"),
+    )
+
+
+def fig_yearly(df, selected_year: int | None = None) -> go.Figure:
     fig = go.Figure()
 
     fig.add_bar(
         x=df["year"],
         y=df["trips"],
         name="Trips",
-        marker_color="#2980b9",
+        marker_color=_highlight(df["year"], selected_year, "#2980b9"),
         yaxis="y2",
         opacity=0.75,
     )
@@ -401,20 +466,15 @@ def fig_yearly(df) -> go.Figure:
         marker=dict(size=8),
     )
 
-    fig.update_layout(
-        title="Yearly Business Overview · Trips vs Revenue",
-        paper_bgcolor="white",
-        plot_bgcolor="white",
-        margin=dict(l=40, r=40, t=60, b=40),
-        yaxis=dict(title="Revenue ($)", gridcolor="#eee"),
-        yaxis2=dict(title="Trips", overlaying="y", side="right", showgrid=False),
-        legend=dict(orientation="h", y=1.12),
-    )
+    title = "Yearly Overview · Trips vs Revenue"
+    if selected_year:
+        title += f" · {selected_year} highlighted"
+    _dual_axis_layout(fig, title)
 
     return fig
 
 
-def fig_monthly(df) -> go.Figure:
+def fig_monthly(df, year: int | None = None, selected_month: int | None = None) -> go.Figure:
     df = df.copy()
     df["label"] = df["month_date"].astype(str).str[:7]
 
@@ -424,7 +484,7 @@ def fig_monthly(df) -> go.Figure:
         x=df["label"],
         y=df["trips"],
         name="Trips",
-        marker_color="#3498db",
+        marker_color=_highlight(df["month_num"], selected_month, "#3498db"),
         opacity=0.65,
         yaxis="y2",
     )
@@ -437,16 +497,12 @@ def fig_monthly(df) -> go.Figure:
         line=dict(color="#e67e22", width=2.5),
     )
 
-    fig.update_layout(
-        title="Monthly Trend · Demand and Revenue",
-        paper_bgcolor="white",
-        plot_bgcolor="white",
-        margin=dict(l=40, r=40, t=60, b=70),
-        xaxis=dict(tickangle=-45),
-        yaxis=dict(title="Revenue ($)", gridcolor="#eee"),
-        yaxis2=dict(title="Trips", overlaying="y", side="right", showgrid=False),
-        legend=dict(orientation="h", y=1.12),
-    )
+    # графік показує всі місяці вибраного року; вибраний місяць підсвічено
+    title = f"Monthly Trend · {year if year else 'all years'}"
+    if selected_month:
+        title += f" · {MONTHS[int(selected_month)]} highlighted"
+    _dual_axis_layout(fig, title, bottom=70)
+    fig.update_layout(xaxis=dict(tickangle=-45))
 
     return fig
 
@@ -601,6 +657,7 @@ initial_kpi = get_kpi(DEFAULT_YEAR)
 initial_yoy = get_yoy(DEFAULT_YEAR)
 initial_monthly = get_monthly_series(DEFAULT_YEAR)
 initial_yearly = get_yearly_summary()
+YEARLY = initial_yearly          # річний підсумок не залежить від фільтрів — рахуємо один раз
 initial_hourly = get_hourly(DEFAULT_YEAR)
 initial_weekday = get_weekday(DEFAULT_YEAR)
 initial_top_zones = get_top_zones(DEFAULT_YEAR)
@@ -668,11 +725,11 @@ app.layout = dbc.Container([
 
     dbc.Row([
         dbc.Col(dbc.Card(dbc.CardBody([
-            dcc.Graph(id="fig-yearly", figure=fig_yearly(initial_yearly), config={"displayModeBar": False})
+            dcc.Graph(id="fig-yearly", figure=fig_yearly(initial_yearly, DEFAULT_YEAR), config={"displayModeBar": False})
         ]), style=CARD_STYLE), md=5),
 
         dbc.Col(dbc.Card(dbc.CardBody([
-            dcc.Graph(id="fig-monthly", figure=fig_monthly(initial_monthly), config={"displayModeBar": False})
+            dcc.Graph(id="fig-monthly", figure=fig_monthly(initial_monthly, DEFAULT_YEAR), config={"displayModeBar": False})
         ]), style=CARD_STYLE), md=7),
     ], className="g-3 mb-4"),
 
@@ -710,6 +767,7 @@ app.layout = dbc.Container([
     Output("card-avg", "children"),
     Output("card-distance", "children"),
     Output("insight-panel", "children"),
+    Output("fig-yearly", "figure"),
     Output("fig-monthly", "figure"),
     Output("fig-hourly", "figure"),
     Output("fig-weekday", "figure"),
@@ -722,13 +780,17 @@ def update_dashboard(year_value: int, month_value: int):
     year = year_value or None
     month = month_value or None
 
+    # кожну вибірку рахуємо ОДИН раз і передаємо далі
     kpi = get_kpi(year, month)
-    insights = get_business_insights(year, month)
-
     monthly = get_monthly_series(year)
     hourly = get_hourly(year, month)
     weekday = get_weekday(year, month)
-    top_zones = get_top_zones(year, month)
+    zone_stats = get_zone_stats(year, month)
+    top_zones = get_top_zones(limit=15, stats=zone_stats)
+    insights = get_business_insights(
+        year, month, kpi=kpi, monthly=monthly, hourly=hourly,
+        zones=top_zones.head(1), yoy=get_yoy(year),
+    )
 
     return (
         kpi_card("Total Trips", number(kpi["total_trips"]), "filtered trips", "#2980b9"),
@@ -736,11 +798,12 @@ def update_dashboard(year_value: int, month_value: int):
         kpi_card("Avg Fare", money_float(kpi["avg_revenue"]), "mean total amount", "#8e44ad"),
         kpi_card("Avg Distance", miles(kpi["avg_distance"]), "mean trip distance", "#e67e22"),
         insight_cards(insights),
-        fig_monthly(monthly),
+        fig_yearly(YEARLY, year),
+        fig_monthly(monthly, year, month),
         fig_hourly(hourly),
         fig_weekday(weekday),
         fig_top_zones(top_zones),
-        build_map_figure(year, month),
+        build_map_figure(year, month, stats=zone_stats),
     )
 
 

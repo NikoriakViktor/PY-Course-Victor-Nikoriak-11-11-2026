@@ -362,6 +362,34 @@ details.deep p,details.deep ul{margin:8px 0 0;font-size:14.5px}
 .disk .sep{background:none;border:none;padding:0 3px;color:var(--muted)}
 nav.tabs #subbar{flex-wrap:wrap}
 #builder-sql,#builder-redis{white-space:pre-wrap;word-break:break-word;overflow-wrap:anywhere}
+/* схеми кроків проєктування */
+svg.dsg{width:100%;height:auto;display:block}
+.dsg text{fill:var(--ink);font-family:var(--sans);font-size:14px}
+.dsg text.m{font-family:var(--mono);font-size:13px}
+.dsg text.t{font-weight:700;font-size:15.5px}
+.dsg text.s{fill:var(--muted);font-size:12.5px}
+.dsg text.hd{fill:#fff;font-family:var(--mono);font-weight:700;font-size:14.5px}
+.dsg text.ty{fill:var(--muted);font-family:var(--mono);font-size:12.5px}
+.dsg text.key{fill:var(--dk);font-family:var(--mono);font-weight:700;font-size:11.5px}
+.dsg text.fk{fill:var(--pg);font-family:var(--mono);font-weight:700;font-size:11.5px}
+.dsg text.rule{fill:var(--ok);font-family:var(--mono);font-size:12px;font-weight:600}
+.dsg text.card{fill:var(--rd);font-weight:800;font-size:15px}
+.dsg rect.pg{fill:color-mix(in srgb,var(--pg) 7%,var(--panel));stroke:var(--pg);stroke-width:2.5}
+.dsg rect.pgh{fill:var(--pg)}
+.dsg rect.rd{fill:color-mix(in srgb,var(--rd) 6%,var(--panel));stroke:var(--rd);stroke-width:2.5}
+.dsg rect.dk{fill:color-mix(in srgb,var(--dk) 9%,var(--panel));stroke:var(--dk);stroke-width:2.5}
+.dsg rect.svc{fill:var(--panel);stroke:var(--svc);stroke-width:2.5}
+.dsg rect.act{fill:color-mix(in srgb,var(--ok) 10%,var(--panel));stroke:var(--ok);stroke-width:2.5}
+.dsg rect.ghost{fill:var(--panel);stroke:var(--muted);stroke-width:2;stroke-dasharray:6 5}
+.dsg rect.row{fill:transparent}
+.dsg rect.rowfk{fill:color-mix(in srgb,var(--pg) 14%,transparent)}
+.dsg line.sep{stroke:var(--line);stroke-width:1}
+.dsg .ln{stroke:var(--muted);stroke-width:2.2;fill:none}
+.dsg .ln.pg{stroke:var(--pg);stroke-width:2.6}
+.dsg .ln.rd{stroke:var(--rd)}
+.dsg .ln.dash{stroke-dasharray:7 5}
+.dsg text.lbl{font-size:12.5px;font-weight:600;paint-order:stroke;stroke:var(--panel);stroke-width:6px;stroke-linejoin:round}
+.dsg .arh{fill:var(--muted)}.dsg .arh.pg{fill:var(--pg)}.dsg .arh.rd{fill:var(--rd)}
 </style>
 
 <header class="top"><div class="wrap">
@@ -756,14 +784,16 @@ docker compose logs -f postgres          # кожен SQL-запит + хто й
   <h2>Як спроєктувати базу даних: 7 кроків</h2>
   <p class="lead">Базу не починають з <code>CREATE TABLE</code>. Починають з <b>питань, на які система має відповідати</b>, і йдуть зверху вниз: сценарії → сутності → поля → зв'язки → таблиці → гарячі операції в Redis → аналітика. Пройди кроки на «Смачно + Таксі». На кожному показано, <b>що ми вирішили</b>, <b>де це в коді</b> і <b>чому саме там</b>.</p>
   <details class="predict"><summary>🔮 Прогноз: з чого почнеш проєктувати базу для служби доставки — з таблиць чи з питання «що користувачі й сервіси мають робити»?</summary><p>З питань. Таблиці — відповідь на них. Якщо почати з таблиць, з'являться колонки, які ніхто не читає, і не буде тих, без яких система не працює, наприклад «хто з кур'єрів вільний зараз».</p></details>
-  <div class="grid">
+  <div class="card">
+    <div class="controls" id="design-controls"></div>
+    <div class="flow" id="design-flow"></div>
+    <h3 id="design-h" style="font-size:19px;text-transform:none;letter-spacing:0;color:var(--ink);margin:12px 0 4px"></h3>
+    <p id="design-cap" style="margin:0 0 8px;color:var(--muted);font-size:14px"></p>
+    <svg class="dsg" id="design-svg" viewBox="0 0 1000 400" role="img" aria-label="Схема кроку проєктування"></svg>
+  </div>
+  <div class="grid" style="margin-top:20px">
     <div class="stack">
-      <div class="card">
-        <div class="controls" id="design-controls"></div>
-        <div class="flow" id="design-flow"></div>
-        <h3 id="design-h" style="font-size:18px;text-transform:none;letter-spacing:0;color:var(--ink);margin:10px 0 6px"></h3>
-        <div id="design-body" style="font-size:15px"></div>
-      </div>
+      <div class="card"><h3>Що ми вирішили</h3><div id="design-body" style="font-size:15px"></div></div>
       <div class="card"><h3>Чек-лист: база зрозуміла, якщо…</h3>
         <ul style="margin:0;padding-left:20px;display:flex;flex-direction:column;gap:5px;font-size:14.5px">
           <li>кожна таблиця — одна сутність, названа іменником у множині (<code>orders</code>), з первинним ключем <code>id</code>;</li>
@@ -776,7 +806,7 @@ docker compose logs -f postgres          # кожен SQL-запит + хто й
         </ul></div>
     </div>
     <div class="stack">
-      <div class="card"><h3 id="design-code-h">Результат у коді</h3><pre class="code" id="design-code"></pre></div>
+      <div class="card"><h3>Результат у коді</h3><pre class="code" id="design-code"></pre></div>
     </div>
   </div>
   <div class="course" id="design-course"></div>
@@ -1443,9 +1473,92 @@ course($('#whatis-course'),['l30','l31','duck','taxiarch']);
         +where('<code>app/simulator.py: deliver()</code> → <code>app/db.py: save_delivered_order()</code>. Повна схема стрілок — вкладка «Архітектура проєкту».','момент «замовлення завершено» — єдиний, коли факт стає остаточним. Записувати раніше означало б оновлювати рядок щосекунди.'),
      c:['def deliver(r, cid, order_id):                  # app/simulator.py','    order = r.hgetall(C.order_key(order_id))','    pipe = r.pipeline(transaction=True)         # Redis: усе разом','    pipe.hset(..., {"status": "delivered"})','    pipe.expire(C.order_key(order_id), 3600)    # гаряча копія зникне сама','    pipe.zincrby(C.LB_COURIERS, 1, cid)','    pipe.sadd(C.COURIERS_FREE, cid)','    pipe.execute()','    db.save_delivered_order(order)              # → PostgreSQL: назавжди','','# app/db.py:  INSERT INTO orders ... ON CONFLICT (id) DO NOTHING']},
   ];
+
+  /* ---------- малювання схем ---------- */
+  const NS='http://www.w3.org/2000/svg';
+  const T=(x,y,s,cls,anchor)=>`<text x="${x}" y="${y}"${cls?` class="${cls}"`:''}${anchor?` text-anchor="${anchor}"`:''}>${esc(s)}</text>`;
+  const clip=(b,tx,ty)=>{const cx=b.x+b.w/2,cy=b.y+b.h/2,dx=tx-cx,dy=ty-cy;if(!dx&&!dy)return[cx,cy];
+    const sx=dx?(b.w/2)/Math.abs(dx):1e9,sy=dy?(b.h/2)/Math.abs(dy):1e9,s=Math.min(sx,sy);return[cx+dx*s,cy+dy*s];};
+  const ah=(x1,y1,x2,y2,cls)=>{const a=Math.atan2(y2-y1,x2-x1),L=11,W=5.5;
+    const p=[[x2,y2],[x2-L*Math.cos(a)+W*Math.sin(a),y2-L*Math.sin(a)-W*Math.cos(a)],[x2-L*Math.cos(a)-W*Math.sin(a),y2-L*Math.sin(a)+W*Math.cos(a)]];
+    return `<polygon class="arh ${cls||''}" points="${p.map(q=>q.join(',')).join(' ')}"/>`;};
+  function link(a,b,label,o={}){const c=[b.x+b.w/2,b.y+b.h/2],d=[a.x+a.w/2,a.y+a.h/2];const[x1,y1]=clip(a,...c),[x2,y2]=clip(b,...d);
+    const cls=`ln ${o.cls||''}${o.dash?' dash':''}`;let s=`<line class="${cls}" x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}"/>`+ah(x1,y1,x2,y2,o.cls);
+    if(o.both)s+=ah(x2,y2,x1,y1,o.cls);
+    if(label){const lx=(x1+x2)/2+(o.dx||0),ly=(y1+y2)/2+(o.dy||0);String(label).split('\n').forEach((l,i,arr)=>s+=T(lx,ly+4+(i-(arr.length-1)/2)*15,l,'lbl','middle'));}
+    return s;}
+  function box(b,cls,title,lines=[],o={}){let s=`<rect class="${cls}" x="${b.x}" y="${b.y}" width="${b.w}" height="${b.h}" rx="10"/>`;
+    const lh=o.lh||17,top=b.y+b.h/2-((lines.length)*lh)/2+(lines.length?2:6);
+    s+=T(b.x+b.w/2,lines.length?top:b.y+b.h/2+5,title,'t','middle');
+    lines.forEach((l,i)=>s+=T(b.x+b.w/2,top+lh*(i+1),l,o.mono?'m':'s','middle'));return s;}
+  /* таблиця: rows [name,type,flag] flag: pk|fk|'' ; rules → зелений текст справа */
+  const RH=23,HH=32;
+  function table(t,o={}){const h=HH+t.rows.length*RH+6;let s=`<rect class="pg" x="${t.x}" y="${t.y}" width="${t.w}" height="${h}" rx="9"/>`+
+    `<path class="pgh" style="fill:var(--pg)" d="M${t.x} ${t.y+HH}V${t.y+9}a9 9 0 0 1 9-9H${t.x+t.w-9}a9 9 0 0 1 9 9V${t.y+HH}Z"/>`+T(t.x+12,t.y+21,t.n,'hd');
+    t.rows.forEach((r,i)=>{const y=t.y+HH+RH*i+3;if(r[2]==='fk'&&o.fk)s+=`<rect class="rowfk" x="${t.x+2}" y="${y}" width="${t.w-4}" height="${RH}"/>`;
+      if(i)s+=`<line class="sep" x1="${t.x+8}" x2="${t.x+t.w-8}" y1="${y}" y2="${y}"/>`;
+      const by=y+16;s+=r[2]==='pk'?T(t.x+10,by,'PK','key'):r[2]==='fk'?T(t.x+10,by,'FK','fk'):'';
+      s+=T(t.x+36,by,r[0],'m');if(o.types!==false)s+=T(t.x+t.w-10,by,r[1],r[3]&&o.rules?'rule':'ty','end');});
+    t.h=h;return s;}
+  const rowY=(t,i)=>t.y+HH+RH*i+3+RH/2;
+  const TB={
+    restaurants:{n:'restaurants',x:30,y:20,w:270,rows:[['id','INTEGER','pk'],['name','TEXT NOT NULL','',1],['cuisine','TEXT NOT NULL','',1],['district','TEXT NOT NULL','',1],['lat, lon','DOUBLE NOT NULL','',1]]},
+    menu_items:{n:'menu_items',x:30,y:235,w:270,rows:[['id','SERIAL','pk'],['restaurant_id','INTEGER NOT NULL','fk',1],['name','TEXT NOT NULL','',1],['price','NUMERIC CHECK > 0','',1]]},
+    orders:{n:'orders',x:375,y:20,w:290,rows:[['id','BIGINT','pk'],['customer','TEXT NOT NULL','',1],['restaurant_id','INTEGER NOT NULL','fk',1],['courier_id','TEXT','fk'],['items','JSONB NOT NULL','',1],['total, fee','NUMERIC(8,2)','',1],['created_at','TIMESTAMPTZ','',1],['delivered_at','TIMESTAMPTZ','',1],['lat, lon','DOUBLE NOT NULL','',1]]},
+    couriers:{n:'couriers',x:740,y:20,w:230,rows:[['id','TEXT','pk'],['name','TEXT NOT NULL','',1]]},
+  };
+  const DRAWS=[
+    /* 1. сценарії */
+    ()=>{const A=[['👤 Клієнт','бачить меню з цінами','menu_items'],['👤 Клієнт','замовляє (≤ 3 за хвилину)','orders · ліміт'],['🧭 Диспетчер','найближчий ВІЛЬНИЙ кур\'єр','couriers: де, чи вільний'],['🛵 Кур\'єр','де він зараз на мапі','координати щосекунди'],['📊 Власниця','рейтинг і виторг','лічильники, топ'],['🔍 Аналітик','середній час доставки за рік','історія orders']];
+      let s='';A.forEach(([who,what,data],i)=>{const y=12+i*64,a={x:20,y,w:170,h:50},q={x:290,y,w:380,h:50},d={x:770,y,w:210,h:50};
+        s+=box(a,'act',who)+box(q,'svc',what)+box(d,'pg',data)+link(a,q,'хоче')+link(q,d,'потрібні дані',{cls:'pg'});});
+      return [s,400,'Кожен сценарій «хто → що хоче» вказує, які дані потрібні. Справа — майбутні таблиці й ключі.'];},
+    /* 2. сутності */
+    ()=>{const B={cl:{x:30,y:40,w:200,h:62},or:{x:400,y:160,w:200,h:62},re:{x:30,y:280,w:200,h:62},me:{x:400,y:318,w:200,h:62},co:{x:770,y:160,w:200,h:62},di:{x:770,y:20,w:200,h:62}};
+      let s=box(B.cl,'ghost','клієнт',['лише ім\'я → колонка'])+box(B.or,'pg','замовлення',['orders'],{mono:1})+box(B.re,'pg','ресторан',['restaurants'],{mono:1})+box(B.me,'pg','страва',['menu_items'],{mono:1})+box(B.co,'pg','кур\'єр',['couriers'],{mono:1})+box(B.di,'ghost','диспетчер',['процес, не сутність']);
+      s+=link(B.cl,B.or,'замовляє()')+link(B.re,B.or,'готує')+link(B.re,B.me,'має в меню')+link(B.or,B.me,'містить',{dash:1})+link(B.co,B.or,'доставляє()')+link(B.di,B.co,'призначає()',{dash:1});
+      return [s,400,'Іменники → сутності (синя рамка — таблиця). Дієслова на стрілках → функції в коді. Пунктир — не таблиця.'];},
+    /* 3. поля */
+    ()=>[Object.values(TB).map(t=>table({...t},{rules:1})).join('')+T(740,150,'зелене — правило в схемі:','s')+T(740,168,'NOT NULL, CHECK, NUMERIC','rule')+T(740,196,'PK — первинний ключ','s')+T(740,214,'FK — зовнішній ключ','s'),420,'Кожна сутність — таблиця: поле, тип, правило. Гроші — NUMERIC, час — TIMESTAMPTZ.'],
+    /* 4. зв'язки */
+    ()=>{const t={};let s=Object.entries(TB).map(([k,v])=>{t[k]={...v};return table(t[k],{fk:1,types:false});}).join('');
+      const R=t.restaurants,M=t.menu_items,O=t.orders,C=t.couriers;
+      const el=(x1,y1,xm,x2,y2,c1,c2,cls='pg')=>`<path class="ln ${cls}" d="M${x1} ${y1}H${xm}V${y2}H${x2}"/>`+ah(xm,y2,x2,y2,cls)+T(x1+(x2>x1?-14:14)*(x1<xm?-1:1),y1-6,c1,'card','middle')+T(x2+(xm<x2?-12:12),y2-6,c2,'card','middle');
+      s+=`<path class="ln pg" d="M${M.x} ${rowY(M,1)}H${M.x-16}V${rowY(R,0)}H${R.x}"/>`+ah(M.x-16,rowY(R,0),R.x,rowY(R,0),'pg')+T(M.x-6,rowY(M,1)-6,'N','card','end')+T(R.x-6,rowY(R,0)-6,'1','card','end');
+      s+=`<path class="ln pg" d="M${O.x} ${rowY(O,2)}H${O.x-37}V${rowY(R,0)}H${R.x+R.w}"/>`+ah(O.x-37,rowY(R,0),R.x+R.w,rowY(R,0),'pg')+T(O.x-6,rowY(O,2)-6,'N','card','end')+T(R.x+R.w+8,rowY(R,0)-6,'1','card');
+      s+=`<path class="ln pg" d="M${O.x+O.w} ${rowY(O,3)}H${O.x+O.w+38}V${rowY(C,0)}H${C.x}"/>`+ah(O.x+O.w+38,rowY(C,0),C.x,rowY(C,0),'pg')+T(O.x+O.w+8,rowY(O,3)-6,'N','card')+T(C.x-6,rowY(C,0)-6,'1','card','end');
+      s+=`<path class="ln dash" d="M${O.x} ${rowY(O,4)}H${O.x-28}V${rowY(M,0)}H${M.x+M.w}"/>`+ah(O.x-28,rowY(M,0),M.x+M.w,rowY(M,0))+T(O.x+10,O.y+O.h+24,'- - ▶  items JSONB — знімок страв і цін, не FK','s');
+      s+=T(740,150,'1 ──▶ N','card')+T(740,170,'«в одного ресторану','s')+T(740,186,'багато страв і замовлень»','s')+T(740,214,'FK веде до PK іншої таблиці','s');
+      return [s,420,'Лінії — зовнішні ключі (FK → PK). 1 і N — скільки рядків з кожного боку. Пунктир — зв\'язок без FK (знімок у JSONB).'];},
+    /* 5. правда / гаряче */
+    ()=>{const P={r:{x:30,y:28,w:220,h:56},m:{x:30,y:118,w:220,h:56},c:{x:30,y:208,w:220,h:56},o:{x:30,y:312,w:220,h:56}};
+      const R={r:{x:610,y:20,w:360,h:72},m:{x:610,y:116,w:360,h:60},c:{x:610,y:196,w:360,h:90},o:{x:610,y:304,w:360,h:90}};
+      let s=box(P.r,'pg','restaurants',['правда'])+box(P.m,'pg','menu_items',['правда'])+box(P.c,'pg','couriers',['довідник'])+box(P.o,'pg','orders',['лише доставлені'])
+       +box(R.r,'rd','restaurant:<id> HASH',['restaurants:geo GEO'],{mono:1})+box(R.m,'rd','cache:menu:<id> STRING',['EX 60'],{mono:1})
+       +box(R.c,'rd','courier:<id> HASH',['couriers:geo GEO','couriers:free SET'],{mono:1})+box(R.o,'rd','order:<id> HASH',['orders:new STREAM','orders:active ZSET'],{mono:1});
+      s+=link(P.r,R.r,'seed_redis(): копія на старті',{cls:'rd',dash:1})+link(P.m,R.m,'MISS → SELECT → SET',{cls:'rd',dash:1})+link(P.c,R.c,'seed_redis(): стан змінюється щосекунди',{cls:'rd',dash:1})+link(R.o,P.o,'deliver() → INSERT: стає фактом',{cls:'pg'});
+      s+=T(140,18,'🐘 PostgreSQL — правда','t','middle')+T(790,12,'⚡ Redis — гаряче','t','middle');
+      return [s,400,'Ліворуч — що не можна втратити. Праворуч — що змінюється щосекунди або потрібне кільком процесам. Стрілки — звідки береться і куди повертається.'];},
+    /* 6. операції → типи */
+    ()=>{const O=[['картка з полями, міняємо одне','HASH','courier:c4 · order:42'],['хто поруч','GEO','couriers:geo'],['взяти вільного атомарно','SET + SREM','couriers:free'],['рейтинг, топ-N','ZSET','lb:couriers:deliveries'],['черга з підтвердженням','STREAM','orders:new'],['лічильник, новий id','STRING + INCR','order:seq'],['останні N подій','LIST + LTRIM','events:log'],['кеш з терміном','STRING + EX','cache:menu:3']];
+      let s=T(165,14,'операція (що робимо)','s','middle')+T(470,14,'тип Redis','s','middle')+T(780,14,'ключ у проєкті','s','middle');
+      O.forEach(([op,ty,k],i)=>{const y=24+i*47,a={x:20,y,w:300,h:38},b={x:390,y,w:160,h:38},c={x:620,y,w:340,h:38};
+        s+=box(a,'svc',op)+box(b,'rd',ty)+box(c,'dk',k)+link(a,b,'')+link(b,c,'');});
+      return [s,404,'Тип обирають за операцією. Ті самі кур\'єри лежать у чотирьох структурах: картка, GEO, SET вільних, рейтинг.'];},
+    /* 7. потік */
+    ()=>{const X=[15,272,529,786],W=200,B=[0,1,2,3].map(i=>({x:X[i],y:70,w:W,h:96})).concat([3,2,1,0].map(i=>({x:X[i],y:262,w:W,h:96})));
+      let s=box(B[0],'svc','generator / api',['create_order()','MULTI: HSET, XADD'],{mono:1})+box(B[1],'rd','⚡ Redis',['order:42 · new','orders:new'],{mono:1})
+       +box(B[2],'svc','dispatcher',['try_assign()','GEOSEARCH · SREM'],{mono:1})+box(B[3],'svc','simulator',['tick(): GEOADD','кожну секунду'],{mono:1})
+       +box(B[4],'svc','deliver()',['MULTI … EXEC','EXPIRE order:42'],{mono:1})+box(B[5],'pg','🐘 PostgreSQL',['INSERT INTO orders','ON CONFLICT DO NOTHING'],{mono:1})
+       +box(B[6],'dk','parquet',['COPY … TO','orders.parquet'],{mono:1})+box(B[7],'dk','🦆 DuckDB',['GROUP BY за рік','аналітика'],{mono:1});
+      const up={dy:-16};s+=link(B[0],B[1],'new',up)+link(B[1],B[2],'читає',up)+link(B[2],B[3],'assigned',up)+link(B[3],B[4],'picked_up → delivered',{dx:-6})+link(B[4],B[5],'факт',{cls:'pg',dy:-16})+link(B[5],B[6],'COPY',{dash:1,dy:-16})+link(B[6],B[7],'',{dash:1});
+      s+=T(500,30,'статус замовлення: new → assigned → picked_up → delivered → в історії','t','middle')+T(500,222,'одна межа запису в правду: deliver() → save_delivered_order()','s','middle');
+      return [s,380,'Верхній ряд — гаряче життя замовлення в Redis. Нижній — факт у PostgreSQL і копія для аналітики.'];},
+  ];
+  function drawDesign(i){const [s,h,cap]=DRAWS[i]();const svg=$('#design-svg');svg.setAttribute('viewBox',`0 0 1000 ${h}`);svg.innerHTML=s;$('#design-cap').textContent=cap;}
   const F=$('#design-flow');flow(F,['сценарії','сутності','поля','зв\'язки','правда/гаряче','операції→типи','потік']);
   function* gen(){for(let i=0;i<STEPS.length;i++)yield i;}
-  function render(i){flowOn(F,i);const s=STEPS[i];$('#design-h').textContent=s.h;$('#design-body').innerHTML=s.b;code($('#design-code'),s.c);}
+  function render(i){flowOn(F,i);drawDesign(i);const s=STEPS[i];$('#design-h').textContent=s.h;$('#design-body').innerHTML=s.b;code($('#design-code'),s.c);}
   const r=new Runner(gen,render);r.delay=4000;controls($('#design-controls'),r,'design');
   F.onclick=e=>{const n=e.target.closest('.node');if(!n)return;r.pause();r.reset();while(r.state!==+n.dataset.i&&!r.done)r.step();};
   course($('#design-course'),['l30','taxiarch','taxi']);
